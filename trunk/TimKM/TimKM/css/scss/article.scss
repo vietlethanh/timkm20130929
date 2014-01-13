@@ -1,0 +1,205 @@
+#article
+{
+	clear:both;	
+	margin-top:20px;
+	#advertises
+	{
+		display: inline-block;
+		vertical-align: top;
+		width: 16%;
+		margin-left: 6px;
+		.advertise
+		{
+			img.partner:first-child
+			{
+				margin: 0; 
+			}
+			img.partner
+			{
+				height: 100px;
+				margin: 5px 0;
+				width: 160px;
+			}
+		}
+		
+	}
+	#article-detail
+	{		
+		display: inline-block;
+		margin: 0 0px;
+		width: 60%;
+		#article-content
+		{			
+			padding: 10px;
+			vertical-align: top;
+			margin-bottom:20px;
+			border: 5px solid $color_border;		
+			border: 5px solid $color_border_rbga;
+			-webkit-background-clip: padding-box; /* for Safari */
+			background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */	
+			.name		
+			{
+				color:$color_header_menu;
+				font-size: 1.3em;
+				font-weight: bold;
+			}
+			.title
+			{
+				font-size: 1.2em;
+				font-weight: bold;
+			}
+			.content
+			{
+				font-size: 1.1em;				
+				text-align:justify;
+			}
+		}	
+		#comment-content
+		{
+			#comment-editor
+			{		
+				background: none repeat scroll 0 0 $color_border_rbga;
+				padding:10px;
+				.title
+				{	
+					
+					display: inline-block;
+					font-size: 15px;
+					font-weight: bolder;
+					height: 26px;
+					padding: 4px;
+					text-transform: uppercase;	
+					margin-bottom:10px;					
+					.icon
+					{
+						vertical-align: middle;	
+					}
+				}	
+				.avatar
+				{
+					vertical-align: top;
+					display: inline-block;
+					margin-right:10px;
+					margin-left: 8px;
+					img
+					{
+						height:65px;
+						vertical-align: top;
+					}
+				}
+				.comment_box
+				{
+					width:507px;
+					display: inline-block;
+					text-align:right;
+					textarea
+					{
+						vertical-align: top;
+						border:none;
+						height:45px;
+						width:99%;
+					}
+					input.btn
+					{
+						margin-top:4px;
+						margin-right:0px;
+					}
+				}
+			}
+			#comment-list
+			{
+				.item
+				{
+					vertical-align: top;
+					margin-top: 4px;	
+					padding:8px;
+					padding-right: 22px;
+					background: none repeat scroll 0 0 $color_border_rbga;
+					display: inline-block;
+					margin-bottom: 0px;
+					overflow: hidden;
+					.avatar
+					{
+						
+						display:inline-block;
+						img
+						{
+							height:65px;
+						}
+					}
+					.comment-detail
+					{
+						vertical-align: top;
+						display:inline-block;
+						width:530px;
+						.username
+						{		
+							line-height:10px;
+							a
+							{
+								
+							}
+						}
+						.comment-detail-content
+						{	
+							
+						}
+					}					
+				}
+			}
+		}
+	}
+	#company-info
+	{
+		display: inline-block;
+		text-align: right;
+		vertical-align: top;
+		width: 22%;
+		.title
+		{
+			font-size: 14px;
+			font-weight: bold;
+			margin: 3px 0;
+		}
+		#company_address
+		{		
+			text-align:center;
+			font-weight: bold;
+			border: 5px solid $color_border;		
+			border: 5px solid $color_border_rbga;
+			-webkit-background-clip: padding-box; /* for Safari */
+			background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+			.name{}
+			.address
+			{
+				font-size: 10px;
+			}
+			.mobile
+			{
+				font-size: 10px;
+			}
+			.website
+			{
+				font-size: 10px;
+			}			
+		}
+		#company_map
+		{
+			text-align:center;
+			.map-address
+			{
+				margin-top: 1px;
+				width: 100%;
+			}
+		}
+			
+		#company_partner
+		{
+			.partner
+			{
+				margin-top: 11px;
+				width: 100%;
+			}
+		}			
+	}	
+} 
