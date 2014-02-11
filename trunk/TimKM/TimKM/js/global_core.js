@@ -129,7 +129,7 @@ core.ui = {
 	    var _speed=speed?speed:'slow';
 	    if(status == core.request.status.success) $('.info-bar .icon').attr('class','icon icon-tick');
 	    else if(status== core.request.status.error) $('.info-bar .icon').attr('class','icon icon-x');
-	    $('.info-bar span').text(text);
+	    $('.info-bar span').html(text);
 	    $('.info-bar').css('left',($(window).width()/2)-($('.info-bar').outerWidth()/2)+'px');
 	    $('.info-bar').attr('class','info-bar '+status).stop().animate(
 		    {top : 0},

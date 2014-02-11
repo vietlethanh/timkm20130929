@@ -19,6 +19,7 @@ if ($_pgR["aid"])
 include_once('_advertises.inc');
 		?>	
 	</div>
+	<input type="hidden" id="hdarticleid" value="<?php echo $article[global_mapping::ArticleID]?>" />
 	<div id="article-detail">
 		<div id="article-content">	
 			<div class="name">

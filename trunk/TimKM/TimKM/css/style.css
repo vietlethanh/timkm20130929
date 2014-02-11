@@ -46,7 +46,7 @@ body {
   /*background-color:#C4C6C8;*/
   height: 100%;
   margin: auto;
-  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6); }
+  background: none repeat scroll 0 0 rgba(228, 167, 219, 0.1); }
 
 .wrapper {
   width: 100%;
@@ -411,7 +411,7 @@ table.table {
 #header {
   height: 45px;
   margin-top: 0px;
-  border-bottom: 1px solid #2F1D35;
+  border-bottom: 1px solid #fff;
   margin-bottom: 18px;
   padding-bottom: 4px; }
   #header #header-menu {
@@ -503,7 +503,7 @@ table.table {
     padding: 90px 0; }
     #login-page form div.table-login {
       margin: auto;
-      width: 57%; }
+      float: right; }
       #login-page form div.table-login .l-remember {
         display: inline;
         vertical-align: middle;
@@ -511,6 +511,23 @@ table.table {
       #login-page form div.table-login input.remember {
         margin: 0 0 3px;
         vertical-align: middle; }
+      #login-page form div.table-login #btnForgot {
+        margin-left: 110px; }
+    #login-page form div.table-register {
+      margin-left: 50px; }
+      #login-page form div.table-register ul.promo-info li {
+        font-size: 1.2em;
+        line-height: 1.5em;
+        font-weight: bold; }
+        #login-page form div.table-register ul.promo-info li i {
+          margin-right: 5px; }
+      #login-page form div.table-register .action-register {
+        margin-top: 20px; }
+        #login-page form div.table-register .action-register a {
+          font-size: 1.5em;
+          font-weight: bold; }
+          #login-page form div.table-register .action-register a i {
+            color: white; }
 
 /*********** end login ************/
 /*********** forgot ************/
@@ -849,7 +866,8 @@ table.table {
         height: 26px;
         padding: 4px;
         text-transform: uppercase;
-        margin-bottom: 10px; }
+        margin-bottom: 10px;
+        margin-top: 0px; }
         #article #article-detail #comment-content #comment-editor .title .icon {
           vertical-align: middle; }
       #article #article-detail #comment-content #comment-editor .avatar {
@@ -863,15 +881,20 @@ table.table {
       #article #article-detail #comment-content #comment-editor .comment_box {
         width: 507px;
         display: inline-block;
-        text-align: right; }
+        text-align: left;
+        vertical-align: top; }
         #article #article-detail #comment-content #comment-editor .comment_box textarea {
           vertical-align: top;
           border: none;
-          height: 45px;
+          height: 70px;
           width: 99%; }
         #article #article-detail #comment-content #comment-editor .comment_box input.btn {
           margin-top: 4px;
           margin-right: 0px; }
+      #article #article-detail #comment-content #comment-editor .comment_action {
+        width: 100%;
+        display: inline-block;
+        text-align: right; }
     #article #article-detail #comment-content #comment-list .item {
       vertical-align: top;
       margin-top: 4px;
