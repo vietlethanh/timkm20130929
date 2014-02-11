@@ -4,7 +4,7 @@
 	<div id="footer" >	
 		<img class="border" src="images/border-footer.png">
 		<ul>
-			<li><a href="#">Liên hệ với chúng tôi</a></li>
+			<li><a href="#">Giới thiệu</a></li>
 			<li><a href="#">Điều khoản sử dụng</a></li>
 			<li><a href="#">Câu hỏi thường gặp</a></a></li>
 			<li><a href="#">Liên hệ với chúng tôi</a></a></li>			

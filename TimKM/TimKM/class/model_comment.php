@@ -104,13 +104,17 @@ class Model_Comment
     
     #region Public Functions
     
-    public function insert( $commenttype,$articleid,$content,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
+    public function insert($articleid,$content,$createdby,$status)
 	{
-		$intID = global_common::getMaxID(self::TBL_SL_COMMENT);
 		
 		$strTableName = self::TBL_SL_COMMENT;
 		$strSQL = global_common::prepareQuery(self::SQL_INSERT_SL_COMMENT,
-				array(self::TBL_SL_COMMENT,$intID,global_common::escape_mysql_string($commenttype),global_common::escape_mysql_string($articleid),global_common::escape_mysql_string($content),global_common::escape_mysql_string($createdby),global_common::escape_mysql_string($createddate),global_common::escape_mysql_string($modifiedby),global_common::escape_mysql_string($modifieddate),global_common::escape_mysql_string($deletedby),global_common::escape_mysql_string($deleteddate),global_common::escape_mysql_string($isdeleted),global_common::escape_mysql_string($status)));
+				array(self::TBL_SL_COMMENT,0,global_common::escape_mysql_string($commenttype),
+				global_common::escape_mysql_string($articleid),global_common::escape_mysql_string($content),
+				global_common::escape_mysql_string($createdby),global_common::escape_mysql_string($createddate),
+				global_common::escape_mysql_string($modifiedby),global_common::escape_mysql_string($modifieddate),
+				global_common::escape_mysql_string($deletedby),global_common::escape_mysql_string($deleteddate),
+				global_common::escape_mysql_string($isdeleted),global_common::escape_mysql_string($status)));
 		
 		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_COMMENT,$this->_objConnection,$strTableName))
 		{
@@ -118,7 +122,8 @@ class Model_Comment
 			global_common::writeLog('Error add sl_comment:'.$strSQL,1);
 			return false;
 		}	
-		return $intID;
+		$newID = global_common::getMaxValueofField(global_mapping::CommentID,self::TBL_SL_COMMENT);
+		return $newID;
 		
 	}
     

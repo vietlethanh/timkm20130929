@@ -142,6 +142,40 @@ var user = {
 			birthdate: birthDate
 	   }      
     },
+	
+	login: function()
+	{
+		var controlSubmit = "btnOK";
+		
+		var message = core.util.getObjectByClass("help-inline.message");
+		message.html('');
+		core.util.disableControl(controlSubmit, true);
+        var isValid = true;
+        var controlID = 'txtUserName';	
+		
+        var userName = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(userName)) {
+            core.util.validateInputTextBox(controlID, 'Tên đăng nhập không được rỗng', isValid);
+            isValid = false;
+        }		
+		controlID = 'txtPassword';	
+        var password = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(password)) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu không được rỗng', isValid);
+            isValid = false;
+        } 
+		
+		
+		 if (isValid == false) {
+            core.util.disableControl(controlSubmit, false);
+            return false;
+        }
+		return true;
+	},
+	
+	
     register: function() {  
 		var regiserInfo = this.getRegisterInfo();
 		if(core.util.isNull(regiserInfo))
@@ -153,8 +187,8 @@ var user = {
             function(respone, info){
 				 var strRespond = core.util.parserXML(respone);
 				if (parseInt(strRespond[1]['rs']) == 1) {
-					core.ui.showInfoBar(1, strRespond[1]["inf"]);	
-					core.util.goTo("login.php");
+					core.ui.showInfoBar(2, "Đăng ký thành công. Vui lòng nhấn vào <a href='login.php'>đây</a> để đăng nhập");	
+					//core.util.goTo("login.php");
                 }
                 else{
 					//existed username

@@ -9,7 +9,7 @@ include_once('class/model_user.php');
 
 if (!$_pgR["cid"])
 {
-	global_common::redirectByScript("index.php");
+	global_common::redirectByScript("index.php"); 
 }
 
 ?>

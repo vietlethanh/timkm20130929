@@ -2,7 +2,7 @@
 
 if (!global_common::isCLogin())
 {
-	global_common::redirectByScript("Login.php");
+	global_common::redirectByScript("Login.php?r=1");
 }
 
 ?>
