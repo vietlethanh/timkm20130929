@@ -134,11 +134,11 @@ class Model_User
 			{
 				if($userInfo[global_mapping::Sex])
 				{
-					$userInfo[global_mapping::Avatar]='/images/default/default-avatar-male.png';
+					$userInfo[global_mapping::Avatar]= global_common::DEFAUTL_MALE_AVATAR;
 				}
 				else
 				{
-					$userInfo[global_mapping::Avatar]='/images/default/default-avatar-female.png';
+					$userInfo[global_mapping::Avatar]= global_common::DEFAUTL_FEMALE_AVATAR;
 				}
 			}
 			return $userInfo;

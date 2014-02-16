@@ -3,6 +3,7 @@
 require('config/globalconfig.php');
 include_once('class/model_comment.php');
 include_once('class/model_article.php');
+include_once('class/model_user.php');
 
 $objComment = new Model_Comment($objConnection);
 $objArticle = new Model_Article($objConnection);
@@ -26,11 +27,12 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 			$resultID = $objComment->insert($articleid,$content,$createdby,$status);
 			if ($resultID)
 			{
+				$commentHTML = $objComment->getCommentHTMLByArticle($articleid);
 				$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
 				echo global_common::convertToXML(
-						$arrHeader, array("rs", "inf"), 
-						array(1, 'Gửi bình luận thành công'), 
-						array( 0, 1 )
+						$arrHeader, array("rs", "inf","form"), 
+						array(1, 'Gửi bình luận thành công',$commentHTML), 
+						array( 0, 1, 1)
 						);
 				return;
 			}
