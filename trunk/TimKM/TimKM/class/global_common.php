@@ -109,6 +109,9 @@ class global_common
 	const COMMENT_TYPE							= 2;	
 	const TBL_SL_CONTENT_SUMMARY	            = 'sl_content_summary';
 	
+	const DEFAUTL_FEMALE_AVATAR					= '/images/default/default-avatar-female.png';
+	const DEFAUTL_MALE_AVATAR					= '/images/default/default-avatar-male.png';
+	
 	//end const for FOLDER
 	
 	#end region
@@ -2777,7 +2780,7 @@ class global_common
 	{
 		return str_pad($num, $zerofill, '0', STR_PAD_LEFT);
 	}
-
+	
 	public function getCharsMD5()
 	{
 		$arrMD5 = array(" " =>"7215ee9c7d9dc229d2921a40e899ec5f",
@@ -3550,7 +3553,7 @@ class global_common
 		}
 		return preg_split('/'.$delimiter.'/', $stringValue , -1, PREG_SPLIT_NO_EMPTY);
 	}
-		
+	
 	/**
 	 * This is method array_column to one column
 	 *
@@ -3630,7 +3633,8 @@ class global_common
 	public function getUserInfo($arrUserID,$objConnection)
 	{		
 		//print_r($arrUserID);
-		$arrUserInfo = global_common::getUserDetailByMultiTable($arrUserID, $objConnection);
+		$arrUserInfo = global_common::getUserDetails($arrUserID, $objConnection);
+		
 		//print_r($arrUserInfo);
 		foreach($arrUserInfo as $key => $info)
 		{
@@ -3638,6 +3642,44 @@ class global_common
 			unset($arrUserInfo[$key]);
 		}		
 		return $arrUserInfo;
+	}
+	
+	
+	/**
+	 * Get user info with single table
+	 *
+	 * @param mixed $userList This is a description
+	 * @param mixed $objConnection This is a description
+	 * @param mixed $selectField This is a description
+	 * @return mixed This is the return value description
+	 *
+	 */
+	private function getUserDetails($userList, $objConnection, $selectField='*')
+	{
+		$arrID = global_common::splitString($userList);
+		$strQueryIN = global_common::convertToQueryIN($arrID);
+		$whereClause = 'WHERE '.global_mapping::UserID.' IN ('.$strQueryIN.')';
+		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE,array('*',
+					Model_User::TBL_SL_USER,$whereClause));
+		//echo $strSQL;
+		$arrUsers = $objConnection->selectCommand($strSQL);
+		$count = count($arrUsers);
+		for($i=0;$i<10;$i++)
+		{
+			if(!$arrUsers[$i][global_mapping::Avatar])
+			{
+				if($arrUsers[$i][global_mapping::Sex])
+				{
+					$arrUsers[$i][global_mapping::Avatar] =  global_common::DEFAUTL_MALE_AVATAR;
+				}
+				else
+				{
+					$arrUsers[$i][global_mapping::Avatar] =  global_common::DEFAUTL_FEMALE_AVATAR;;
+				}
+			}
+		}
+		return $arrUsers;
+		
 	}
 	
 	/**

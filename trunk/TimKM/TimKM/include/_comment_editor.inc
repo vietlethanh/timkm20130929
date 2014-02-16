@@ -1,4 +1,13 @@
-
+<?php
+if ($_pgR["aid"])
+{
+	$articleID = $_pgR["aid"];
+	//,$intPage = 0,$selectField='*',$whereClause='',$orderBy='') 
+	$comments = $objComment->getCommentByArticle($articleID,0,'*','','ModifiedDate Desc');
+	//echo '$comments:';
+	//print_r($comments);
+}
+?>
 <script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_comment.js');?>"></script>
 
 <div id="comment-content">
@@ -33,26 +42,25 @@ else
 	</div>
 	
 	<div id="comment-list">	
-	<?php
-	for($i=0;$i<20;$i++)
-	{
-			?>	
-			<div class="item">	
-				<div class="avatar">
-					<img src="/images/avatar.jpg" />
-				</div>
-				<div class="comment-detail">
-					<div class="username">
-					 <a href="#">Lam Phong Nguyen</a>	
-					</div>
-					<div class="comment-detail-content">
-						Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks Thanks 
-					</div>					
-				</div>
-			</div>
-			
-		<?php 
-		}?>	
+<?php
+foreach($comments as $item)
+{
+	echo '<div class="item">';
+	echo '		<div class="avatar">';
+	echo '			<img src="'.$item[global_mapping::CreatedBy][global_mapping::Avatar].'" />';
+	echo '		</div>';
+	echo '		<div class="comment-detail">';
+	echo '			<div class="username">';
+	echo '				 <a href="#">'.$item[global_mapping::CreatedBy][global_mapping::FullName].'</a>	';
+	echo '				 <p class="created-date">'.global_common::formatDateTimeVN($item[global_mapping::CreatedDate]).'</p>	';
+	echo '			</div>';
+	echo '			<div class="comment-detail-content">';
+	echo '					'.$item[global_mapping::Content];
+	echo '			</div>	';				
+	echo '		</div>';
+	echo '</div>';
+}
+?>	
 	</div>
 </div>
 <script>
