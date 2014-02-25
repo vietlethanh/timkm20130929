@@ -16,70 +16,70 @@ class Model_District
 {		   
 	#region PRESERVE ExtraMethods For District
 	#endregion
-    #region Contants	
-    const ACT_ADD							= 10;
-    const ACT_UPDATE						= 11;
-    const ACT_DELETE						= 12;
-    const ACT_CHANGE_PAGE					= 13;
-    const ACT_SHOW_EDIT                     = 14;
-    const ACT_GET                           = 15;
-    const NUM_PER_PAGE                      = 15;
-    
-    const TBL_SL_DISTRICT			            = 'sl_district';
-
+	#region Contants	
+	const ACT_ADD							= 10;
+	const ACT_UPDATE						= 11;
+	const ACT_DELETE						= 12;
+	const ACT_CHANGE_PAGE					= 13;
+	const ACT_SHOW_EDIT                     = 14;
+	const ACT_GET                           = 15;
+	const NUM_PER_PAGE                      = 15;
+	
+	const TBL_SL_DISTRICT			            = 'sl_district';
+	
 	const SQL_INSERT_SL_DISTRICT		= 'INSERT INTO `{0}`
 		(
-			DistricID,
-			DistrictName,
-			CityID,
-			CreatedBy,
-			CreatedDate,
-			ModifiedBy,
-			ModifiedDate,
-			DeletedBy,
-			DeletedDate,
-			IsDeleted,
-			Status
-        )
-        VALUES (
-			\'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\', \'{11}\'
-        );';
-        
+		DistricID,
+		DistrictName,
+		CityID,
+		CreatedBy,
+		CreatedDate,
+		ModifiedBy,
+		ModifiedDate,
+		DeletedBy,
+		DeletedDate,
+		IsDeleted,
+		Status
+		)
+		VALUES (
+		\'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\', \'{11}\'
+		);';
+	
 	const SQL_UPDATE_SL_DISTRICT		= 'UPDATE `{0}`
 		SET  
-			`DistricID` = \'{1}\',
-			`DistrictName` = \'{2}\',
-			`CityID` = \'{3}\',
-			`CreatedBy` = \'{4}\',
-			`CreatedDate` = \'{5}\',
-			`ModifiedBy` = \'{6}\',
-			`ModifiedDate` = \'{7}\',
-			`DeletedBy` = \'{8}\',
-			`DeletedDate` = \'{9}\',
-			`IsDeleted` = \'{10}\',
-			`Status` = \'{11}\'
+		`DistricID` = \'{1}\',
+		`DistrictName` = \'{2}\',
+		`CityID` = \'{3}\',
+		`CreatedBy` = \'{4}\',
+		`CreatedDate` = \'{5}\',
+		`ModifiedBy` = \'{6}\',
+		`ModifiedDate` = \'{7}\',
+		`DeletedBy` = \'{8}\',
+		`DeletedDate` = \'{9}\',
+		`IsDeleted` = \'{10}\',
+		`Status` = \'{11}\'
 		WHERE `DistricID` = \'{1}\'  ';
-		   
-
-    const SQL_CREATE_TABLE_SL_DISTRICT		= 'CREATE TABLE `{0}` (
-
-			`DistricID` varchar(20),
-			`DistrictName` varchar(50),
-			`CityID` varchar(20),
-			`CreatedBy` varchar(20),
-			`CreatedDate` ,
-			`ModifiedBy` varchar(20),
-			`ModifiedDate` ,
-			`DeletedBy` varchar(20),
-			`DeletedDate` ,
-			`IsDeleted` ,
-			`Status` varchar(20),
-			PRIMARY KEY(DistricID)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 	
-    #endregion   
-    
-    #region Variables
+	
+	const SQL_CREATE_TABLE_SL_DISTRICT		= 'CREATE TABLE `{0}` (
+		
+		`DistricID` varchar(20),
+		`DistrictName` varchar(50),
+		`CityID` varchar(20),
+		`CreatedBy` varchar(20),
+		`CreatedDate` ,
+		`ModifiedBy` varchar(20),
+		`ModifiedDate` ,
+		`DeletedBy` varchar(20),
+		`DeletedDate` ,
+		`IsDeleted` ,
+		`Status` varchar(20),
+		PRIMARY KEY(DistricID)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+	
+	#endregion   
+	
+	#region Variables
 	var $_objConnection;
 	#end region
 	
@@ -97,11 +97,11 @@ class Model_District
 		$this->_objConnection = $objConnection;
 		
 	}
-    #region
-    
-    #region Public Functions
-    
-    public function insert( $districtname,$cityid,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
+	#region
+	
+	#region Public Functions
+	
+	public function insert( $districtname,$cityid,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
 	{
 		$intID = global_common::getMaxID(self::TBL_SL_DISTRICT);
 		
@@ -118,8 +118,8 @@ class Model_District
 		return $intID;
 		
 	}
-    
-    public function update($districid,$districtname,$cityid,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
+	
+	public function update($districid,$districtname,$cityid,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
 	{
 		$strTableName = self::TBL_SL_DISTRICT;
 		$strSQL = global_common::prepareQuery(self::SQL_UPDATE_SL_DISTRICT,
@@ -133,8 +133,8 @@ class Model_District
 		}	
 		return $intNewID;		
 	}
-    
-    public function getDistrictByID($objID,$selectField='*') 
+	
+	public function getDistrictByID($objID,$selectField='*') 
 	{		
 		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
 				array($selectField, self::TBL_SL_DISTRICT ,							
@@ -149,10 +149,14 @@ class Model_District
 		//print_r($arrResult);
 		return $arrResult[0];
 	}
-    
-    public function getAllDistrict($intPage = 0,$selectField='*',$whereClause='',$orderBy='') 
+	
+	public function getAllDistrict($intPage = 0,$selectField='*',$whereClause='',$orderBy='') 
 	{		
-        if($whereClause)
+		if(!$selectField)
+		{
+			$selectField = '*';
+		}
+		if($whereClause)
 		{
 			$whereClause = ' WHERE '.$whereClause;
 		}
@@ -161,18 +165,18 @@ class Model_District
 		{
 			$orderBy = ' ORDER BY '.$orderBy;
 		}
-        if($intPage>0)
-        {
-		    $strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
-				array($selectField, Model_District::TBL_SL_DISTRICT ,							
-					$whereClause.$orderBy .' limit '.(($intPage-1)* self::NUM_PER_PAGE).','.self::NUM_PER_PAGE));
-        }
-        else
-        {
-            $strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
-				array($selectField, Model_District::TBL_SL_DISTRICT ,							
-					$whereClause.$orderBy ));
-        }
+		if($intPage>0)
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, Model_District::TBL_SL_DISTRICT ,							
+						$whereClause.$orderBy .' limit '.(($intPage-1)* self::NUM_PER_PAGE).','.self::NUM_PER_PAGE));
+		}
+		else
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, Model_District::TBL_SL_DISTRICT ,							
+						$whereClause.$orderBy ));
+		}
 		//echo '<br>SQL:'.$strSQL;
 		$arrResult =$this->_objConnection->selectCommand($strSQL);		
 		if(!$arrResult)
@@ -183,53 +187,53 @@ class Model_District
 		//print_r($arrResult);
 		return $arrResult;
 	}
-    
-    public function getListDistrict($intPage,$orderBy='DistricID', $whereClause)
+	
+	public function getListDistrict($intPage,$orderBy='DistricID', $whereClause)
 	{		
-        if($whereClause)
-        {
-            $whereClause='WHERE'+ $whereClause;						
-        }
-        if($orderBy)
-        {
-            $orderBy='ORDER BY'+ $orderBy;						
-        }
+		if($whereClause)
+		{
+			$whereClause='WHERE'+ $whereClause;						
+		}
+		if($orderBy)
+		{
+			$orderBy='ORDER BY'+ $orderBy;						
+		}
 		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE,array('*',
 					self::TBL_SL_DISTRICT,$orderBy.' '.$whereClause.' limit '.(($intPage-1)* self::NUM_PER_PAGE).','.self::NUM_PER_PAGE));
 		//echo 'sql:'.$strSQL;	
 		$arrResult = $this->_objConnection->selectCommand($strSQL);
 		//print_r($arrResult);
 		$strHTML = '<table class="tbl-list">
-                    <thead>
-						<td>DistricID</td>
-						<td>DistrictName</td>
-						<td>CityID</td>
-						<td>CreatedBy</td>
-						<td>CreatedDate</td>
-						<td>ModifiedBy</td>
-						<td>ModifiedDate</td>
-						<td>DeletedBy</td>
-						<td>DeletedDate</td>
-						<td>IsDeleted</td>
-						<td>Status</td>
-                    </thead>
-                    <tbody>';
+				<thead>
+				<td>DistricID</td>
+				<td>DistrictName</td>
+				<td>CityID</td>
+				<td>CreatedBy</td>
+				<td>CreatedDate</td>
+				<td>ModifiedBy</td>
+				<td>ModifiedDate</td>
+				<td>DeletedBy</td>
+				<td>DeletedDate</td>
+				<td>IsDeleted</td>
+				<td>Status</td>
+				</thead>
+				<tbody>';
 		$icount = count($arrmenu);
 		for($i=0;$i<$icount;$i++)
 		{
 			$strHTML.='<tr class="'.($i%2==0?'even':'odd').'">
-						<td>'.$arrResult[$i]['DistricID'].'</td>
-						<td>'.$arrResult[$i]['DistrictName'].'</td>
-						<td>'.$arrResult[$i]['CityID'].'</td>
-						<td>'.$arrResult[$i]['CreatedBy'].'</td>
-						<td>'.$arrResult[$i]['CreatedDate'].'</td>
-						<td>'.$arrResult[$i]['ModifiedBy'].'</td>
-						<td>'.$arrResult[$i]['ModifiedDate'].'</td>
-						<td>'.$arrResult[$i]['DeletedBy'].'</td>
-						<td>'.$arrResult[$i]['DeletedDate'].'</td>
-						<td><input type="checkbox" onclick="_objDistrict.showHide(\''.$arrResult[$i]['DistricID'].'\',\''.$arrResult[$i]['name'].'\',this)" '.($arrResult[$i]['IsDeleted']?'':'checked=checked').' /></td>
-						<td class="lastCell">'.$arrResult[$i]['Status'].'</td>
-					  </tr>';
+					<td>'.$arrResult[$i]['DistricID'].'</td>
+					<td>'.$arrResult[$i]['DistrictName'].'</td>
+					<td>'.$arrResult[$i]['CityID'].'</td>
+					<td>'.$arrResult[$i]['CreatedBy'].'</td>
+					<td>'.$arrResult[$i]['CreatedDate'].'</td>
+					<td>'.$arrResult[$i]['ModifiedBy'].'</td>
+					<td>'.$arrResult[$i]['ModifiedDate'].'</td>
+					<td>'.$arrResult[$i]['DeletedBy'].'</td>
+					<td>'.$arrResult[$i]['DeletedDate'].'</td>
+					<td><input type="checkbox" onclick="_objDistrict.showHide(\''.$arrResult[$i]['DistricID'].'\',\''.$arrResult[$i]['name'].'\',this)" '.($arrResult[$i]['IsDeleted']?'':'checked=checked').' /></td>
+					<td class="lastCell">'.$arrResult[$i]['Status'].'</td>
+					</tr>';
 		}
 		$strHTML.='</tbody></table>';
 		
@@ -237,7 +241,7 @@ class Model_District
 				"_objMenu.changePage")."</div>";
 		return $strHTML;
 	}
-    
-    #endregion   
+	
+	#endregion   
 }
 ?>

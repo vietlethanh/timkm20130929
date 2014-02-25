@@ -133,19 +133,24 @@
 						img
 						{
 							height:65px;
+							max-width: 51px;
 						}
 					}
 					.comment-detail
 					{
 						vertical-align: top;
 						display:inline-block;
-						width:530px;
+						width:528px;
 						.username
 						{		
 							line-height:10px;
 							a
 							{
 								
+							}
+							p.created-date
+							{
+								float: right;
 							}
 						}
 						.comment-detail-content
@@ -199,8 +204,13 @@
 				margin-top: 1px;
 				width: 100%;
 			}
+			#map-article
+			{
+				height: 300px;
+				width: 100%;
+			}
 		}
-			
+		
 		#company_partner
 		{
 			.partner

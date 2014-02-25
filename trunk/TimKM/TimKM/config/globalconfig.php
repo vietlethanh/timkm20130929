@@ -54,7 +54,7 @@ if(!global_common::isCLogin() && $_objSystem->_pName!='index')
 	global_common::redirectByScript('index.php');
 	exit;
 }
-	
+
 //view list catalogue vấn được phép
 if($_SESSION[global_common::SES_C_USERINFO]['admin_type'] == '2' && ($_objSystem->_pName=='admin_user'
 			||$_objSystem->_pName=='admin_section'||$_objSystem->_pName=='admin_manufactory'||$_objSystem->_pName=='admin_menu'

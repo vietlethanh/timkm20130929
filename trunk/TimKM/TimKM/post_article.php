@@ -10,15 +10,26 @@ include_once('class/model_articletype.php');
 include_once('class/model_article.php');
 include_once('class/model_comment.php');
 include_once('class/model_user.php');
+include_once('class/model_city.php');
+include_once('class/model_district.php');
 
 $objArticle = new Model_Article($objConnection);
 $objArticleType = new Model_ArticleType($objConnection);
+$objCity = new Model_City($objConnection);
+$objDistrict = new Model_District($objConnection);
 $intMode = 0;//add mode
 $parentTypes = $objArticleType->getAllArticleType(0,null, 'ParentID=0','Level');
 $allTypes = $objArticleType->getAllArticleType(0,null, 'ParentID='.$parentTypes[0][global_mapping::ArticleTypeID] ,'Level');
+
+$allCities = $objCity->getAllCity();
+//echo 'get city:';
+//echo($allCities);
+$allDistricts = $objDistrict->getAllDistrict();
+
 if ($_pgR["aid"])
 {
 	$articleID = $_pgR["aid"];
+	
 	$article = $objArticle->getArticleByID($articleID);
 	
 	$intMode = 1;//edit mode
@@ -51,6 +62,7 @@ if ($_pgR["aid"])
 }
 
 ?>
+
 <script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_article.js');?>"></script>
 <script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_articletype.js');?>"></script>
 <div id="post-page" class="span10">
@@ -224,14 +236,22 @@ foreach($allTypes as $item)
 				<label class="control-label">Địa điểm KM</label>
 				<div class="controls">
 					<input type="text" name="txtAddressArticle" id="txtAddressArticle" class="text m-wrap  span3" maxlength="255" placeholder="vd: 1A Trần Hưng Đạo" />
-					<select id="optCity" name="optCity" class="chosen span2 "  data-placeholder="Chọn TP/Tỉnh" >
-						<option value="HCM">HCM</option>
-						<option value="HN">HN</option>
+					<select id="optCity" name="optCity" class="chosen span2 "  data-placeholder="Chọn TP/Tỉnh" onchange="article.bindDistrict(this);">
+<?php
+foreach($allCities as $item)
+{
+	echo '			<option value="'.$item[global_mapping::CityName].'" CityID="'.$item[global_mapping::CityID].'">'.$item[global_mapping::CityName].'</option>';
+}
+?>
 					</select>
 					<select id="optDistrict" name="optDistrict"  class="chosen span2" data-placeholder="Chọn Quận/Huyện" >
-						<option value="Quận 1">Quận 1</option>
-						<option value="Quận 2">Quận 2</option>
-						<option value="Quận 3">Quận 3</option>
+<?php
+$display='style="display:none"';
+foreach($allDistricts as $item)
+{
+	echo '			<option value="'.$item[global_mapping::DistrictName].'" '.$display.'  CityID="'.$item[global_mapping::CityID].'">'.$item[global_mapping::DistrictName].'</option>';
+}
+?>
 					</select>	
 					<a href="javascript:void(0);" class="btn btn-mini btn-add" onclick="article.addLocation(this)"/><i class="icon-plus"></i> Thêm</a>
 					<a href="javascript:void(0);" class="btn btn-mini btn-update no-display" onclick="article.updateLocation(this)"/><i class="icon-ok"></i> Cập nhật</a>

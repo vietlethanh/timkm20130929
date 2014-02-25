@@ -18,6 +18,7 @@ include_once('include/_menu.inc');
 //include_once('include/_cat_list.inc');
 
 ?>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_article.js');?>"></script>
 <script type="text/javascript"> 
 
 </script>
