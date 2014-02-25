@@ -53,5 +53,13 @@ class global_mapping
 	const Dictricts					= 'Dictricts';
 	const Cities					= 'Cities';
 	const FileName					= 'FileName';
+	
+	
+	const CityName					= 'CityName';
+	const DistrictName				= 'DistrictName';
+	const Order						= 'Order';
+	const CityID						= 'CityID';
+	
+	
 }
 ?>

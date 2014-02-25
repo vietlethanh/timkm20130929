@@ -27,6 +27,8 @@ core.constant = {
 	MsgSuccess: "Thành công !",
 	MsgDataLoaded: "OK !",
 	MsgAjaxTimeOut: "Không kết nối được! Xin thử lại sau.",
+	LatDefault: 13.415315,
+	LongDefault: 111.943130
 };
 
 core.request = {
@@ -277,7 +279,7 @@ core.ui = {
     showMessage: function(message) {
         jAlert(message, "Message");
     }
-
+	
 };
 core.util = {
     /*
@@ -363,7 +365,13 @@ core.util = {
     trim: function(str) {
             return $.trim(str);
     },
-	
+	//remove all string in string
+	removeAll: function(input, str)
+	{
+		if(typeof(input)!= 'undefined' && input != null && input!="")
+			return input.replace(new RegExp(str,"g")," "); 
+		return "";
+	},
 	// Disable/Enable a control
     disableControl: function (idControl, isDisable) {
 		var control =   this.getObjectByID(idControl);
@@ -505,6 +513,14 @@ core.util = {
 	},
 	deSelectOption: function(controlID){
 		core.util.getObjectByID(controlID).val([]);
+		core.util.getObjectByID(controlID).trigger("liszt:updated");
+	},
+	
+	hideOptions: function(controlID){
+		var options = core.util.getObjectByID(controlID).find('option');
+		options.each(function(){
+			$(this).hide();
+		});
 		core.util.getObjectByID(controlID).trigger("liszt:updated");
 	},
 	clearValue: function(controlID){

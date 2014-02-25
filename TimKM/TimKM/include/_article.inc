@@ -32,7 +32,7 @@ echo $article[global_mapping::CompanyName]
 echo '<p>'.$article[global_mapping::Title].' '.$article[global_mapping::AdType].'</p>';
 echo '<br>';
 echo '<p>Thời hạn từ '.global_common::formatDateVN($article[global_mapping::StartDate]).
-		' đến '.global_common::formatDateVN($article[global_mapping::EndDate]).'</p>';
+	' đến '.global_common::formatDateVN($article[global_mapping::EndDate]).'</p>';
 if($article[global_mapping::HappyDays])
 {
 	echo '<p>Happy day '.$article[global_mapping::HappyDays];
@@ -42,7 +42,7 @@ if($article[global_mapping::StartHappyHour])
 {
 	echo '<p>Happy hour '.$article[global_mapping::StartHappyHour].($article[global_mapping::EndHappyHour]? ' - '.$article[global_mapping::EndHappyHour]:'');
 }
-			
+
 echo '<p class="">Áp dụng chương trình khuyến mãi tại:</p>';
 $total = count($addresses);
 if($total>0)
@@ -93,10 +93,24 @@ include_once('_comment_editor.inc');
 			</div>
 		</div>
 		<div id="company_map">
-			<div class="title">
-				Áp dụng KM tại:
-			</div>
-			<img class="map-address" src="images/map.jpg" />
+			
+<?php 
+$count = count(global_common::splitString($article[global_mapping::Addresses],';'));
+if($count>0)
+{
+	echo '<div class="title">
+			Đường đi:
+			</div>';
+	echo	'<div id="map-article"></div>';
+	echo ' <script language="javascript" type="text/javascript">$(document).ready(function () {			
+			article.loadMap("'.$article[global_mapping::Addresses].'","'.$article[global_mapping::Dictricts].'","'.$article[global_mapping::Cities].'");
+			});
+			</script>';
+}
+
+			?>
+			<!--img class="map-address" src="images/map.jpg" /-->
+			
 		</div>
 		<div id="company_partner">
 			<img class="partner" src="images/partner.jpg" />

@@ -322,8 +322,14 @@ var article = {
 		var root = $('div.address-article');
 		var parent = $(obj).parent();
 		var	address = core.util.getObjectValueByID('txtAddressArticle');
+		address = core.util.removeAll(address,"'");
+		address = core.util.removeAll(address,"\"");
 		var	city =  core.util.getObjectValueByID('optCity');
+		city = core.util.removeAll(city,"'");
+		city = core.util.removeAll(city,"\"");
 		var	district = core.util.getObjectValueByID('optDistrict');
+		district = core.util.removeAll(district,"'");
+		district = core.util.removeAll(district,"\"");
 		core.util.validateInputTextBox('txtAddressArticle','');
 		if (address == '') {
 			core.util.validateInputTextBox('txtAddressArticle','Bạn chưa nhập địa chỉ');
@@ -375,8 +381,8 @@ var article = {
 		$('#popup-location').on('shown', function () {
 			var map = new GMaps({
 				el: '#map',
-				lat: -12.043333,
-				lng: -77.028333
+				lat: core.constant.LatDefault,
+				lng: core.constant.LongDefault
 			});
 			GMaps.geocode({
 			  address: location,
@@ -475,6 +481,7 @@ var article = {
 		core.util.clearValue('txtAddressArticle');
 		core.util.deSelectOption('optCity');
 		core.util.deSelectOption('optDistrict');
+		core.util.hideOptions('optDistrict');		
 	},
 	
 	showEditMode: function(isEdit)
@@ -501,6 +508,7 @@ var article = {
 		root.find('.row-item').removeClass('updating');
 	},
 	clickEDIT: function (obj) {
+		
 		var root = $('div.address-article');
 		var parent = $(obj).parent();
 		root.find('.row-item').removeClass('updating');
@@ -510,9 +518,11 @@ var article = {
 		var district =  $.trim(parent.find('.location-district').html());
 		
 		core.util.getObjectByID('txtAddressArticle').val(address);
-		core.util.getObjectByID('optCity').val(city);
-		core.util.getObjectByID('optDistrict').val(district);
+		optCity = core.util.getObjectByID('optCity').find('option');
+		$("#optCity option[value='"+city+"']").attr("selected", "selected");
 		$("#optCity").trigger("liszt:updated");
+		$("#optCity").change();
+		core.util.getObjectByID('optDistrict').val(district);		
 		$("#optDistrict").trigger("liszt:updated");
 		
 		this.showEditMode(true);
@@ -539,7 +549,71 @@ var article = {
 		this.showEditMode(false);
 		root.find('.row-item').removeClass('updating');
 	},
-
+	loadMap: function(addresses,districts, cities)
+	{		
+		var addresses = addresses.split(';');
+		var districts = districts.split(';');
+		var cities = cities.split(';');
+		var map = new GMaps({
+				el: '#map-article',
+				lat: core.constant.LatDefault,
+				lng: core.constant.LongDefault
+			});
+		for(i=0;i<addresses.length;i++)
+		{
+			if(addresses[i] != 'undefined' && addresses[i] != '')
+			{
+				var location = addresses[i] + ', ' + districts[i] + ', ' + cities[i];	
+				
+				GMaps.geocode({
+				  address: location,
+				  callback: function(results, status){
+					if(status=='OK'){
+						var latlng = results[0].geometry.location;
+						google.maps.event.trigger(map, "resize");
+						map.setCenter(latlng.lat(), latlng.lng());
+						map.addMarker({
+							lat: latlng.lat(),
+							lng: latlng.lng()
+						});
+						
+					}
+				  }
+				});
+			}
+		}
+	},
+	bindDistrict: function(obj)
+	{
+		me = this;
+		var selectedCity = $(obj).find("option:selected");
+		var cityID = selectedCity.attr("CityID");
+		optDistrict = core.util.getObjectByID('optDistrict');
+		optDistrict.val('');
+		var districts = optDistrict.find("option");
+		districts.each(function(index){
+			if($(this).attr("CityID") == cityID)
+			{
+				$(this).show();
+			}
+			else
+			{
+				$(this).hide();
+			}
+		});
+		/*var currentParent = core.util.getObjectValueByID('cmArea');
+		$("#cmCategory").empty();
+		for (var item in categories) {
+			if( categories[item].ParentID == currentParent)
+			{				
+				key = categories[item].ArticleTypeID;
+				val =  categories[item].ArticleTypeName;			
+				$("#cmCategory").append("<option value=\"" + key + "\">" + val + "</option>");
+			}
+		}
+		*/
+		optDistrict.trigger("liszt:updated");
+	},
     /*
     this.edit = edit;
     function edit() {

@@ -2157,7 +2157,7 @@ class global_common
 	}
 	
 	/**
-	 * Hàm cắt chuỗi với nhiều delimiter
+	 * Hàm cắt chuỗi với nhiều delimiter (delegate)
 	 *
 	 * @param array $delimiters Array chứa các delimiter
 	 * @param string $string Chuỗi cần cắt

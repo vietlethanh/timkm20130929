@@ -696,6 +696,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "include\\_cat_list.inc"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jquery-validation\\lib\\jquery.mockjax.js"
     {
     "ProjRelPath" = "T"
@@ -1724,6 +1728,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jquery-slimscroll\\examples\\navigation.html"
     {
     "ProjRelPath" = "T"
@@ -2233,6 +2241,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\jquery-validation\\demo\\marketo\\mktSignup.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "include\\_location.inc"
     {
     "ProjRelPath" = "T"
     }
@@ -4200,6 +4212,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\admin_article_bk.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\ckeditor\\plugins\\specialchar\\dialogs\\lang\\cy.js"
     {
     "ProjRelPath" = "T"
@@ -5229,6 +5245,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-editable\\bootstrap-editable\\js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\index.php"
     {
     "ProjRelPath" = "T"
     }
@@ -7929,6 +7949,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\jquery-validation\\demo\\captcha\\rand.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\admin_article.php"
     {
     "ProjRelPath" = "T"
     }
