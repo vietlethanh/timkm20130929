@@ -15,6 +15,14 @@
 chdir("..");
 /* TODO: Add code here */
 require('config/globalconfig.php');
+require('include/_permission_admin.inc');
 ?>
+<?php
+$_SESSION[global_common::SES_C_CUR_PAGE] = "admin/index.php";
+include_once('include/_admin_header.inc');
 
+?>
 <a href="admin_article.php">Manage Article</a>
+<?php
+include_once('include/_admin_footer.inc');
+?>

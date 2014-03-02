@@ -148,6 +148,13 @@ class Model_ArticleType
     
     public function getArticleTypeByID($objID,$selectField='*') 
 	{		
+		$cache = Application::getVar('getArticleTypeByID'.$objID);
+		if($cache)
+		{
+			//global_common::writeLog('get cache',1,$_mainFrame->pPage);
+			return $cache;
+		}
+		
 		$selectField = $selectField? $selectField : '*';
 		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
 				array($selectField, self::TBL_SL_ARTICLE_TYPE ,							
@@ -159,6 +166,7 @@ class Model_ArticleType
 			global_common::writeLog('get sl_article_type ByID:'.$strSQL,1,$_mainFrame->pPage);
 			return null;
 		}
+		Application::setVar('getArticleTypeByID'.$objID,$arrResult[0]);
 		//print_r($arrResult);
 		return $arrResult[0];
 	}
@@ -173,7 +181,11 @@ class Model_ArticleType
 		
 		if($orderBy)
 		{
-			$orderBy = ' ORDER BY '.$orderBy;
+			$orderBy = ' ORDER BY Level,'.$orderBy.'';
+		}
+		else
+		{
+			$orderBy = ' ORDER BY Level';
 		}
         if($intPage>0)
         {

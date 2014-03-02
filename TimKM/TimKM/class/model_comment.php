@@ -115,7 +115,7 @@ class Model_Comment
 					global_common::escape_mysql_string($modifiedby),global_common::nowSQL(),
 					global_common::escape_mysql_string($deletedby),global_common::escape_mysql_string($deleteddate),
 					global_common::escape_mysql_string($isdeleted),global_common::escape_mysql_string($status)));
-		
+		//return $strSQL;
 		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_COMMENT,$this->_objConnection,$strTableName))
 		{
 			//echo $strSQL;

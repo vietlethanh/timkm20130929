@@ -77,8 +77,8 @@ class global_common
 	const FOLDER_JS_URL							= 'js/'; 
 	const FOLDER_JPLUGIN_URL					= 'plugins/'; 
 	
-	const FOLDER_XML							= 'files/xml/';  
-	const FOLDER_SQL_CACHE						= 'files/sql_cache/';
+	const FOLDER_XML							= 'file/xml/';  
+	const FOLDER_SQL_CACHE						= 'file/sql_cache/';
 	const FOLDER_CONFIG							= 'config/';
 	const FOLDER_TEMP							= 'file/security/';
 	const FOLDER_SECURITY						= 'file/security/';
@@ -95,6 +95,7 @@ class global_common
 	const FOLDER_USER_CHANGE_BACK_END			= 'config/user_change/back_end/';
 	const FOLDER_LOG							= 'file/log_10_/';
 	const FOLDER_BUSINESS_CACHE					= 'file/business_cache/';
+	const FOLDER_CACHE							= 'file/cache/';
 	
 	
 	const ENCODING								= 'utf-8';
@@ -762,6 +763,21 @@ class global_common
 		// is authenticated
 		//if(isset($_SESSION[self::SES_C_USERINFO]) && $_SESSION[self::SES_C_USERINFO]["active"]==1)
 		if(isset($_SESSION[self::SES_C_USERINFO]))
+		{	
+			return true;
+		}
+		else // not authenticated
+		{		
+			return false;	
+		}
+	} 
+	
+	public function isAdmin()
+	{		
+		//return true;
+		// is authenticated
+		//if(isset($_SESSION[self::SES_C_USERINFO]) && $_SESSION[self::SES_C_USERINFO]["active"]==1)
+		if(isset($_SESSION[self::SES_C_USERINFO]) && $_SESSION[self::SES_C_USERINFO][global_mapping::RoleID]== "1")
 		{	
 			return true;
 		}

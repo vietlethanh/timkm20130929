@@ -10,9 +10,9 @@ $message = '';
 if ($_pgR["act"] == Model_User::ACT_LOGIN)
 {
 	$userName = $_pgR['txtUserName'];
-	$userName = global_editor::rteSafe(html_entity_decode($userName,ENT_COMPAT ,'UTF-8' ));
+	$userName = html_entity_decode($userName,ENT_COMPAT ,'UTF-8' );
 	$password = $_pgR['txtPassword'];
-	$password = global_editor::rteSafe(html_entity_decode($password,ENT_COMPAT ,'UTF-8' ));
+	$password = html_entity_decode($password,ENT_COMPAT ,'UTF-8' );
 	$remember = $_pgR['ckRemember'];
 	
 	$result = $objUser->login($userName,$password);

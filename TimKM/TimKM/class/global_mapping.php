@@ -58,7 +58,10 @@ class global_mapping
 	const CityName					= 'CityName';
 	const DistrictName				= 'DistrictName';
 	const Order						= 'Order';
-	const CityID						= 'CityID';
+	const CityID					= 'CityID';
+	
+	const RoleID					= 'RoleID';
+	
 	
 	
 }

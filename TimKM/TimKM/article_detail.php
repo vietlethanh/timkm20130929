@@ -10,6 +10,11 @@ include_once('class/model_user.php');
 //$objArticleType = new model_ArticleType($objConnection);
 $objArticle = new Model_Article($objConnection);
 $objComment = new Model_Comment($objConnection);
+if ($_pgR["aid"])
+{
+	$articleID = $_pgR["aid"];
+	$_SESSION[global_common::SES_C_CUR_PAGE] = 'article_detail.php?aid='.$articleID;
+}
 
 ?>
 <?php

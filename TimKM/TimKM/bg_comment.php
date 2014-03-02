@@ -17,7 +17,7 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 		$c_userInfo = $_SESSION[global_common::SES_C_USERINFO];
 		
 		$articleid = $_pgR[global_mapping::ArticleID];
-		$content = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::Content],ENT_COMPAT ,'UTF-8' ));
+		$content = html_entity_decode($_pgR[global_mapping::Content],ENT_COMPAT ,'UTF-8' );
 		$createdby = $c_userInfo[global_mapping::UserID];	
 		$status = 1;
 		
@@ -25,6 +25,8 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 		{
 			$createdBy = $c_userInfo[global_mapping::UserID];
 			$resultID = $objComment->insert($articleid,$content,$createdby,$status);
+			//echo global_common::convertToXML($arrHeader, array("rs","info"), array(0,$resultID), array(0,1));
+			//return;
 			if ($resultID)
 			{
 				$commentHTML = $objComment->getCommentHTMLByArticle($articleid);
@@ -45,7 +47,7 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 		else
 		{
 			$modifiedBy = $c_userInfo[global_mapping::UserID];
-			$articleID = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::ArticleID],ENT_COMPAT ,'UTF-8' ));
+			$articleID = html_entity_decode($_pgR[global_mapping::ArticleID],ENT_COMPAT ,'UTF-8' );
 			$currentArticle = $objArticle->getArticleByID($articleID);
 			$resultID = $objArticle->update($articleID,null,$title,$fileName,$catalogueID, $content,null,$tags,null,null,$currentArticle[global_mapping::CreatedBy],
 					$currentArticle[global_mapping::CreatedDate],$modifiedBy,global_common::nowSQL(),null,null,1,null,null,null,null,$companyName,

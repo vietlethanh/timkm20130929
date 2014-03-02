@@ -8,6 +8,7 @@ if(!session_start())
 
 require('class/common/include.php');
 require('class/common/dbconnection.php');
+//require('class/cache/client.class.php');
 
 require('class/application.php');
 require('class/global_system.php');
@@ -28,6 +29,7 @@ global $_cacheXMLInfo;		// Quy dinh thong tin cache cho cac file XML
 global $_cacheSQLInfo;		// Quy dinh thong tin cache cho cac cau truy can SQL
 global $_cacheBusinessInfo;	// Quy dinh thong tin cache cho mot nghiep vu nao do
 global $_mobileDetect;		// Detect co dang dung di dong ko
+
 
 // Khoi tao gia tri cho global variables
 $_pgR = global_common::getRequest();

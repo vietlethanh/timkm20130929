@@ -39,7 +39,7 @@ class Application
 		$iCount = 0;
 		$iMax = 10000;
 		
-		$strFileName =  $fileName . self::APP_EXTENSION;
+		$strFileName = global_common::FOLDER_CACHE.$fileName . self::APP_EXTENSION;
 		if (!self::checkExists($strFileName))
 		{
 			return false;
@@ -85,7 +85,7 @@ class Application
 		$iCount = 0;
 		$iMax = 10000;
         
-        $strFileName =$fileName . self::APP_EXTENSION;
+		$strFileName =  global_common::FOLDER_CACHE.$fileName . self::APP_EXTENSION;
    		$filePath = pathinfo($fileName);
         $fileName = $filePath['filename'];
         $filePath = $filePath['dirname'].'/';

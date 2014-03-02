@@ -188,9 +188,10 @@ class Model_Article
 					global_common::escape_mysql_string($title),global_common::escape_mysql_string($filename),
 					global_common::escape_mysql_string($content),global_common::escape_mysql_string($notificationtype),
 					global_common::escape_mysql_string($tags),					
-					global_common::escape_mysql_string($numview),global_common::escape_mysql_string($numcomment),
+					global_common::escape_mysql_string($numview),
+					global_common::escape_mysql_string($numcomment),
 					global_common::escape_mysql_string($createdby),global_common::nowSQL(),
-					global_common::escape_mysql_string($modifiedby),global_common::nowSQL(),
+					global_common::escape_mysql_string($createdby),global_common::nowSQL(),
 					global_common::escape_mysql_string($deletedby),global_common::escape_mysql_string($deleteddate),
 					global_common::escape_mysql_string($isdeleted),global_common::escape_mysql_string($status),
 					global_common::escape_mysql_string($comments),global_common::escape_mysql_string($reneweddate),
@@ -227,7 +228,7 @@ class Model_Article
 		}	
 		return $articleID;
 	}
-		
+	
 	public function update($articleid,$prefix,$title,$filename,$articletype,$content,$notificationtype,$tags,
 		$numview,$numcomment,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,
 		$status,$comments,$reneweddate,$renewednum,$companyname,$companyAddress,$companyWebsite,$companyPhone,
@@ -278,6 +279,7 @@ class Model_Article
 			global_common::writeLog('get sl_article ByID:'.$strSQL,1,$_mainFrame->pPage);
 			return null;
 		}
+		$arrResult[0][global_mapping::Content] = stripslashes($arrResult[0][global_mapping::Content]);
 		//print_r($arrResult);
 		return $arrResult[0];
 	}
@@ -420,9 +422,13 @@ class Model_Article
 		
 		if($orderBy)
 		{
-			$orderBy = ',';
+			$orderBy = ' ORDER BY '.$orderBy. ', ModifiedDate DESC';
 		}
-		$orderBy = ' ORDER BY '.$orderBy. 'ModifiedDate DESC';
+		else
+		{
+			$orderBy = ' ORDER BY  ModifiedDate DESC';
+		}
+		
 		if($whereClause)
 		{
 			$condition = 'WHERE ('.global_mapping::IsDeleted.' IS NULL or '.global_mapping::IsDeleted.' = \'0\') and `'.
@@ -448,6 +454,58 @@ class Model_Article
 		return $arrResult;
 	}
 	
+	
+	public function searchArticle($intPage, $listTypeID, $keyword, $selectField='*',$whereClause='',$orderBy='') 
+	{		
+		if($listTypeID)
+		{
+			$arrTypeID = global_common::splitString($listTypeID);
+			$strQueryIN = global_common::convertToQueryIN($arrTypeID);
+			
+			$arrArticleID = self::getArticleIDsByTypes($listTypeID);
+			
+			$strQueryArticleIN = global_common::convertToQueryIN($arrArticleID);
+		}
+		$selectField = $selectField? $selectField : '*';
+		
+		if($orderBy)
+		{
+			$orderBy = ' ORDER BY '.$orderBy. ', ModifiedDate DESC';
+		}
+		else
+		{
+			$orderBy = ' ORDER BY  ModifiedDate DESC';
+		}
+		if($whereClause)
+		{
+			$condition = 'WHERE ('.global_mapping::IsDeleted.' IS NULL or '.global_mapping::IsDeleted.' = \'0\') and '.
+				($keyword?('`'.global_mapping::Title .'` LIKE \'%'.$keyword.'%\' and '):'').
+				($strQueryArticleIN? ('`'.global_mapping::ArticleID.'` IN ('.$strQueryArticleIN.') and '):'').$whereClause;	
+		}
+		else
+		{
+			$condition = 'WHERE ('.global_mapping::IsDeleted.' IS NULL or '.global_mapping::IsDeleted.' = \'0\') and '.
+				($keyword?('`'.global_mapping::Title .'` LIKE \'%'.$keyword.'%\' and '):'').
+				($strQueryArticleIN? ('`'.global_mapping::ArticleID.'` IN ('.$strQueryArticleIN.') and '):'');	
+		}
+		
+		if($intPage>0)
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, Model_Article::TBL_SL_ARTICLE ,							
+						$condition.$orderBy .' limit '.(($intPage-1)* self::NUM_PER_PAGE).','.self::NUM_PER_PAGE));
+		}
+		else
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, Model_Article::TBL_SL_ARTICLE ,							
+						$condition.$orderBy ));
+		}
+		//return $strSQL;
+		$arrResult = self::getArticlesFromDB($strSQL);
+		//print_r($arrResult);
+		return $arrResult;
+	}
 	
 	/**
 	 * Get Article with UserID and Status Article. Using on Profile Page
@@ -547,6 +605,12 @@ class Model_Article
 		{
 			global_common::writeLog('get sl_article from DB:'.$strSQL,1,$_mainFrame->pPage);
 			return null;
+		}
+		$count = count($arrResult);
+		for($i=0; $i < $count; $i++)
+		{
+			//print_r($arrResult[$i]);
+			$arrResult[$i][global_mapping::Content] = stripslashes($arrResult[$i][global_mapping::Content]);
 		}
 		return global_common::mergeUserInfo($arrResult);	
 	}
