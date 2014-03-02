@@ -7,18 +7,18 @@ $objUser = new Model_User($objConnection);
 if ($_pgR["act"] == Model_User::ACT_REGISTER)
 {
 	$userName = $_pgR['username'];
-	$userName = global_editor::rteSafe(html_entity_decode($userName,ENT_COMPAT ,'UTF-8' ));
+	$userName = html_entity_decode($userName,ENT_COMPAT ,'UTF-8' );
 	$password = $_pgR['password'];
-	$password = global_editor::rteSafe(html_entity_decode($password,ENT_COMPAT ,'UTF-8' ));
+	$password = html_entity_decode($password,ENT_COMPAT ,'UTF-8' );
 	
 	$fullname = $_pgR['fullname'];
-	$fullname = global_editor::rteSafe(html_entity_decode($fullname,ENT_COMPAT ,'UTF-8' ));
+	$fullname = html_entity_decode($fullname,ENT_COMPAT ,'UTF-8' );
 	$birthDate = $_pgR['birthdate'];
-	$birthDate = global_editor::rteSafe(html_entity_decode($birthDate,ENT_COMPAT ,'UTF-8' ));
+	$birthDate = html_entity_decode($birthDate,ENT_COMPAT ,'UTF-8' );
 	$email = $_pgR['email'];
-	$email = global_editor::rteSafe(html_entity_decode($email,ENT_COMPAT ,'UTF-8' ));
+	$email = html_entity_decode($email,ENT_COMPAT ,'UTF-8' );
 	$sex = $_pgR['sex'];
-	$sex = global_editor::rteSafe(html_entity_decode($sex,ENT_COMPAT ,'UTF-8' ));
+	$sex = html_entity_decode($sex,ENT_COMPAT ,'UTF-8' );
 	
 	if($objUser->checkExistUserName($userName)){
 		$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode

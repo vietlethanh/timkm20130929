@@ -15,7 +15,11 @@ if (!$_pgR["cid"])
 ?>
 
 <?php
-$_SESSION[global_common::SES_C_CUR_PAGE] = "article_list.php";
+if($_pgR["cid"])
+{
+	$catID = $_pgR["cid"];
+	$_SESSION[global_common::SES_C_CUR_PAGE] = "article_list.php?cid=".$catID;
+}
 include_once('include/_header.inc');
 include_once('include/_menu.inc');
 

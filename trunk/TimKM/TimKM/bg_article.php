@@ -21,34 +21,35 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 		//}
 		//print_r($_pgR);
 		$title = $_pgR[global_mapping::Title];
-		$title = global_editor::rteSafe(html_entity_decode($title,ENT_COMPAT ,'UTF-8' ));
+		$title = html_entity_decode($title,ENT_COMPAT ,'UTF-8' );
 		$content = $_pgR[global_mapping::Content];
-		$content = global_editor::rteSafe(html_entity_decode($content,ENT_COMPAT ,'UTF-8' ));
+		//$content = html_entity_decode($content,ENT_COMPAT ,'UTF-8' );
 		$tags = $_pgR[global_mapping::Tags];
-		$tags = global_editor::rteSafe(html_entity_decode($tags,ENT_COMPAT ,'UTF-8' ));
+		$tags = html_entity_decode($tags,ENT_COMPAT ,'UTF-8' );
 		$catalogueID = $_pgR[global_mapping::CatalogueID];
 		
 		$sectionID = $_pgR[global_mapping::SectionID];
 		
-		$renewedNum = global_editor::rteSafe(html_entity_decode($renewedNum,ENT_COMPAT ,'UTF-8' ));
-		$companyName = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::CompanyName],ENT_COMPAT ,'UTF-8' ));
-		$companyAddress = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::CompanyAddress],ENT_COMPAT ,'UTF-8' ));
-		$companyWebsite = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::CompanyWebsite],ENT_COMPAT ,'UTF-8' ));
-		$companyPhone = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::CompanyPhone],ENT_COMPAT ,'UTF-8' ));
-		$adType = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::AdType],ENT_COMPAT ,'UTF-8' ));
-		$startDate = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::StartDate],ENT_COMPAT ,'UTF-8' ));
-		$endDate = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::EndDate],ENT_COMPAT ,'UTF-8' ));
-		$happyDays = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::HappyDays],ENT_COMPAT ,'UTF-8' ));
-		$startHappyHour = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::StartHappyHour],ENT_COMPAT ,'UTF-8' ));
-		$endHappyHour = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::EndHappyHour],ENT_COMPAT ,'UTF-8' ));
-		$addresses = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::Addresses],ENT_COMPAT ,'UTF-8' ));
-		$dictricts = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::Dictricts],ENT_COMPAT ,'UTF-8' ));
-		$cities = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::Cities],ENT_COMPAT ,'UTF-8' ));
-		$fileName = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::FileName],ENT_COMPAT ,'UTF-8' ));
+		$renewedNum = html_entity_decode($renewedNum,ENT_COMPAT ,'UTF-8' );
+		$companyName = html_entity_decode($_pgR[global_mapping::CompanyName],ENT_COMPAT ,'UTF-8' );
+		$companyAddress = html_entity_decode($_pgR[global_mapping::CompanyAddress],ENT_COMPAT ,'UTF-8' );
+		$companyWebsite = html_entity_decode($_pgR[global_mapping::CompanyWebsite],ENT_COMPAT ,'UTF-8' );
+		$companyPhone = html_entity_decode($_pgR[global_mapping::CompanyPhone],ENT_COMPAT ,'UTF-8' );
+		$adType = html_entity_decode($_pgR[global_mapping::AdType],ENT_COMPAT ,'UTF-8' );
+		$startDate = html_entity_decode($_pgR[global_mapping::StartDate],ENT_COMPAT ,'UTF-8' );
+		$endDate = html_entity_decode($_pgR[global_mapping::EndDate],ENT_COMPAT ,'UTF-8' );
+		$happyDays = html_entity_decode($_pgR[global_mapping::HappyDays],ENT_COMPAT ,'UTF-8' );
+		$startHappyHour = html_entity_decode($_pgR[global_mapping::StartHappyHour],ENT_COMPAT ,'UTF-8' );
+		$endHappyHour = html_entity_decode($_pgR[global_mapping::EndHappyHour],ENT_COMPAT ,'UTF-8' );
+		$addresses = html_entity_decode($_pgR[global_mapping::Addresses],ENT_COMPAT ,'UTF-8' );
+		$dictricts = html_entity_decode($_pgR[global_mapping::Dictricts],ENT_COMPAT ,'UTF-8' );
+		$cities = html_entity_decode($_pgR[global_mapping::Cities],ENT_COMPAT ,'UTF-8' );
+		$fileName = html_entity_decode($_pgR[global_mapping::FileName],ENT_COMPAT ,'UTF-8' );
 		$status = 1;
 		if($_pgR["act"] == model_Article::ACT_ADD)
 		{
 			$createdBy = $c_userInfo[global_mapping::UserID];
+			
 			$resultID = $objArticle->insert($title,$fileName, $content,null,$tags,$catalogueID,$createdBy,$renewedNum,$companyName,
 					$companyAddress,$companyWebsite,$companyPhone,$adType,$startDate,$endDate,$happyDays,
 					$startHappyHour,$endHappyHour, $addresses,$dictricts,$cities,$status);
@@ -71,7 +72,7 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 		else
 		{
 			$modifiedBy = $c_userInfo[global_mapping::UserID];
-			$articleID = global_editor::rteSafe(html_entity_decode($_pgR[global_mapping::ArticleID],ENT_COMPAT ,'UTF-8' ));
+			$articleID = html_entity_decode($_pgR[global_mapping::ArticleID],ENT_COMPAT ,'UTF-8' );
 			$currentArticle = $objArticle->getArticleByID($articleID);
 			$resultID = $objArticle->update($articleID,null,$title,$fileName,$catalogueID, $content,null,$tags,null,null,$currentArticle[global_mapping::CreatedBy],
 					$currentArticle[global_mapping::CreatedDate],$modifiedBy,global_common::nowSQL(),null,null,1,null,null,null,null,$companyName,

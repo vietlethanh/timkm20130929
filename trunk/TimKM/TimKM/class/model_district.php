@@ -163,7 +163,11 @@ class Model_District
 		
 		if($orderBy)
 		{
-			$orderBy = ' ORDER BY '.$orderBy;
+			$orderBy = ' ORDER BY `Order`, '.$orderBy;
+		}
+		else
+		{
+			$orderBy = ' ORDER BY `Order`';
 		}
 		if($intPage>0)
 		{

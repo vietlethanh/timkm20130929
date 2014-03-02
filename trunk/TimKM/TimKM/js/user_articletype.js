@@ -45,16 +45,17 @@ var articleType = {
 		me = this;
 		var categories = me.AllCategories;
 		var currentParent = core.util.getObjectValueByID('cmArea');
-		$("#cmCategory").empty();
+		cmCategory = core.util.getObjectByID('cmCategory');
+		cmCategory.empty();
 		for (var item in categories) {
 			if( categories[item].ParentID == currentParent)
 			{				
 				key = categories[item].ArticleTypeID;
 				val =  categories[item].ArticleTypeName;			
-				$("#cmCategory").append("<option value=\"" + key + "\">" + val + "</option>");
+				cmCategory.append("<option value=\"" + key + "\">" + val + "</option>");
 			}
 		}
-		$("#cmCategory").trigger("liszt:updated");
+		cmCategory.trigger("liszt:updated");
 	},
     //endregion   
     
