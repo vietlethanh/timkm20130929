@@ -38,6 +38,7 @@ elseif($_pgR["aid"])
 	
 	<ul>
 <?php 
+
 echo $parentCat[global_mapping::ArticleTypeName];
 foreach($allCats as $item)
 {

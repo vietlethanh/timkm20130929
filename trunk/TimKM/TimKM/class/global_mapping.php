@@ -11,6 +11,15 @@ class global_mapping
 	const UserID					= 'UserID';
 	const Avatar					= 'Avatar';
 	const Password					= 'Password';
+	const BirthDate					= 'BirthDate';
+	const Phone						= 'Phone';
+	const Address					= 'Address';
+	const Identity					= 'Identity';
+	const UserRankID				= 'UserRankID';
+	const AccountID					= 'AccountID';
+	const IsActive					= 'IsActive';
+	
+	
 	
 	//table Article Type
 	const ArticleTypeID				= 'ArticleTypeID';

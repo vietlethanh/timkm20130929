@@ -24,8 +24,19 @@
 						{
 							display: inline;
 							float: none;
-							vertical-align: top;
+							vertical-align: top; 
 							margin-left: 0px;
+						}
+					}
+					.input-icon
+					{
+						.icon-envelope
+						{
+							margin-top: 6px;
+						}
+						#txtEmail
+						{
+							width: 204px;
 						}
 					}
 				}

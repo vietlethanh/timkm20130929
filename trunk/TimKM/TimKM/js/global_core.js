@@ -28,7 +28,8 @@ core.constant = {
 	MsgDataLoaded: "OK !",
 	MsgAjaxTimeOut: "Không kết nối được! Xin thử lại sau.",
 	LatDefault: 13.415315,
-	LongDefault: 111.943130
+	LongDefault: 111.943130,
+	AgeAbove: 5,
 };
 
 core.request = {
@@ -336,7 +337,12 @@ core.util = {
 		var dtRegex = new RegExp(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{4}\b/);
 		return dtRegex.test(input);
     },
-    
+
+    validateEmail: function(emailAddress) {
+        var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@+[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+        return pattern.test(emailAddress);
+    },
+	
 	formatDateTimeVN: function (input) {
 		var dtArray = input.split('/');
 		dtDay= dtArray[0];
@@ -375,7 +381,7 @@ core.util = {
 	// Disable/Enable a control
     disableControl: function (idControl, isDisable) {
 		var control =   this.getObjectByID(idControl);
-        if (typeof(control) != 'undefined' ) {
+        if (typeof(control) != 'undefined' && control.length>0) {
 
             if (isDisable) {
                 control[0].style.cursor = "default";
@@ -481,6 +487,10 @@ core.util = {
     },
 	goTo: function(url) {
         window.location.href = url;
+    },
+	
+	reload: function() {
+        location.reload();
     },
 	
 	isPhoneNumber: function(sText){

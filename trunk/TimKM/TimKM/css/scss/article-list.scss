@@ -6,7 +6,7 @@
 		display: inline-block;
 		background-clip: padding-box;
 		border: 5px solid rgba(113, 108, 104, 0.3);
-		margin: 5px;
+		margin: 1px;
 		vertical-align: top;
 		width:80%;
 		.item
@@ -69,14 +69,14 @@
 	#advertises
 	{
 		display: inline-block;
-		width: 16%;
+		width: 18%;
 		.advertise
 		{
 			img.partner
 			{
-				height: 100px;
+				height: 200px;
 				margin: 5px 0;
-				width: 160px;
+				width: 100%;
 			}
 		}
 		

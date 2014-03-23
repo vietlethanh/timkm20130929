@@ -19,6 +19,7 @@ require('class/global_mapping.php');
 //require('class/security.php');
 require('lib/log4php/LoggerManager.php');
 require('class/global_editor.php');
+require('class/global_mail.php');
 //require('class/user_user.php');
 
 // Tao global variables

@@ -63,4 +63,27 @@
 			background: none repeat scroll 0 0 #0C91E5 !important;
 		}		
 	}
+	#change-profile
+	{
+		.control-group
+		{
+			.controls
+			{
+				.input-icon 
+				{
+					.icon-envelope
+					{
+						margin-top: 6px;
+					}					
+				}
+			}
+		}
+	}
+	#general-info
+	{
+		li
+		{
+			padding: 10px;
+		}
+	}
 } 

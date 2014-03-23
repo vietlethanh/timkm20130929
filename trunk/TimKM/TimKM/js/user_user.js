@@ -27,11 +27,46 @@ var user = {
 	ACT_LOGOUT:				17,
 	ACT_CHANGE_PASS:		18,
 	ACT_REGISTER:			19,
+	ACT_UPDATE_PROFILE:		20,
+	ACT_RESET_PASS:			21,
     Page : "bg_user.php",
 
-    getRegisterInfo: function() {
+    	
+	login: function()
+	{
+		var controlSubmit = "btnOK";
 		
-        core.util.disableControl("btnOK", true);
+		var message = core.util.getObjectByClass("help-inline.message");
+		message.html('');
+		core.util.disableControl(controlSubmit, true);
+        var isValid = true;
+        var controlID = 'txtUserName';	
+		
+        var userName = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(userName)) {
+            core.util.validateInputTextBox(controlID, 'Tên đăng nhập không được rỗng', isValid);
+            isValid = false;
+        }		
+		controlID = 'txtPassword';	
+        var password = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(password)) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu không được rỗng', isValid);
+            isValid = false;
+        } 
+		
+		
+		 if (isValid == false) {
+            core.util.disableControl(controlSubmit, false);
+            return false;
+        }
+		return true;
+	},
+	
+	getRegisterInfo: function() {
+		var controlSubmit = "btnOK";
+        core.util.disableControl(controlSubmit, true);
         var isValid = true;
         var controlID = 'txtUserName';		
         var userName = core.util.getObjectValueByID(controlID);
@@ -84,7 +119,7 @@ var user = {
         core.util.validateInputTextBox(controlID, '');
 		
 		var validDate = new Date();
-		validDate.setFullYear(validDate.getFullYear()-5);
+		validDate.setFullYear(validDate.getFullYear()-core.constant.AgeAbove);
 		
         if (core.util.isNull(birthDate)) {
             core.util.validateInputTextBox(controlID, 'Ngày sinh không được rỗng', isValid);
@@ -104,8 +139,11 @@ var user = {
         if (core.util.isNull(email)) {
             core.util.validateInputTextBox(controlID, 'Email không được rỗng', isValid);
             isValid = false;
-        } else if (email.length > 255) {
+        }else if (email.length > 255) {
             core.util.validateInputTextBox(controlID, 'Email phải ngắn hơn 255 ký tự', isValid);
+            isValid = false;
+        }else if (core.util.validateEmail(email)) {
+            core.util.validateInputTextBox(controlID, 'Email không hợp lệ', isValid);
             isValid = false;
         }
 				
@@ -118,7 +156,7 @@ var user = {
 		{
 			sex = core.util.getObjectValueByID("rdFemale");
 		}
-       
+        core.util.validateInputTextBox('rdMale', '');
         if (core.util.isNull(sex)) {
             core.util.validateInputTextBox('rdMale', 'Bạn chưa chọn giới tính', isValid);
             isValid = false;
@@ -130,7 +168,7 @@ var user = {
         }
 		
 		 if (isValid == false) {
-            core.util.disableControl("btnOK", false);
+            core.util.disableControl(controlSubmit, false);
             return;
         }
 		return {
@@ -143,39 +181,6 @@ var user = {
 	   }      
     },
 	
-	login: function()
-	{
-		var controlSubmit = "btnOK";
-		
-		var message = core.util.getObjectByClass("help-inline.message");
-		message.html('');
-		core.util.disableControl(controlSubmit, true);
-        var isValid = true;
-        var controlID = 'txtUserName';	
-		
-        var userName = core.util.getObjectValueByID(controlID);
-        core.util.validateInputTextBox(controlID, '');
-        if (core.util.isNull(userName)) {
-            core.util.validateInputTextBox(controlID, 'Tên đăng nhập không được rỗng', isValid);
-            isValid = false;
-        }		
-		controlID = 'txtPassword';	
-        var password = core.util.getObjectValueByID(controlID);
-        core.util.validateInputTextBox(controlID, '');
-        if (core.util.isNull(password)) {
-            core.util.validateInputTextBox(controlID, 'Mật khẩu không được rỗng', isValid);
-            isValid = false;
-        } 
-		
-		
-		 if (isValid == false) {
-            core.util.disableControl(controlSubmit, false);
-            return false;
-        }
-		return true;
-	},
-	
-	
     register: function() {  
 		var regiserInfo = this.getRegisterInfo();
 		if(core.util.isNull(regiserInfo))
@@ -187,7 +192,8 @@ var user = {
             function(respone, info){
 				 var strRespond = core.util.parserXML(respone);
 				if (parseInt(strRespond[1]['rs']) == 1) {
-					core.ui.showInfoBar(2, "Đăng ký thành công. Vui lòng nhấn vào <a href='login.php'>đây</a> để đăng nhập");	
+					//core.ui.showInfoBar(2, "Đăng ký thành công. Vui lòng nhấn vào <a href='login.php'>đây</a> để đăng nhập");	
+					core.ui.showInfoBar(2, "Đăng ký thành công. Bạn có thể <a href='post_article.php'>đăng bài</a> ngay bây giờ");	
 					//core.util.goTo("login.php");
                 }
                 else{
@@ -211,7 +217,296 @@ var user = {
             }
         );
     },
-    validateCreateUser: function() {
+	
+	getUpdateInfo: function() {
+		var controlSubmit = "btnUpdateInfo";
+        core.util.disableControl(controlSubmit, true);
+        var isValid = true;
+       		
+		controlID = 'txtFullname';	
+        var fullname = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(fullname)) {
+            core.util.validateInputTextBox(controlID, 'Họ tên không được rỗng', isValid);
+            isValid = false;
+        } else if (fullname.length > 255) {
+            core.util.validateInputTextBox(controlID, 'Họ tên phải ngắn hơn 255 ký tự', isValid);
+            isValid = false;
+        }
+
+		controlID = 'txtBirthDate';	
+        var birthDate = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+		
+		var validDate = new Date();
+		validDate.setFullYear(validDate.getFullYear()- core.constant.AgeAbove);
+		
+        if (core.util.isNull(birthDate)) {
+            core.util.validateInputTextBox(controlID, 'Ngày sinh không được rỗng', isValid);
+            isValid = false;
+        } else if (core.util.validateDateTime(birthDate) == false) {
+			 core.util.validateInputTextBox(controlID, 'Ngày sinh không hợp lệ', isValid);
+			 isValid = false;
+        }
+		else if (new Date(core.util.formatDateTimeVN(birthDate)) >= validDate ) {
+			 core.util.validateInputTextBox(controlID, 'Ngày sinh không hợp lệ', isValid);
+			 isValid = false;
+        }
+		
+		controlID = 'txtEmail';	
+        var email = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(email)) {
+            core.util.validateInputTextBox(controlID, 'Email không được rỗng', isValid);
+            isValid = false;
+        } else if (email.length > 255) {
+            core.util.validateInputTextBox(controlID, 'Email phải ngắn hơn 255 ký tự', isValid);
+            isValid = false;
+        }else if (core.util.validateEmail(email)) {
+            core.util.validateInputTextBox(controlID, 'Email không hợp lệ', isValid);
+            isValid = false;
+        }
+				
+		var sex ;
+		if(core.util.isChecked("rdMale"))
+		{
+			sex = core.util.getObjectValueByID("rdMale");
+		}
+		else if(core.util.isChecked("rdFemale"))
+		{
+			sex = core.util.getObjectValueByID("rdFemale");
+		}
+         
+		core.util.validateInputTextBox('rdMale', '');
+        if (core.util.isNull(sex)) {
+            core.util.validateInputTextBox('rdMale', 'Bạn chưa chọn giới tính', isValid);
+            isValid = false;
+        }
+        
+				
+		if (isValid == false) {
+            core.util.disableControl(controlSubmit, false);
+            return;
+        }
+		return {			
+			fullname: fullname,
+			email: email,
+			sex: sex,
+			birthdate: birthDate,
+			address: core.util.getObjectValueByID("txtAddress"),
+			phone: core.util.getObjectValueByID("txtPhone"),
+	   }      
+    },
+	
+	
+    updateProfile: function()
+	{		
+		var controlSubmit = "btnUpdateInfo";
+		var userInfo = this.getUpdateInfo();
+		if(core.util.isNull(userInfo))
+		{
+			return false;
+		}
+		
+		userInfo.act = this.ACT_UPDATE_PROFILE;
+        core.request.post(this.Page,userInfo,
+            function(respone, info){
+				 var strRespond = core.util.parserXML(respone);
+				if (parseInt(strRespond[1]['rs']) == 1) {
+					core.ui.showInfoBar(1, "Cập nhật thành công");	
+					core.util.reload();
+                }
+                else{					
+					if(parseInt(strRespond[1]['rs']) == 3)
+					{
+						 core.util.validateInputTextBox('txtEmail', strRespond[1]["inf"], true);
+					}
+                }
+				core.util.disableControl(controlSubmit, false);
+            },
+            function()
+            {
+				core.ui.showInfoBar(2, core.constant.MsgProcessError);	
+				core.util.disableControl(controlSubmit, false);
+            }
+        ); 
+		
+	},//updateProfile
+	
+	getPasswordInfo: function(controlSubmit) 
+	{
+        core.util.disableControl(controlSubmit, true);
+        var isValid = true;
+      
+		
+		controlID = 'txtCurrentPass';
+        var currentPass = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(currentPass)) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu hiện tại không được rỗng', isValid);
+            isValid = false;
+        } 
+		
+		controlID = 'txtNewPass';	
+        var password = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(password)) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu mới không được rỗng', isValid);
+            isValid = false;
+        } 
+		else if (password.length < 6 ) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu phải tối thiều 6 ký tự', isValid);
+            isValid = false;
+        }
+		else if (password.length > 255) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu phải ngắn hơn 255 ký tự', isValid);
+            isValid = false;
+        }
+		
+		controlID = 'txtConfirmPass';	
+		var confirmPass = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+		if (confirmPass != password) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu mới không trùng nhau', isValid);
+            isValid = false;
+        } 
+		
+		
+		if (isValid == false) {
+            core.util.disableControl(controlSubmit, false);
+            return;
+        }
+		return {			
+			currentpass: currentPass,
+			password: password,
+			confirmpass: confirmPass
+	   }      
+    },
+	
+	changePassword: function()
+	{		
+		var controlSubmit = "btnChangePassword";
+		var passwordInfo = this.getPasswordInfo(controlSubmit);
+		if(core.util.isNull(passwordInfo))
+		{
+			return false;
+		}
+		
+		passwordInfo.act = this.ACT_CHANGE_PASS;
+        core.request.post(this.Page,passwordInfo,
+            function(respone, info){
+				var strRespond = core.util.parserXML(respone);
+				if (parseInt(strRespond[1]['rs']) == 1) {
+					core.ui.showInfoBar(1, "Cập nhật thành công");	
+                }
+                else{
+					if(parseInt(strRespond[1]['rs']) == 2)
+					{
+						 core.util.validateInputTextBox('txtNewPass', strRespond[1]["inf"], true);
+					}
+					
+					core.ui.showInfoBar(2,strRespond[1]["inf"]);	
+                }
+				core.util.disableControl(controlSubmit, false);
+            },
+            function()
+            {
+				core.ui.showInfoBar(2, core.constant.MsgProcessError);	
+				core.util.disableControl(controlSubmit, false);
+            }
+        ); 
+		
+	},//changepassword
+	
+	
+	getResetInfo: function(controlSubmit) 
+	{
+        core.util.disableControl(controlSubmit, true);
+        var isValid = true;
+      
+		
+		userNameID = 'txtUserName';
+        var userName = core.util.getObjectValueByID(userNameID);
+		
+		emailID = 'txtEmail';	
+        var email = core.util.getObjectValueByID(emailID);
+		core.util.validateInputTextBox(userNameID, '');
+		core.util.validateInputTextBox(emailID, '');
+		if(core.util.isNull(userName) && core.util.isNull(email))
+		{
+			if (core.util.isNull(userName)) {
+				core.util.validateInputTextBox(userNameID, 'Hãy nhập tên đăng nhập hoặc email', isValid);
+				isValid = false;
+			} 
+		}
+		else if(!core.util.isNull(email))
+		{			
+			if (!core.util.validateEmail(email)) {
+				core.util.validateInputTextBox(emailID, 'Email không hợp lệ', isValid);
+				isValid = false;
+			}
+		}
+		
+		if (isValid == false) {
+            core.util.disableControl(controlSubmit, false);
+            return;
+        }
+		return {			
+			username: userName,
+			email: email			
+	   }      
+    },
+	
+	resetPassword: function()
+	{		
+		var controlSubmit = "btnOK";
+		var resetInfo = this.getResetInfo(controlSubmit);
+		if(core.util.isNull(resetInfo))
+		{
+			return false;
+		}
+		
+		resetInfo.act = this.ACT_RESET_PASS;
+        core.request.post(this.Page,resetInfo,
+            function(respone, info){
+				var strRespond = core.util.parserXML(respone);
+				if (parseInt(strRespond[1]['rs']) == 1) {
+					core.ui.showInfoBar(2, strRespond[1]["inf"]);	
+                }
+                else{					
+					core.ui.showInfoBar(2,strRespond[1]["inf"]);	
+                }
+				core.util.disableControl(controlSubmit, false);
+            },
+            function()
+            {
+				core.ui.showInfoBar(2, core.constant.MsgProcessError);	
+				core.util.disableControl(controlSubmit, false);
+            }
+        ); 
+		
+	},//reset password
+	
+    logout: function()
+	{		
+		var data ={act:this.ACT_LOGOUT}
+        core.request.post(this.Page,data,
+            function(respone, info){
+				 var strRespond = core.util.parserXML(respone);
+				if (parseInt(strRespond[1]['rs']) == 1) {					
+					core.util.goTo("index.php");
+                }
+                else{					
+                    core.ui.showInfoBar(2, strRespond[1]["inf"]);						
+                }
+            },
+            function()
+            {
+				core.ui.showInfoBar(2, core.constant.MsgProcessError);					
+            }
+        );//logout
+	},
+	 validateCreateUser: function() {
         core.disableControl("btnOK", true);
         var isValid = true;
 
@@ -370,25 +665,7 @@ var user = {
             edit();
         }
     },
-    logout: function()
-	{		
-		var data ={act:this.ACT_LOGOUT}
-        core.request.post(this.Page,data,
-            function(respone, info){
-				 var strRespond = core.util.parserXML(respone);
-				if (parseInt(strRespond[1]['rs']) == 1) {					
-					core.util.goTo("index.php");
-                }
-                else{					
-                    core.ui.showInfoBar(2, strRespond[1]["inf"]);						
-                }
-            },
-            function()
-            {
-				core.ui.showInfoBar(2, core.constant.MsgProcessError);					
-            }
-        );//logout
-	},
+	
     //endregion   
 
     //region Public Functions

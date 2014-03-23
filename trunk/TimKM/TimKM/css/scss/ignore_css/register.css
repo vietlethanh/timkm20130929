@@ -16,3 +16,7 @@
           float: none;
           vertical-align: top;
           margin-left: 0px; }
+      #register-page form div.table-register .control-group .controls .input-icon .icon-envelope {
+        margin-top: 6px; }
+      #register-page form div.table-register .control-group .controls .input-icon #txtEmail {
+        width: 204px; }

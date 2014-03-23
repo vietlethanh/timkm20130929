@@ -95,6 +95,7 @@ h1 a:hover {
 
 /*********** end common for admin page ************/
 /*********** common ************/
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
   border-radius: 0px; }
 
@@ -538,7 +539,7 @@ table.table {
     padding: 60px 0; }
     #forgot-page form div.table-forgot {
       margin: auto;
-      width: 57%; }
+      width: 72%; }
       #forgot-page form div.table-forgot .l-remember {
         display: inline;
         vertical-align: middle;
@@ -567,6 +568,10 @@ table.table {
           float: none;
           vertical-align: top;
           margin-left: 0px; }
+      #register-page form div.table-register .control-group .controls .input-icon .icon-envelope {
+        margin-top: 6px; }
+      #register-page form div.table-register .control-group .controls .input-icon #txtEmail {
+        width: 204px; }
 
 /*********** end register ************/
 /*********** post ************/
@@ -638,6 +643,10 @@ table.table {
       text-decoration: none; }
     #profile-page .menu-profile li.active i {
       background: none repeat scroll 0 0 #0C91E5 !important; }
+  #profile-page #change-profile .control-group .controls .input-icon .icon-envelope {
+    margin-top: 6px; }
+  #profile-page #general-info li {
+    padding: 10px; }
 
 /*********** end profile ************/
 /*********** seach box ************/
@@ -767,7 +776,7 @@ table.table {
     display: inline-block;
     background-clip: padding-box;
     border: 5px solid rgba(113, 108, 104, 0.3);
-    margin: 5px;
+    margin: 1px;
     vertical-align: top;
     width: 80%; }
     #article-list #articles .item {
@@ -803,11 +812,11 @@ table.table {
         width: 100%; }
   #article-list #advertises {
     display: inline-block;
-    width: 16%; }
+    width: 18%; }
     #article-list #advertises .advertise img.partner {
-      height: 100px;
+      height: 200px;
       margin: 5px 0;
-      width: 160px; }
+      width: 100%; }
   #article-list ul {
     list-style-type: none; }
     #article-list ul li {
@@ -824,14 +833,14 @@ table.table {
   #article #advertises {
     display: inline-block;
     vertical-align: top;
-    width: 16%;
-    margin-left: 6px; }
+    width: 17%;
+    margin-left: 0px; }
     #article #advertises .advertise img.partner:first-child {
       margin: 0; }
     #article #advertises .advertise img.partner {
-      height: 100px;
+      height: 200px;
       margin: 5px 0;
-      width: 160px; }
+      width: 100%; }
   #article #article-detail {
     display: inline-block;
     margin: 0 0px;
@@ -951,7 +960,8 @@ table.table {
         width: 100%; }
     #article #company-info #company_partner .partner {
       margin-top: 11px;
-      width: 100%; }
+      width: 100%;
+      height: 270px; }
 
 /*********** end article ************/
 /*********** map ************/

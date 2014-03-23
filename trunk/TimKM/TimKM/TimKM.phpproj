@@ -68,6 +68,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\mail\\class.pop3.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "file\\avatar\\651 (13).jpg"
     {
     "ProjRelPath" = "T"
@@ -101,6 +105,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-datetimepicker\\sample\\bootstrap\\js\\bootstrap.min.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn\\tmp\\prop-base"
     {
     "ProjRelPath" = "T"
     }
@@ -848,6 +856,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\mail\\.svn\\text-base\\class.smtp.php.svn-base"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jquery-slimscroll\\examples\\height-width.html"
     {
     "ProjRelPath" = "T"
@@ -1025,6 +1037,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-fileupload\\bootstrap-editable-1.4.4\\inputs-ext\\wysihtml5\\bootstrap-wysihtml5-0.0.2\\bootstrap-wysihtml5-0.0.2.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn\\tmp\\props"
     {
     "ProjRelPath" = "T"
     }
@@ -1225,6 +1241,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\jquery-validation\\demo\\marketo\\images\\time.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail"
     {
     "ProjRelPath" = "T"
     }
@@ -2748,6 +2768,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\mail\\.svn\\tmp\\text-base"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jquery-validation\\dist\\jquery.validate.js"
     {
     "ProjRelPath" = "T"
@@ -2952,6 +2976,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\mail\\.svn\\all-wcprops"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\font-awesome\\scss\\_variables.scss"
     {
     "ProjRelPath" = "T"
@@ -3144,6 +3172,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\mail\\class.phpmailer.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\bootstrap-timepicker\\compiled\\timepicker.css"
     {
     "ProjRelPath" = "T"
@@ -3201,6 +3233,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-tag\\README.md"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn"
     {
     "ProjRelPath" = "T"
     }
@@ -3353,6 +3389,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\jquery-ui\\components\\jquery.ui.autocomplete.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn\\text-base"
     {
     "ProjRelPath" = "T"
     }
@@ -3737,6 +3777,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\FlexSlider\\demo\\js\\modernizr.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "class\\global_mail.php"
     {
     "ProjRelPath" = "T"
     }
@@ -4192,10 +4236,6 @@
     {
     "ProjRelPath" = "T"
     }
-    "upload"
-    {
-    "ProjRelPath" = "T"
-    }
     "plugins\\ckeditor\\lang\\hi.js"
     {
     "ProjRelPath" = "T"
@@ -4301,6 +4341,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\ckeditor\\lang\\el.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn\\tmp"
     {
     "ProjRelPath" = "T"
     }
@@ -4461,6 +4505,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-colorpicker\\img\\alpha.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn\\entries"
     {
     "ProjRelPath" = "T"
     }
@@ -5276,6 +5324,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\mail\\.svn\\prop-base"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jquery-validation\\Gruntfile.js"
     {
     "ProjRelPath" = "T"
@@ -5760,6 +5812,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\ImageManipulator.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\flot\\examples\\shared"
     {
     "ProjRelPath" = "T"
@@ -5956,6 +6012,14 @@
     {
     "ProjRelPath" = "T"
     }
+    "class\\model_resetpassword.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn\\props"
+    {
+    "ProjRelPath" = "T"
+    }
     "css\\themes\\smoothness\\images\\ui-bg_glass_75_dadada_1x400.png"
     {
     "ProjRelPath" = "T"
@@ -5997,6 +6061,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\ckeditor\\lang\\lv.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn\\format"
     {
     "ProjRelPath" = "T"
     }
@@ -6688,6 +6756,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\mail\\.svn\\text-base\\class.pop3.php.svn-base"
+    {
+    "ProjRelPath" = "T"
+    }
     "images\\loading_4.gif"
     {
     "ProjRelPath" = "T"
@@ -6853,6 +6925,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\flot\\jquery.flot.stack.min.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\vssver2.scc"
     {
     "ProjRelPath" = "T"
     }
@@ -7521,6 +7597,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\jquery-file-upload\\server\\gae-python\\app.yaml"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn\\prop-base\\vssver2.scc.svn-base"
     {
     "ProjRelPath" = "T"
     }
@@ -9220,6 +9300,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\mail\\.svn\\text-base\\vssver2.scc.svn-base"
+    {
+    "ProjRelPath" = "T"
+    }
     "class\\application.php"
     {
     "ProjRelPath" = "T"
@@ -9257,6 +9341,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-fileupload\\bootstrap-editable-1.4.4\\LICENSE-MIT"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\class.smtp.php"
     {
     "ProjRelPath" = "T"
     }
@@ -9397,6 +9485,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\flot\\examples\\series-errorbars\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\mail\\.svn\\text-base\\class.phpmailer.php.svn-base"
     {
     "ProjRelPath" = "T"
     }
