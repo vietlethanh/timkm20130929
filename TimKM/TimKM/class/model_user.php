@@ -27,6 +27,8 @@ class Model_User
 	const ACT_LOGOUT						= 17;
 	const ACT_CHANGE_PASS					= 18;
 	const ACT_REGISTER						= 19;
+	const ACT_UPDATE_PROFILE				= 20;
+	const ACT_RESET_PASS					= 21;
 	
 	const NUM_PER_PAGE                      = 15;
 	
@@ -58,7 +60,7 @@ class Model_User
 		SET  
 		`UserID` = \'{1}\',
 		`UserName` = \'{2}\',
-		`Password` = \'{3}\',
+		--`Password` = \'{3}\',
 		`Fullname` = \'{4}\',
 		`BirthDate` = \'{5}\',
 		`Address` = \'{6}\',
@@ -183,15 +185,53 @@ class Model_User
 	{
 		$strTableName = self::TBL_SL_USER;
 		$strSQL = global_common::prepareQuery(self::SQL_UPDATE_SL_USER,
-				array($strTableName,global_common::escape_mysql_string($userid),global_common::escape_mysql_string($username),global_common::escape_mysql_string($password),global_common::escape_mysql_string($fullname),global_common::escape_mysql_string($birthdate),global_common::escape_mysql_string($address),global_common::escape_mysql_string($phone),global_common::escape_mysql_string($email),global_common::escape_mysql_string($sex),global_common::escape_mysql_string($identity),global_common::escape_mysql_string($roleid),global_common::escape_mysql_string($userrankid),global_common::escape_mysql_string($avatar),global_common::escape_mysql_string($accountid),global_common::escape_mysql_string($isactived) ));
-		
+				array($strTableName,global_common::escape_mysql_string($userid),
+					global_common::escape_mysql_string($username),
+					//global_common::escape_mysql_string($password),
+					global_common::escape_mysql_string($fullname),
+					global_common::formatDateTimeSQL($birthdate),
+					global_common::escape_mysql_string($address),
+					global_common::escape_mysql_string($phone),
+					global_common::escape_mysql_string($email),
+					global_common::escape_mysql_string($sex),
+					global_common::escape_mysql_string($identity),
+					global_common::escape_mysql_string($roleid),
+					global_common::escape_mysql_string($userrankid),
+					global_common::escape_mysql_string($avatar),
+					global_common::escape_mysql_string($accountid),
+					global_common::escape_mysql_string($isactived) ));
+		//echo $strSQL;
 		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_USER,$this->_objConnection,$strTableName))
 		{
 			//echo $strSQL;
 			global_common::writeLog('Error add sl_user:'.$strSQL,1);
 			return false;
 		}	
-		return $intNewID;		
+		return true;		
+	}
+	
+	function changePassword($userID, $oldPassword, $newPassword)
+	{
+		$userInfo = $this->getUserByID($userID);
+		$sysPassword = $userInfo[global_mapping::Password];
+		$oldPassword = md5($userID.md5($oldPassword));
+		if($oldPassword == $sysPassword){
+			$newPassword = md5($userID.md5($newPassword));
+			$sqlUpdate = '`Password` = \''.global_common::escape_mysql_string($newPassword).'\'';
+			$condition = '`UserID` = \''.$userID.'\'';
+			$strTableName = self::TBL_SL_USER;
+			$strSQL = global_common::prepareQuery(global_common::SQL_UPDATE_BY_CONDITION,
+					array($strTableName, $sqlUpdate,$condition));
+			//echo $strSQL;
+			if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_USER,$this->_objConnection,$strTableName))
+			{
+				//echo $strSQL;
+				global_common::writeLog('Error add changePassword:'.$strSQL,1);
+				return -1;
+			}	
+			return 1;
+		}
+		return 0;
 	}
 	
 	public function getUserByID($objID,$selectField='*') 
@@ -223,23 +263,36 @@ class Model_User
 			return null;
 		}
 		//print_r($arrResult);
-		return $arrResult[0];
+		return $arrResult;
 	}
 	
-	public function getUserByField($fieldName,$fieldValue, $selectField='*') 
+	public function getUserByField($fieldName,$fieldValue, $condition = "",$selectField='*') 
 	{		
-		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
-				array($selectField, self::TBL_SL_USER ,							
-					'WHERE '.$fieldName.' = \''.$fieldValue.'\' '));
+		if(!$selectField)
+		{
+			$selectField = '*';
+		}
+		if($condition)
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, self::TBL_SL_USER ,							
+						'WHERE '.$fieldName.' = \''.$fieldValue.'\' and '.$condition));
+		}
+		else
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, self::TBL_SL_USER ,							
+						'WHERE '.$fieldName.' = \''.$fieldValue.'\' '));
+		}
 		//echo '<br>SQL:'.$strSQL;
 		$arrResult =$this->_objConnection->selectCommand($strSQL);		
 		if(!$arrResult)
 		{
-			global_common::writeLog('get sl_user ByName:'.$strSQL,1,$_mainFrame->pPage);
+			//global_common::writeLog('get sl_user ByName:'.$strSQL,1,$_mainFrame->pPage);
 			return null;
 		}
 		//print_r($arrResult);
-		return $arrResult[0];
+		return $arrResult;
 	}
 	
 	public function checkExistUserName($userName) 
@@ -251,10 +304,15 @@ class Model_User
 		return false;
 	}
 	
-	public function checkExistEmail($email) 
-	{		
-		$obj = $this->getUserByField(global_mapping::Email,$email);
-		if($obj){
+	public function checkExistEmail($email,$userID) 
+	{	
+		$condition = '';	
+		if($userID)
+		{
+			$condition = global_mapping::UserID . '!='.$userID;
+		}
+		$obj = $this->getUserByField(global_mapping::Email,$email,$condition);
+		if($obj[0]){
 			return true;	
 		}
 		return false;

@@ -28,7 +28,7 @@ include_once('include/_menu.inc');
 			<div class="control-group ">
 				<label class="control-label">Tên đăng nhập *</label>
 				<div class="controls">
-					<input type="text" name="txtUserName" id="txtUserName" class="text m-wrap" maxlength="255" />
+					<input type="text" name="txtUserName" id="txtUserName" class="text  m-wrap span3" maxlength="255" />
 					<div class="help-inline message">Tên đăng nhập không được rỗng</div>
 					<span class="help-inline">Xin hãy điền tên mà bạn thích được hiển thị trên hệ thống.</span>
 				</div>
@@ -36,7 +36,7 @@ include_once('include/_menu.inc');
 			<div class="control-group">
 				<label class="control-label">Mật khẩu *</label>
 				<div class="controls">
-					<input type="password" name="txtPassword" id="txtPassword" class="text" maxlength="255" />
+					<input type="password" name="txtPassword" id="txtPassword" class="text m-wrap span3" maxlength="255" />
 					<div class="help-inline message"></div>
 					<br>
 					<span class="help-inline">Để tăng tính bảo mật thì mật khẩu phải tối thiểu 6 ký tự.</span>
@@ -45,29 +45,32 @@ include_once('include/_menu.inc');
 			<div class="control-group">
 				<label class="control-label">Xác nhận mật khẩu *</label>
 				<div class="controls">
-					<input type="password" name="txtRepassword" id="txtRepassword" class="text" maxlength="255" />
+					<input type="password" name="txtRepassword" id="txtRepassword" class="text m-wrap span3" maxlength="255" />
 					<div class="help-inline message"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">Email *</label>
 				<div class="controls">
-					<input type="text" name="txtEmail" id="txtEmail" class="text" maxlength="255" />
+					<div class="input-icon left inline">
+						<i class="icon-envelope"></i>
+						<input type="text" placeholder="Địa chỉ email"  name="txtEmail" id="txtEmail" class="text   m-wrap span3" maxlength="255">    
+					</div>
 					<div class="help-inline message"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">Họ tên *</label>
 				<div class="controls">
-					<input type="text" name="txtFullname" id="txtFullname" class="text" maxlength="255" />
+					<input type="text" name="txtFullname" id="txtFullname" class="text m-wrap span3" maxlength="255" />
 					<div class="help-inline message"></div>					
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">Ngày sinh *</label>
 				<div class="controls">
-					<div class="input-append date date-picker text " data-date="21/12/2012"  data-date-format="dd/mm/yyyy"  data-date-viewmode="years">
-						<input name="txtBirthDate" id="txtBirthDate" class="m-wrap m-ctrl-medium date-picker" size="16" type="text" value="" placeholder="dd/mm/yyyy" />
+					<div class="input-append date date-picker text " data-date="21/12/2008"  data-date-format="dd/mm/yyyy"  data-date-viewmode="years">
+						<input name="txtBirthDate" id="txtBirthDate" class="m-wrap m-ctrl-medium date-picker" size="16" type="text" value="" disabled placeholder="dd/mm/yyyy" />
 							<span class="add-on"><i class="icon-calendar"></i></span>
 					</div>
 					<div class="help-inline message"></div>

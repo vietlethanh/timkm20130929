@@ -42,3 +42,7 @@
       text-decoration: none; }
     #profile-page .menu-profile li.active i {
       background: none repeat scroll 0 0 #0C91E5 !important; }
+  #profile-page #change-profile .control-group .controls .input-icon .icon-envelope {
+    margin-top: 6px; }
+  #profile-page #general-info li {
+    padding: 10px; }

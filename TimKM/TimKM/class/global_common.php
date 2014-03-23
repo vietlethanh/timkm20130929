@@ -12,6 +12,7 @@ class global_common
 	*****************************************************************************/
 	const DEFAULT_TOP_ITEMS = 1000;//24
 	const DEFAULT_PAGE_SIZE = 1000;//100
+	const RESET_EXPIRE_DAYS = 3;//reset password link be expire after 3 days
 	
 	/*****************************************************************************
 	* 
@@ -90,7 +91,7 @@ class global_common
 	const FOLDER_IMAGE_NEWS						= 'image/news/';
 	const FOLDER_IMAGE_NEWS_URL					= 'image/news/'; 
 	const FOLDER_IMAGE_USERS_URL				= 'image/users/';
-	const FOLDER_MAX_TEMPLATE					= 'file/other/mail_template/';
+	const FOLDER_MAX_TEMPLATE					= 'file/mail_template/';
 	const FOLDER_FILES_USER_CHANGE_FRONT_END	= 'file/user_change/front_end/';	
 	const FOLDER_USER_CHANGE_BACK_END			= 'config/user_change/back_end/';
 	const FOLDER_LOG							= 'file/log_10_/';
@@ -112,6 +113,25 @@ class global_common
 	
 	const DEFAUTL_FEMALE_AVATAR					= '/images/default/default-avatar-female.png';
 	const DEFAUTL_MALE_AVATAR					= '/images/default/default-avatar-male.png';
+	const FOLDER_AVATAR							= 'file/avatar/';
+	
+	/*****************************************************************************
+	* 
+	* Email Template Variable
+	* 
+	*****************************************************************************/
+	const TEAMPLATE_REGISTER = 'reset_password.mail';
+	const TEAMPLATE_RESET_PASSWORD = 'reset_password.mail';
+	
+	/*****************************************************************************
+	* 
+	* Email AUTHENTICATION
+	* 
+	*****************************************************************************/
+	
+	const SUPPORT_MAIL_USERNAME					= "timkmvn@gmail.com";
+	const SUPPORT_MAIL_PASSWORD					= "promo100";
+	const SUPPORT_MAIL_DISPLAY_NAME				= "TimKM.vn";
 	
 	//end const for FOLDER
 	
@@ -887,8 +907,6 @@ class global_common
 		{
 			$arrReturn[1] = self::prepareQuery($arrReturn[1], $arrContentPara);
 		}
-		// TODO: DoNguyen - Format cho quang cao {100} sau này sẽ để trong 1 function và lấy dữ liệu từ DB
-		$arrReturn[1] = str_replace('{100}', 'Học tiếng Anh hiệu quả tại <a href="http://www.hellochao.com">www.hellochao.com</a>', $arrReturn[1]);
 		
 		// Return values
 		return $arrReturn;
@@ -1774,6 +1792,21 @@ class global_common
 			}
 		}
 		return $y.$m;
+	}
+	
+	/**
+	 * This is method addDays
+	 *
+	 * @param mixed $current format Y-m-d H:i:s
+	 * @param mixed $dayAmount This is a description
+	 * @return DateTime with format Y-m-d H:i:s
+	 *
+	 */
+	function addDays($current, $dayAmount)
+	{		
+		$dateTime = new DateTime($current);		
+		$dateTime->add(new DateInterval('P'.$dayAmount.'D'));
+		return $dateTime->format('Y-m-d H:i:s');
 	}
 	
 	/**
@@ -3596,12 +3629,19 @@ class global_common
 	public function convertToQueryIN($stringValue,$delimiter=',') {
 		if(!is_array($stringValue))
 		{
-			$stringValue = implode($delimiter,$stringValue);
+			$stringValue = explode($delimiter,$stringValue);
 		}
+		/*if(is_array($stringValue))
+		{
+			$stringValue = implode($delimiter,$stringValue);
+		}*/
 		$strQueryIDs = '';
 		foreach($stringValue as $item)
 		{
-			$strQueryIDs .= '\''.$item.'\',';
+			if($item)
+			{
+				$strQueryIDs .= '\''.$item.'\',';
+			}
 		}
 		if(strlen($strQueryIDs)>0)
 		{
