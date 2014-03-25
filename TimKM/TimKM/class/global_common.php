@@ -3865,6 +3865,14 @@ class global_common
 		ob_end_clean();
 		return $contents;
 	}
+	
+	public function clearSession()
+	{
+		// or this would remove all the variables in the session, but not the session itself 
+		session_unset(); 		
+		// this would destroy the session variables 
+		session_destroy(); 
+	}
 	#end region
 	
 }
