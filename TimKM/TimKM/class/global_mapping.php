@@ -72,6 +72,8 @@ class global_mapping
 	const RoleID					= 'RoleID';
 	
 	
+	const ExpireDate				= 'ExpireDate';
+	const ResetDate					= 'ResetDate';
 	
 }
 ?>

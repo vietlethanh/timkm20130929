@@ -29,6 +29,7 @@ var user = {
 	ACT_REGISTER:			19,
 	ACT_UPDATE_PROFILE:		20,
 	ACT_RESET_PASS:			21,
+	ACT_UPDATE_RESET_PASS:	22,
     Page : "bg_user.php",
 
     	
@@ -142,7 +143,7 @@ var user = {
         }else if (email.length > 255) {
             core.util.validateInputTextBox(controlID, 'Email phải ngắn hơn 255 ký tự', isValid);
             isValid = false;
-        }else if (core.util.validateEmail(email)) {
+        }else if (!core.util.validateEmail(email)) {
             core.util.validateInputTextBox(controlID, 'Email không hợp lệ', isValid);
             isValid = false;
         }
@@ -193,7 +194,17 @@ var user = {
 				 var strRespond = core.util.parserXML(respone);
 				if (parseInt(strRespond[1]['rs']) == 1) {
 					//core.ui.showInfoBar(2, "Đăng ký thành công. Vui lòng nhấn vào <a href='login.php'>đây</a> để đăng nhập");	
-					core.ui.showInfoBar(2, "Đăng ký thành công. Bạn có thể <a href='post_article.php'>đăng bài</a> ngay bây giờ");	
+					//core.ui.showInfoBar(2, "Đăng ký thành công. Bạn có thể <a href='post_article.php'>đăng bài</a> ngay bây giờ");	
+					core.ui.showInfoBar(2, "Đăng ký thành công.");	
+					var rurl =  strRespond[1]['rurl'];
+					if(core.util.isNull(rurl) == false)
+					{
+					    core.util.goTo(rurl);
+					}
+					else
+					{
+					    core.util.goTo("index.php");
+					}
 					//core.util.goTo("login.php");
                 }
                 else{
@@ -262,7 +273,7 @@ var user = {
         } else if (email.length > 255) {
             core.util.validateInputTextBox(controlID, 'Email phải ngắn hơn 255 ký tự', isValid);
             isValid = false;
-        }else if (core.util.validateEmail(email)) {
+        }else if (!core.util.validateEmail(email)) {
             core.util.validateInputTextBox(controlID, 'Email không hợp lệ', isValid);
             isValid = false;
         }
@@ -418,6 +429,81 @@ var user = {
 		
 	},//changepassword
 	
+	getUpdateResetPasswordInfo: function(controlSubmit) 
+	{
+        core.util.disableControl(controlSubmit, true);
+        var isValid = true;
+      	
+		controlID = 'txtNewPass';	
+        var password = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(password)) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu mới không được rỗng', isValid);
+            isValid = false;
+        } 
+		else if (password.length < 6 ) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu phải tối thiều 6 ký tự', isValid);
+            isValid = false;
+        }
+		else if (password.length > 255) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu phải ngắn hơn 255 ký tự', isValid);
+            isValid = false;
+        }
+		
+		controlID = 'txtConfirmPass';	
+		var confirmPass = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+		if (confirmPass != password) {
+            core.util.validateInputTextBox(controlID, 'Mật khẩu mới không trùng nhau', isValid);
+            isValid = false;
+        } 
+		
+		
+		if (isValid == false) {
+            core.util.disableControl(controlSubmit, false);
+            return;
+        }
+		return {			
+			resetid: core.util.getObjectValueByID("reset-id"),
+			password: password,
+			confirmpass: confirmPass
+	   }      
+    },
+	
+	updateResetPassword: function()
+	{		
+		var controlSubmit = "btnChangePassword";
+		var passwordInfo = this.getUpdateResetPasswordInfo(controlSubmit);
+		if(core.util.isNull(passwordInfo))
+		{
+			return false;
+		}
+		
+		passwordInfo.act = this.ACT_UPDATE_RESET_PASS;
+        core.request.post(this.Page,passwordInfo,
+            function(respone, info){
+				var strRespond = core.util.parserXML(respone);
+				if (parseInt(strRespond[1]['rs']) == 1) {
+					core.ui.showInfoBar(1, "Cập nhật thành công");	
+                }
+                else{
+					if(parseInt(strRespond[1]['rs']) == 2)
+					{
+						 core.util.validateInputTextBox('txtNewPass', strRespond[1]["inf"], true);
+					}
+					
+					core.ui.showInfoBar(2,strRespond[1]["inf"]);	
+                }
+				core.util.disableControl(controlSubmit, false);
+            },
+            function()
+            {
+				core.ui.showInfoBar(2, core.constant.MsgProcessError);	
+				core.util.disableControl(controlSubmit, false);
+            }
+        ); 
+		
+	},//changepassword
 	
 	getResetInfo: function(controlSubmit) 
 	{

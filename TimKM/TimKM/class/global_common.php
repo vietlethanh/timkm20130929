@@ -288,7 +288,9 @@ class global_common
 	 * 
 	 * */
 	function redirect($url){
-		header ("Location: $url");
+		echo "<script type=\"text/javascript\">"; 
+		echo "window.location.href='$url'"; 
+		echo "</script>";
 	}
 	
 	/**

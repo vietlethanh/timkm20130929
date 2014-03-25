@@ -34,7 +34,7 @@ class Model_ResetPassword
 			CreatedDate,
 			ExpireDate,
 			ResetDate,
-			IsDelete
+			IsDeleted
         )
         VALUES (
 			\'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\'
@@ -47,18 +47,17 @@ class Model_ResetPassword
 			`CreatedDate` = \'{3}\',
 			`ExpireDate` = \'{4}\',
 			`ResetDate` = \'{5}\',
-			`IsDelete` = \'{6}\'
+			`IsDeleted` = \'{6}\'
 		WHERE `ID` = \'{1}\'  ';
 		   
 
     const SQL_CREATE_TABLE_SL_RESET_PASSWORD		= 'CREATE TABLE `{0}` (
-
 			`ID` varchar(255),
-			`UserID` ,
-			`CreatedDate` ,
-			`ExpireDate` ,
-			`ResetDate` ,
-			`IsDelete` ,
+			`UserID` int,
+			`CreatedDate` datetime,
+			`ExpireDate` datetime,
+			`ResetDate` datetime,
+			`IsDeleted` bool
 			PRIMARY KEY(ID)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 	
@@ -127,11 +126,29 @@ class Model_ResetPassword
 		return $intNewID;		
 	}
     
+	
+	public function checkResetPasswordByID($objID,$selectField='*') 
+	{		
+		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+				array($selectField, self::TBL_SL_RESET_PASSWORD ,							
+					'WHERE ID = \''.$objID.'\' and `'.global_mapping::ExpireDate.'` > \''.global_common::nowSQL(). '\'  
+						and '.global_mapping::IsDeleted.'=0'));
+		//echo '<br>SQL:'.$strSQL;
+		$arrResult =$this->_objConnection->selectCommand($strSQL);		
+		if(!$arrResult)
+		{
+			global_common::writeLog('get sl_reset_password ByID:'.$strSQL,1,$_mainFrame->pPage);
+			return null;
+		}
+		//print_r($arrResult);
+		return $arrResult[0];
+	}
+	
     public function getResetPasswordByID($objID,$selectField='*') 
 	{		
 		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
 				array($selectField, self::TBL_SL_RESET_PASSWORD ,							
-					'WHERE ID = \''.$objID.'\' '));
+					'WHERE ID = \''.$objID.'\''));
 		//echo '<br>SQL:'.$strSQL;
 		$arrResult =$this->_objConnection->selectCommand($strSQL);		
 		if(!$arrResult)

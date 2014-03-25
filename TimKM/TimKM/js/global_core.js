@@ -97,10 +97,10 @@ core.request = {
         });
     },
     post: function(url, data, fx, fxFail) {
-        this.execute(url, data, fx, 'POST', fxFail)
+        this.execute(url, data, fx, 'POST', fxFail,true)
     },
     get: function(url, data, fx, fxFail) {
-        this.execute(url, data, fx, 'GET', fxFail);
+        this.execute(url, data, fx, 'GET', fxFail,true);
     }
 };
 // common for ui
