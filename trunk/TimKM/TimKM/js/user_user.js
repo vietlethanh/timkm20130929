@@ -409,6 +409,9 @@ var user = {
 				var strRespond = core.util.parserXML(respone);
 				if (parseInt(strRespond[1]['rs']) == 1) {
 					core.ui.showInfoBar(1, "Cập nhật thành công");	
+					core.util.clearValue("txtNewPass");
+					core.util.clearValue("txtConfirmPass");
+					core.util.clearValue("txtCurrentPass");
                 }
                 else{
 					if(parseInt(strRespond[1]['rs']) == 2)
@@ -485,6 +488,8 @@ var user = {
 				var strRespond = core.util.parserXML(respone);
 				if (parseInt(strRespond[1]['rs']) == 1) {
 					core.ui.showInfoBar(1, "Cập nhật thành công");	
+					core.util.clearValue("txtNewPass");
+					core.util.clearValue("txtConfirmPass");
                 }
                 else{
 					if(parseInt(strRespond[1]['rs']) == 2)
