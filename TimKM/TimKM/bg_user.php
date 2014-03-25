@@ -172,13 +172,11 @@ else if ($_pgR["act"] == Model_User::ACT_UPDATE_PROFILE)
 				
 				if($password == $confirmpass)
 				{
-					$currentUser = $_SESSION[global_common::SES_C_USERINFO];
-					$result = $objUser->changeResetPassword($currentUser[global_mapping::UserID],$password);
-					
+					$resetPw = $objReset->getResetPasswordByID($resetid);
+					$result = $objUser->changeResetPassword($resetPw[global_mapping::UserID],$password);
 					//echo $result;
 					if ($result > 0)
 					{
-						$resetPw = $objReset->getResetPasswordByID($resetid);
 						$resetPw[global_mapping::ResetDate] = global_common::nowSQL();
 						$resetPw[global_mapping::IsDeleted] = 1;
 						$objReset->update($resetid,$resetPw[global_mapping::UserID],$resetPw[global_mapping::CreatedDate],
