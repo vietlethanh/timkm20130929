@@ -264,15 +264,13 @@ else if ($_pgR["act"] == Model_User::ACT_UPDATE_PROFILE)
 				}
 				else if ($_pgR["act"] == Model_User::ACT_LOGOUT)
 					{
-						// or this would remove all the variables in the session, but not the session itself 
-						session_unset(); 		
-						// this would destroy the session variables 
-						session_destroy(); 
+						
 						echo global_common::convertToXML(
-								$arrHeader, array('rs', 'inf'), 
-								array(1, ''), 
-								array( 0, 1 )
+								$arrHeader, array('rs', 'inf','rurl'), 
+								array(1, '',$_SESSION[global_common::SES_C_CUR_PAGE]), 
+								array( 0, 1,1 )
 								);
+						global_common::clearSession();
 						return;
 					}
 ?>
