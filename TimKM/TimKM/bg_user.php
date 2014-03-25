@@ -232,7 +232,7 @@ else if ($_pgR["act"] == Model_User::ACT_UPDATE_PROFILE)
 						{
 							$userEmail = $result[0][global_mapping::Email];
 							$fullName = $result[0][global_mapping::FullName];
-							$linkReset = '/change_pass?id='.$guid;
+							$linkReset = global_common::getHostName().'/change_password.php?id='.$guid;
 							$arrMailContent = global_common::formatMailContent(global_common::TEAMPLATE_RESET_PASSWORD,
 									null,
 									array(global_common::formatOutputText($result[0][global_mapping::FullName]),
