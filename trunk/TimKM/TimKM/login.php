@@ -16,6 +16,7 @@ if ($_pgR["act"] == Model_User::ACT_LOGIN)
 	$remember = $_pgR['ckRemember'];
 	
 	$result = $objUser->login($userName,$password);
+	
 	if ($result)
 	{
 		$_SESSION[global_common::SES_C_USERINFO] = $result;

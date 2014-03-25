@@ -29,6 +29,7 @@ class Model_User
 	const ACT_REGISTER						= 19;
 	const ACT_UPDATE_PROFILE				= 20;
 	const ACT_RESET_PASS					= 21;
+	const ACT_UPDATE_RESET_PASS				= 22;
 	
 	const NUM_PER_PAGE                      = 15;
 	
@@ -128,6 +129,7 @@ class Model_User
 	public function login($userName,$password)
 	{
 		$userInfo = $this->getUserByName($userName);
+		
 		$userID = $userInfo[global_mapping::UserID];
 		$sysPassword = $userInfo[global_mapping::Password];
 		$userpassword = md5($userID.md5($password));
@@ -234,6 +236,29 @@ class Model_User
 		return 0;
 	}
 	
+	function changeResetPassword($userID, $newPassword)
+	{
+		$userInfo = $this->getUserByID($userID);
+		
+		if($userInfo){
+			$newPassword = md5($userID.md5($newPassword));
+			$sqlUpdate = '`Password` = \''.global_common::escape_mysql_string($newPassword).'\'';
+			$condition = '`UserID` = \''.$userID.'\'';
+			$strTableName = self::TBL_SL_USER;
+			$strSQL = global_common::prepareQuery(global_common::SQL_UPDATE_BY_CONDITION,
+					array($strTableName, $sqlUpdate,$condition));
+			//echo $strSQL;
+			if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_USER,$this->_objConnection,$strTableName))
+			{
+				//echo $strSQL;
+				global_common::writeLog('Error add changeResetPassword:'.$strSQL,1);
+				return -1;
+			}	
+			return 1;
+		}
+		return 0;
+	}
+	
 	public function getUserByID($objID,$selectField='*') 
 	{		
 		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
@@ -263,7 +288,7 @@ class Model_User
 			return null;
 		}
 		//print_r($arrResult);
-		return $arrResult;
+		return $arrResult[0];
 	}
 	
 	public function getUserByField($fieldName,$fieldValue, $condition = "",$selectField='*') 
