@@ -3873,6 +3873,11 @@ class global_common
 		// this would destroy the session variables 
 		session_destroy(); 
 	}
+	
+	public function getHostName()
+	{
+		return $_SERVER["HTTP_HOST"];
+	}
 	#end region
 	
 }
