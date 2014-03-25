@@ -768,6 +768,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\reply_message-explaination.txt"
+    {
+    "ProjRelPath" = "T"
+    }
     "images\\partner.jpg"
     {
     "ProjRelPath" = "T"
@@ -1172,6 +1176,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_sta_request_message-explaination.txt"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\chosen-bootstrap\\VERSION"
     {
     "ProjRelPath" = "T"
@@ -1417,6 +1425,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\jquery-validation\\demo\\multipart"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\reset_password.mail"
     {
     "ProjRelPath" = "T"
     }
@@ -2045,6 +2057,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\jquery-slimscroll\\examples\\style.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_aoc_table_message-explaination.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -2720,6 +2736,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_invitation-explaination.txt"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jquery-ui\\components\\jquery.ui.spinner.js"
     {
     "ProjRelPath" = "T"
@@ -3336,6 +3356,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_remider_letter.mail"
+    {
+    "ProjRelPath" = "T"
+    }
     "lib\\log4php\\appenders\\LoggerAppenderNull.php"
     {
     "ProjRelPath" = "T"
@@ -3417,6 +3441,10 @@
     "ProjRelPath" = "T"
     }
     "lib\\log4php\\LoggerLayout.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_forget_pass-explaination.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -4100,6 +4128,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_feedback_article_notice.mail"
+    {
+    "ProjRelPath" = "T"
+    }
     "images\\border-footer.jpg"
     {
     "ProjRelPath" = "T"
@@ -4240,6 +4272,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_change_pass.mail"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jquery-validation\\test\\firebug\\firebugx.js"
     {
     "ProjRelPath" = "T"
@@ -4329,6 +4365,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-tag\\js\\bootstrap-tag.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_new_message.mail"
     {
     "ProjRelPath" = "T"
     }
@@ -4441,6 +4481,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\ckeditor\\lang\\ug.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\admin_send_invitation.mail"
     {
     "ProjRelPath" = "T"
     }
@@ -4756,6 +4800,14 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_feedback_article_notice-explanation.txt"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_feedback_notice-explanation.txt"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\ckeditor\\plugins\\a11yhelp\\dialogs\\lang\\tr.js"
     {
     "ProjRelPath" = "T"
@@ -4973,6 +5025,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\flot\\examples\\ajax\\data-eu-gdp-growth-5.json"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_change_profile.mail"
     {
     "ProjRelPath" = "T"
     }
@@ -5300,6 +5356,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_active_mail.mail.bak"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\index.php"
     {
     "ProjRelPath" = "T"
@@ -5436,7 +5496,15 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_invitation.mail"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\bootstrap-datepicker\\js\\locales\\bootstrap-datepicker.pt.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_active_mail.mail"
     {
     "ProjRelPath" = "T"
     }
@@ -5692,6 +5760,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_keyword.mail"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jqvmap"
     {
     "ProjRelPath" = "T"
@@ -5908,6 +5980,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\vssver2.scc"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jquery-validation\\demo\\multipart\\style.css"
     {
     "ProjRelPath" = "T"
@@ -6065,6 +6141,10 @@
     "ProjRelPath" = "T"
     }
     "lib\\mail\\.svn\\format"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_feedback_notice_owner-explanation.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -6620,6 +6700,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_feedback_notice_owner.mail"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\flot\\API.md"
     {
     "ProjRelPath" = "T"
@@ -6673,6 +6757,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-fileupload\\bootstrap-editable-1.4.4\\bootstrap-editable\\img\\clear.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_keyword-explanation.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -7420,6 +7508,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_feedback_article_notice_owner.mail"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\FlexSlider\\demo\\css"
     {
     "ProjRelPath" = "T"
@@ -7720,6 +7812,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_sta_request_message.mail"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\jquery-validation\\demo\\multipart\\index.html"
     {
     "ProjRelPath" = "T"
@@ -7745,6 +7841,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\jquery-file-upload\\js\\jquery.fileupload-ui.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template"
     {
     "ProjRelPath" = "T"
     }
@@ -7825,6 +7925,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\select2\\select2-spinner.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_feedback_article_notice_owner-explanation.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -8001,6 +8105,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\fancybox\\source\\helpers\\jquery.fancybox-buttons.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_new_message-explaination.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -8232,7 +8340,15 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\reply_message.mail"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\bootstrap-tree\\bootstrap\\img"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_feedback_notice.mail"
     {
     "ProjRelPath" = "T"
     }
@@ -8285,6 +8401,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\data-tables\\jquery.dataTables.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_aoc_table_message.mail"
     {
     "ProjRelPath" = "T"
     }
@@ -8357,6 +8477,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\fullcalendar\\jquery\\jquery-1.9.1.min.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\announce_joined.mail"
     {
     "ProjRelPath" = "T"
     }
@@ -8509,6 +8633,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-datetimepicker\\screenshot\\standard_hour_meridian.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_active_mail-explaination.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -8737,6 +8865,10 @@
     "ProjRelPath" = "T"
     }
     "lib\\log4php\\helpers\\LoggerPatternConverter.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_change_pass-explanation.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -9081,6 +9213,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\bootstrap-toggle-buttons\\static\\js\\jquery.toggle.buttons.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\send_change_profile-explanation.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -9840,6 +9976,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "file\\mail_template\\send_remider_letter-explaination.txt"
+    {
+    "ProjRelPath" = "T"
+    }
     "plugins\\ckeditor\\lang\\eo.js"
     {
     "ProjRelPath" = "T"
@@ -9897,6 +10037,10 @@
     "ProjRelPath" = "T"
     }
     "plugins\\font-awesome\\scss\\_bootstrap.scss"
+    {
+    "ProjRelPath" = "T"
+    }
+    "file\\mail_template\\announce_joined-explaination.txt"
     {
     "ProjRelPath" = "T"
     }

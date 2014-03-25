@@ -579,8 +579,16 @@ var user = {
         core.request.post(this.Page,data,
             function(respone, info){
 				 var strRespond = core.util.parserXML(respone);
-				if (parseInt(strRespond[1]['rs']) == 1) {					
-					core.util.goTo("index.php");
+				if (parseInt(strRespond[1]['rs']) == 1) {
+					var rurl =  strRespond[1]['rurl'];
+					if(core.util.isNull(rurl) == false)
+					{
+					    core.util.goTo(rurl);
+					}
+					else
+					{
+					    core.util.goTo("index.php");
+					}					
                 }
                 else{					
                     core.ui.showInfoBar(2, strRespond[1]["inf"]);						
