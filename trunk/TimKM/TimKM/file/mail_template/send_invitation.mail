@@ -1,0 +1,38 @@
+{0} mời bạn cùng tham gia HelloChao.com
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>{0} mời bạn cùng tham gia HelloChao.com</title>
+<style>
+body{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:12px;
+	margin-top:2px;
+}	
+</style>
+</head>
+<body>
+Chào bạn,<br>
+<br>
+Hellochao.com là công cụ tìm kiếm câu đàm thoại Anh Việt, có giao diện giống như Google và cách tìm kiếm cũng giống như Google. Khi bạn gõ vào một cụm từ thể hiện cho ý của bạn để tìm kiếm, HelloChao sẽ tìm cho bạn những cặp câu song ngữ Anh Việt có chứa cụm từ bạn cần tìm.<br>
+<br>
+Hellochao.com là nơi tập trung hàng triệu câu tiếng Anh hoàn chỉnh để bạn có thể sử dụng ngay trong mọi tình huống, là một người thầy luôn luôn bên bạn để giải đáp cho bạn mỗi khi bạn không biết nói câu nào đó bằng tiếng Anh, là nơi hiệu quả nhất để bạn có thể cải thiện và hoàn thiện tiếng Anh của mình...<br>
+<br>
+<p style="color:red;font-weight:bold;font-size:15px;">
+	TẤT CẢ ĐỀU MIỄN PHÍ
+</p>
+<br>
+<b>{0}</b> đã cảm nhận được những lợi ích tuyệt vời đó và muốn mời bạn cùng tham gia, hãy đón nhận và gởi lời cảm ơn đến <b>{0}</b> bằng cách click vào link này và đăng ký làm thành viên của HelloChao: <a href="{1}">{1}</a><br>
+<br>
+Để xem profile của <b>{0}</b>, bạn click vào link sau: <a href="{2}">{2}</a><br>
+<br>
+Nếu không thể mở link bạn vui lòng copy link và paste vào thanh địa chỉ của trình duyệt và ấn phím ENTER.<br>
+<br>
+Trân trọng,<br>
+<br>
+Ban quản trị<br>
+www.hellochao.com<br>
+----------------------------<br>
+Xin vui lòng đừng trả lời mail này.
+</body>
+</html>

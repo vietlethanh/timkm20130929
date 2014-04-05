@@ -15,7 +15,7 @@
 chdir("..");
 /* TODO: Add code here */
 require('config/globalconfig.php');
-
+require('include/_permission_admin.inc');
 include_once('class/model_articletype.php');
 include_once('class/model_article.php');
 include_once('class/model_user.php');
@@ -37,7 +37,7 @@ else
 }
 
 
-$condidtion =global_mapping::StartDate.' <= \''.global_common::nowSQL().'\''.' And '.global_mapping::EndDate.' >= \''.global_common::nowSQL().'\'';
+//$condidtion =global_mapping::StartDate.' <= \''.global_common::nowSQL().'\''.' And '.global_mapping::EndDate.' >= \''.global_common::nowSQL().'\'';
 $articles = $objArticle->searchArticle(1,'','','',$condidtion);
 
 ?>
@@ -45,7 +45,8 @@ $articles = $objArticle->searchArticle(1,'','','',$condidtion);
 $_SESSION[global_common::SES_C_CUR_PAGE] = "admin/admin_article.php";
 include_once('include/_admin_header.inc');
 ?>
-
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_article.js');?>"></script>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_articletype.js');?>"></script>
 <div id="admin-article">
 	<div class="row-fluid">
 		<div class="span12">
@@ -113,9 +114,15 @@ if($articles)
 		echo global_common::formatDateVN($item[global_mapping::EndDate]);		
 		echo '</td>';
 		echo '<td style="padding:0;width:180px">';
-		echo '<a href="../article_detail.php?aid='.$item[global_mapping::ArticleID].'" target="_blank" class="btn btn-mini"> View</a> ';		
-		echo '<a href="javascript:;" class="btn btn-mini">Active</a> ';		
-		echo '<a href="javascript:;" class="btn btn-mini">Deactive</a>';		
+		echo '<a href="../article_detail.php?aid='.$item[global_mapping::ArticleID].'" target="_blank" class="btn btn-mini"> View</a> ';	
+		if(	!$item[global_mapping::Status])
+		{
+			echo '<a href="javascript:article.activeArticle(\''.$item[global_mapping::ArticleID].'\',1)" class="btn btn-mini">Active</a> ';	
+		}
+		else
+		{
+			echo '<a href="javascript:article.activeArticle(\''.$item[global_mapping::ArticleID].'\',0)" class="btn btn-mini">Deactive</a>';	
+		}	
 		echo '</td>';
 		echo '</tr>';
 	}
