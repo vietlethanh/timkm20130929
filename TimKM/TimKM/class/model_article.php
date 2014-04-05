@@ -23,6 +23,9 @@ class Model_Article
 	const ACT_CHANGE_PAGE					= 13;
 	const ACT_SHOW_EDIT                     = 14;
 	const ACT_GET                           = 15;
+	const ACT_ACTIVE                        = 16;
+
+
 	const NUM_PER_PAGE                      = 15;
 	
 	const TBL_SL_ARTICLE			        = 'sl_article';
@@ -107,7 +110,12 @@ class Model_Article
 		`Dictricts`= \'{32}\',
 		`Cities`= \'{33}\'
 		WHERE `ArticleID` = \'{1}\'  ';
-	
+		
+	//status : 0 -> Deactivate;  1 ->Active; 2-> bad content
+	const SQL_ACTIVE_SL_ARTICLE		= 'UPDATE `{0}`
+		SET  		
+		 `Status` = \'{2}\'		
+		WHERE `ArticleID` = \'{1}\'  ';
 	
 	const SQL_CREATE_TABLE_SL_ARTICLE		= 'CREATE TABLE `{0}` (
 		
@@ -181,6 +189,7 @@ class Model_Article
 		$adType,$startDate,$endDate,$happyDays,$startHappyHour,$endHappyHour,$addresses,
 		$dictricts,$cities,$status)
 	{
+		$status = 1;
 		$strTableName = self::TBL_SL_ARTICLE;
 		$strSQL = global_common::prepareQuery(self::SQL_INSERT_SL_ARTICLE,
 				array(self::TBL_SL_ARTICLE,
@@ -256,7 +265,6 @@ class Model_Article
 					global_common::escape_mysql_string($dictricts),
 					global_common::escape_mysql_string($cities)
 					));
-		global_common::writeLog('Error Update sl_article:'.$strSQL,1);
 		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_ARTICLE,$this->_objConnection,$strTableName))
 		{
 			//echo $strSQL;
@@ -264,6 +272,20 @@ class Model_Article
 			return false;
 		}	
 		return $articleid;		
+	}
+	
+	public function activeArticle($articleID, $isActivate)
+	{
+		$strTableName = self::TBL_SL_ARTICLE;
+		$strSQL = global_common::prepareQuery(self::SQL_ACTIVE_SL_ARTICLE,array($strTableName,global_common::escape_mysql_string($articleID),$isActivate));
+		//echo $strSQL;
+		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_ARTICLE,$this->_objConnection,$strTableName))
+		{
+			//echo $strSQL;
+			global_common::writeLog('Error add sl_article:'.$strSQL,1);
+			return false;
+		}	
+		return $articleID;	
 	}
 	
 	public function getArticleByID($objID,$selectField='*') 
@@ -460,10 +482,8 @@ class Model_Article
 		if($listTypeID)
 		{
 			$arrTypeID = global_common::splitString($listTypeID);
-			$strQueryIN = global_common::convertToQueryIN($arrTypeID);
-			
-			$arrArticleID = self::getArticleIDsByTypes($listTypeID);
-			
+			$strQueryIN = global_common::convertToQueryIN($arrTypeID);			
+			$arrArticleID = self::getArticleIDsByTypes($listTypeID);			
 			$strQueryArticleIN = global_common::convertToQueryIN($arrArticleID);
 		}
 		$selectField = $selectField? $selectField : '*';
@@ -478,15 +498,15 @@ class Model_Article
 		}
 		if($whereClause)
 		{
-			$condition = 'WHERE ('.global_mapping::IsDeleted.' IS NULL or '.global_mapping::IsDeleted.' = \'0\') and '.
-				($keyword?('`'.global_mapping::Title .'` LIKE \'%'.$keyword.'%\' and '):'').
-				($strQueryArticleIN? ('`'.global_mapping::ArticleID.'` IN ('.$strQueryArticleIN.') and '):'').$whereClause;	
+			$condition = 'WHERE ('.global_mapping::IsDeleted.' IS NULL or '.global_mapping::IsDeleted.' = \'0\') '.
+				($keyword?(' and `'.global_mapping::Title .'` LIKE \'%'.$keyword.'%\' '):'').
+				($strQueryArticleIN? ('and `'.global_mapping::ArticleID.'` IN ('.$strQueryArticleIN.') and '):'').$whereClause;	
 		}
 		else
 		{
-			$condition = 'WHERE ('.global_mapping::IsDeleted.' IS NULL or '.global_mapping::IsDeleted.' = \'0\') and '.
-				($keyword?('`'.global_mapping::Title .'` LIKE \'%'.$keyword.'%\' and '):'').
-				($strQueryArticleIN? ('`'.global_mapping::ArticleID.'` IN ('.$strQueryArticleIN.') and '):'');	
+			$condition = 'WHERE ('.global_mapping::IsDeleted.' IS NULL or '.global_mapping::IsDeleted.' = \'0\') '.
+				($keyword?(' and `'.global_mapping::Title .'` LIKE \'%'.$keyword.'%\''):'').
+				($strQueryArticleIN? ('and `'.global_mapping::ArticleID.'` IN ('.$strQueryArticleIN.') '):'');	
 		}
 		
 		if($intPage>0)
@@ -501,6 +521,9 @@ class Model_Article
 					array($selectField, Model_Article::TBL_SL_ARTICLE ,							
 						$condition.$orderBy ));
 		}
+		
+		//echo $condition;
+		//echo $strSQL;
 		//return $strSQL;
 		$arrResult = self::getArticlesFromDB($strSQL);
 		//print_r($arrResult);

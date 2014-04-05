@@ -65,7 +65,7 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 			}
 			else
 			{
-				echo global_common::convertToXML($arrHeader, array("rs","info"), array(0,"Input data is invalid"), array(0,1));
+				echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,"Input data is invalid"), array(0,1));
 				return;
 			}
 		}
@@ -90,7 +90,7 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 			}
 			else
 			{
-				echo global_common::convertToXML($arrHeader, array("rs","info"), array(0,"Input data is invalid"), array(0,1));
+				echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,"Input data is invalid"), array(0,1));
 				return;
 			}
 		}
@@ -106,6 +106,28 @@ elseif($_pgR['act'] == Model_ArticleType::ACT_GET_ALL)
 	$types = $objArticleType->getAllArticleType(0);
 	echo json_encode($types);
 	return ;
+}
+elseif($_pgR['act'] == Model_Article::ACT_ACTIVE)
+{
+	$articleID = $_pgR['id'];
+	$isActivate = $_pgR['isactivate'];
+	$result = $objArticle->activeArticle($articleID,$isActivate);
+	if ($result)
+	{
+		$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
+		echo global_common::convertToXML(
+				$arrHeader, array("rs", "inf"), 
+				array(1, ($isActivate?'Activate':'Deactivate').' successfully'), 
+				array( 0, 1 )
+				);
+		return;
+	}
+	else
+	{
+		echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,($isActivate?'Activate':'Deactivate').' unsuccessfully'), array(0,1));
+		return;
+	}
+	
 }
 elseif($_pgR['act'] == model_Article::ACT_CHANGE_PAGE)
 {

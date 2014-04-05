@@ -59,7 +59,7 @@ class Model_User
 	
 	const SQL_UPDATE_SL_USER		= 'UPDATE `{0}`
 		SET  
-		`UserID` = \'{1}\',
+		--`UserID` = \'{1}\',
 		`UserName` = \'{2}\',
 		--`Password` = \'{3}\',
 		`Fullname` = \'{4}\',
@@ -183,13 +183,15 @@ class Model_User
 		
 	}
 	
-	public function update($userid,$username,$password,$fullname,$birthdate,$address,$phone,$email,$sex,$identity,$roleid,$userrankid,$avatar,$accountid,$isactived)
+	public function update($userid,$username,$password,$fullname,$birthdate,$address,$phone,$email,
+		$sex,$identity,$roleid,$userrankid,$avatar,$accountid,$isactived)
 	{
+		
 		$strTableName = self::TBL_SL_USER;
 		$strSQL = global_common::prepareQuery(self::SQL_UPDATE_SL_USER,
 				array($strTableName,global_common::escape_mysql_string($userid),
 					global_common::escape_mysql_string($username),
-					//global_common::escape_mysql_string($password),
+					global_common::escape_mysql_string($password),
 					global_common::escape_mysql_string($fullname),
 					global_common::formatDateTimeSQL($birthdate),
 					global_common::escape_mysql_string($address),
@@ -202,7 +204,7 @@ class Model_User
 					global_common::escape_mysql_string($avatar),
 					global_common::escape_mysql_string($accountid),
 					global_common::escape_mysql_string($isactived) ));
-		//echo $strSQL;
+		echo $strSQL;
 		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_USER,$this->_objConnection,$strTableName))
 		{
 			//echo $strSQL;

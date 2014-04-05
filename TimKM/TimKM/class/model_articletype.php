@@ -17,13 +17,13 @@ class Model_ArticleType
 	#region PRESERVE ExtraMethods For ArticleType
 	#endregion
     #region Contants	
-    const ACT_ADD							= 10;
-    const ACT_UPDATE						= 11;
-    const ACT_DELETE						= 12;
-    const ACT_CHANGE_PAGE					= 13;
-    const ACT_SHOW_EDIT                     = 14;
-	const ACT_GET                           = 15;
-	const ACT_GET_ALL                       = 16;
+    const ACT_ADD							= 100;
+    const ACT_UPDATE						= 101;
+    const ACT_DELETE						= 102;
+    const ACT_CHANGE_PAGE					= 103;
+    const ACT_SHOW_EDIT                     = 104;
+	const ACT_GET                           = 105;
+	const ACT_GET_ALL                       = 106;
 	
 	
     const NUM_PER_PAGE                      = 15;

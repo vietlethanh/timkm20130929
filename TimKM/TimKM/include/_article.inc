@@ -27,6 +27,9 @@ include_once('_advertises.inc');
 echo $article[global_mapping::CompanyName]
 			?>
 			</div>	
+<?php 
+include('include/_social.inc');
+?>
 <div class="title">
 <?php 
 echo '<p>'.$article[global_mapping::Title].' '.$article[global_mapping::AdType].'</p>';
@@ -61,13 +64,16 @@ else
 }
 			?>
 			</div>
-			<div class="content">
-			
+
+			<div class="content">			
 <?php 
 
 echo $article[global_mapping::Content]
 			?>
 			</div>			
+<?php 
+include('include/_social.inc');
+?>
 		</div>		
 <?php 
 //article
