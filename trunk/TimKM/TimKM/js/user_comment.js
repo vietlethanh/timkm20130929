@@ -22,6 +22,7 @@ var comment =
     ACT_CHANGE_PAGE : 13,
     ACT_SHOW_EDIT : 14,
     ACT_GET : 15,
+	ACT_BAD_COMMENT: 16,
     Page : "bg_comment.php",
     
    getCommentInfo: function() {
@@ -88,9 +89,41 @@ var comment =
         );
     },
 	
+	badComment: function(commentID) {  
+		
+		var commentInfo = {
+			id : commentID,
+			isbad: 1
+		}
+		
+		if(core.util.isNull(commentInfo))
+		{
+			return false;
+		}
+		
+		commentInfo.act = this.ACT_BAD_COMMENT;
+		//return false;;
+		
+        core.request.post(this.Page,commentInfo,
+            function(respone, info){
+				var strRespond = core.util.parserXML(respone);
+				if (parseInt(strRespond[1]['rs']) == 1) {
+					core.ui.showInfoBar(1, strRespond[1]["inf"]);					
+                }
+                else{
+                    core.ui.showInfoBar(2, strRespond[1]["inf"]);						
+                }
+            },
+            function()
+            {
+				core.ui.showInfoBar(2, core.constant.MsgProcessError);					
+            }
+        );
+    },
+	
 	clearForm: function()
 	{
-		var controlID = 'comment-content';		
+		var controlID = 'txtcontent';		
 		core.util.clearValue(controlID);			
 	},
     //endregion   
