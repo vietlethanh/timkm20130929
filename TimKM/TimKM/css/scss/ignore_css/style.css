@@ -927,6 +927,8 @@ table.table {
           line-height: 10px; }
           #article #article-detail #comment-content #comment-list .item .comment-detail .username p.created-date {
             float: right; }
+      #article #article-detail #comment-content #comment-list .item .comment-controls {
+        float: right; }
   #article #company-info {
     display: inline-block;
     text-align: right;
