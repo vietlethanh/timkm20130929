@@ -24,6 +24,7 @@ var comment =
     ACT_GET : 15,
 	ACT_BAD_COMMENT: 16,
     Page : "bg_comment.php",
+    AdminPage : "../bg_comment.php",
     
    getCommentInfo: function() {
 		var controlSubmit = 'btnPost';
@@ -89,22 +90,26 @@ var comment =
         );
     },
 	
-	badComment: function(commentID) {  
+	badComment: function(commentID, reportBad, fromAdmin) {  
 		
 		var commentInfo = {
 			id : commentID,
-			isbad: 1
+			isbad: reportBad			
 		}
 		
 		if(core.util.isNull(commentInfo))
 		{
 			return false;
 		}
-		
+		page = this.Page;
+		if(fromAdmin)
+		{
+			page = this.AdminPage;
+		}
 		commentInfo.act = this.ACT_BAD_COMMENT;
 		//return false;;
 		
-        core.request.post(this.Page,commentInfo,
+        core.request.post(page,commentInfo,
             function(respone, info){
 				var strRespond = core.util.parserXML(respone);
 				if (parseInt(strRespond[1]['rs']) == 1) {
