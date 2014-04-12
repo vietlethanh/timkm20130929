@@ -2,11 +2,16 @@
 /* TODO: Add code here */
 require('config/globalconfig.php');
 include_once('class/model_comment.php');
+include_once('class/model_commentbad.php');
+include_once('class/model_articletype.php');
 include_once('class/model_article.php');
 include_once('class/model_user.php');
 
 $objComment = new Model_Comment($objConnection);
+$objCommentBad = new Model_CommentBad($objConnection);
+$objUser = new Model_User($objConnection);
 $objArticle = new Model_Article($objConnection);
+$objArticleType = new Model_ArticleType($objConnection);
 
 if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT_UPDATE)
 {
@@ -135,6 +140,75 @@ elseif($_pgR['act'] == model_Article::ACT_DELETE)
 	$arrIsMetaData = array(0, 1);
 	echo global_common::convertToXML($arrHeader, $arrKey, $arrValue, $arrIsMetaData);
 	
+	return;
+}
+
+elseif($_pgR['act'] == Model_Comment::ACT_BAD_COMMENT)
+{	
+	if (global_common::isCLogin())
+	{
+		$c_userInfo = $_SESSION[global_common::SES_C_USERINFO];
+		$commentID = $_pgR["id"];
+		$isBad = $_pgR["isbad"];
+		$strTableName = Model_CommentBad::TBL_SL_COMMENT_BAD;
+		
+		$comment = $objComment->getCommentByID($commentID);
+		$user = $objUser->getUserByID($comment[global_mapping::CreatedBy]);
+		
+		if($user && $comment)
+		{
+			$isSent = true;
+			$description = "Restore Comment";
+			if($isBad)
+			{
+				$description = "Bad Comment";
+				$userEmail = $user[global_mapping::Email];
+				$fullName = $user[global_mapping::FullName];
+				$linkArticle = global_common::getHostName().'/article_detail.php?aid='.$comment[global_mapping::ArticleID];
+				$commentDate = global_common::formatDateTimeVN($comment[global_mapping::CreatedDate]);
+				$commentContent = $comment[global_mapping::Content];
+				$linkPolicy = global_common::getHostName().'/policy.php';
+				
+				$arrMailContent = global_common::formatMailContent(global_common::TEAMPLATE_BAD_COMMENT,
+						null, array(global_common::formatOutputText($fullName),$linkArticle, $commentDate,$commentContent, $linkPolicy));
+				$emailSubject = $arrMailContent[0];
+				$emailContent = $arrMailContent[1];
+				
+				$isSent = global_mail::send($userEmail,$fullName,$emailSubject,$emailContent,null,
+						global_common::SUPPORT_MAIL_USERNAME,global_common::SUPPORT_MAIL_PASSWORD,
+						global_common::SUPPORT_MAIL_DISPLAY_NAME);
+			}
+			if($isSent)
+			{
+				$badComment = $objCommentBad->getCommentBadByID($commentID);
+				if(count($badComment) <= 0)
+				{				
+					$createdBy = $c_userInfo[global_mapping::UserID];
+					$resultID = $objCommentBad->insert($commentID,$description, $createdBy,$isBad);
+				}
+				else
+				{
+					$updatedBy = $c_userInfo[global_mapping::UserID];
+					$resultID = $objCommentBad->activateBadComment($commentID,$description, $updatedBy,0);
+				}
+				
+				if ($resultID)
+				{				
+					$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
+					
+					echo global_common::convertToXML(
+							$arrHeader, array("rs", "inf","form"), 
+							array(1, 'Xử lý bad comment thành công'), 
+							array( 0, 1)
+							);
+					return;
+				}
+			}
+		}
+		
+		echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,"Xử lý thất bại. Xin vui lòng thử lại sau."), array(0,1));
+		return;
+	}
 	return;
 }
 ?>

@@ -6,6 +6,7 @@ if ($_pgR["aid"])
 	$comments = $objComment->getCommentByArticle($articleID,0,'*','','ModifiedDate Desc');
 	//echo '$comments:';
 	//print_r($comments);
+	//print_r($_SESSION[global_common::SES_C_USERINFO]);
 }
 ?>
 <script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_comment.js');?>"></script>
@@ -56,7 +57,13 @@ foreach($comments as $item)
 	echo '			</div>';
 	echo '			<div class="comment-detail-content">';
 	echo '					'.$item[global_mapping::Content];
-	echo '			</div>	';				
+	echo '			</div>	';	
+	if(global_common::isAdmin())
+	{	
+		echo '			<div class="comment-controls">';
+		echo '				<a href="javascript:comment.badComment(\''.$item[global_mapping::CommentID].'\')">Delete</a>';
+		echo '			</div>	';	
+	}			
 	echo '		</div>';
 	echo '</div>';
 }

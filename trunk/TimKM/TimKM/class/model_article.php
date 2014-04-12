@@ -288,12 +288,22 @@ class Model_Article
 		return $articleID;	
 	}
 	
-	public function getArticleByID($objID,$selectField='*') 
+	public function getArticleByID($objID,$selectField='*', $whereClause='') 
 	{		
 		$selectField = $selectField? $selectField : '*';
+		
+		if($whereClause)
+		{
+			$condition ='WHERE '.global_mapping::ArticleID.' = \''.$objID.'\' and '.$whereClause;	
+		}
+		else
+		{
+			$condition = 'WHERE '.global_mapping::ArticleID.' = \''.$objID.'\' ';	
+		}
+		
+		
 		$strSQL = global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
-				array($selectField, self::TBL_SL_ARTICLE ,							
-					'WHERE '.global_mapping::ArticleID.' = \''.$objID.'\' '));
+				array($selectField, self::TBL_SL_ARTICLE , $condition));
 		//return $strSQL;
 		$arrResult =$this->_objConnection->selectCommand($strSQL);		
 		if(!$arrResult)

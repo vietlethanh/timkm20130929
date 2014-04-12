@@ -11,13 +11,13 @@
 var articleType = {	   
 	
     //region Contants	
-    ACT_ADD : 10,
-    ACT_UPDATE : 11,
-    ACT_DELETE : 12,
-    ACT_CHANGE_PAGE : 13,
-    ACT_SHOW_EDIT : 14,
-    ACT_GET : 15,
-	ACT_GET_ALL : 16,
+    ACT_ADD : 100,
+    ACT_UPDATE : 101,
+    ACT_DELETE : 102,
+    ACT_CHANGE_PAGE : 103,
+    ACT_SHOW_EDIT : 104,
+    ACT_GET : 105,
+	ACT_GET_ALL : 106,
     Page : "bg_article.php",
     
     AllCategories: null,

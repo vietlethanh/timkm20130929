@@ -23,6 +23,9 @@ class Model_Comment
 	const ACT_CHANGE_PAGE					= 13;
 	const ACT_SHOW_EDIT                     = 14;
 	const ACT_GET                           = 15;
+	const ACT_BAD_COMMENT                   = 16;
+	
+	
 	const NUM_PER_PAGE                      = 15;
 	
 	const TBL_SL_COMMENT			            = 'sl_comment';
@@ -186,11 +189,11 @@ class Model_Comment
 	{		
 		if($whereClause)
 		{
-			$whereClause = ' WHERE '.$whereClause. ' AND  `'.global_mapping::ArticleID.'` =  \''. $articleID .'\' ';
+			$whereClause = ' WHERE '.$whereClause. ' AND  `'.global_mapping::ArticleID.'` =  \''. $articleID .'\' AND CommentID NOT IN (SELECT CommentID FROM sl_comment_bad WHERE `STATUS` =\'0\')';
 		}
 		else
 		{
-			$whereClause = ' WHERE `'.global_mapping::ArticleID.'` =  \''. $articleID .'\' ';
+			$whereClause = ' WHERE `'.global_mapping::ArticleID.'` =  \''. $articleID .'\'  AND CommentID NOT IN (SELECT CommentID FROM sl_comment_bad WHERE `STATUS` =\'0\')';
 		}
 		
 		if($orderBy)
@@ -223,6 +226,53 @@ class Model_Comment
 		}
 		return global_common::mergeUserInfo($arrResult);	
 	}
+	
+	public function getAllBadComment($intPage = 0,$selectField='*',$whereClause='',$orderBy='') 
+	{		
+		if($whereClause)
+		{
+			$whereClause = ' WHERE '.$whereClause. ' AND  CommentID IN (SELECT CommentID FROM sl_comment_bad)';
+		}
+		else
+		{
+			$whereClause = ' WHERE  CommentID IN (SELECT CommentID FROM sl_comment_bad)';
+		}
+		
+		if($orderBy)
+		{
+			$orderBy = ' ORDER BY '.$orderBy;
+		}
+		if(!$selectField)
+		{
+			$selectField = '*';
+		}
+		if($intPage>0)
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, Model_Comment::TBL_SL_COMMENT ,							
+						$whereClause.$orderBy .' limit '.(($intPage-1)* self::NUM_PER_PAGE).','.self::NUM_PER_PAGE));
+		}
+		else
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, Model_Comment::TBL_SL_COMMENT ,							
+						$whereClause.$orderBy ));
+		}
+		
+		//echo '<br>SQL:'.$strSQL;
+		$arrResult =$this->_objConnection->selectCommand($strSQL);		
+		if(!$arrResult)
+		{
+			global_common::writeLog('function getCommentByIDs:'.$strSQL,1,$_mainFrame->pPage);
+			return null;
+		}
+		$arrResult = global_common::mergeReporterInfo($arrResult);
+		//echo 'Before merge comment info';
+		$arrResult = global_common::mergeUserInfo($arrResult);
+		//echo 'End merge comment info';
+		return $arrResult;	
+	}
+	
 	
 	public function getAllComment($intPage = 0,$selectField='*',$whereClause='',$orderBy='') 
 	{		

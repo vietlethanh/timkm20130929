@@ -122,6 +122,7 @@ class global_common
 	*****************************************************************************/
 	const TEAMPLATE_REGISTER = 'reset_password.mail';
 	const TEAMPLATE_RESET_PASSWORD = 'reset_password.mail';
+	const TEAMPLATE_BAD_COMMENT = 'bad_comment.mail';
 	
 	/*****************************************************************************
 	* 
@@ -3570,6 +3571,7 @@ class global_common
 	{
 		return substr($mySqlDateTime,8,2)."/".substr($mySqlDateTime,5,2)."/".substr($mySqlDateTime,0,4) ;
 	}
+	
 	/**
 	 * Input exampale: 21/12/2013
 	 * Output: 12/21/2013
@@ -3668,14 +3670,65 @@ class global_common
 	
 	public function mergeUserInfo($arrResult)
 	{
-		$arrUsers =  global_common::getArrayColumn($arrResult,'CreatedBy');
+		$arrUsers= null;
+		if(array_key_exists(global_mapping::CreatedBy,$arrResult[0]))
+		{
+			$arrUsers =  global_common::getArrayColumn($arrResult,global_mapping::CreatedBy);
+		}
+		//print_r($arrUsers);
+		if(array_key_exists(global_mapping::ReportedBy,$arrResult[0]))
+		{
+			if($arrUsers)
+			{
+				$arrUsers = array_merge($arrUsers,global_common::getArrayColumn($arrResult,global_mapping::ReportedBy));
+			}
+			else
+			{
+				$arrUsers =  global_common::getArrayColumn($arrResult,global_mapping::ReportedBy);
+			}
+			//print_r($arrUsers);
+		}
+		//echo array_key_exists(global_mapping::ReportedBy,$arrResult);
+	
 		$arrUserInfo = global_common::getUserInfo($arrUsers,$this->_objConnection);
+		//print_r($arrUserInfo);
+		$count = count($arrResult);
+		//print_r($arrUserInfo[$arrResult[0]['CreatedBy']]);
+		for($i=0; $i < $count; $i++)
+		{
+			if(array_key_exists(global_mapping::CreatedBy,$arrResult[0]))
+			{
+				//print_r($arrUserInfo);
+				//print_r($arrResult[$i]);
+				$arrResult[$i]['CreatedBy'] = $arrUserInfo[$arrResult[$i]['CreatedBy']];
+			}
+			if(array_key_exists(global_mapping::ReportedBy,$arrResult[0]))
+			{
+				$arrResult[$i][global_mapping::ReportedBy] = $arrUserInfo[$arrResult[$i][global_mapping::ReportedBy]];
+			}
+			
+		}
+		//print_r($arrResult);
+		return $arrResult;
+	}
+	
+	public function mergeReporterInfo($arrResult)
+	{
+		//TODO remove comment code
+		$arrArticles =  global_common::getArrayColumn($arrResult,global_mapping::ArticleID);
+		$arrArticleInfo = global_common::getArticleInfo($arrArticles,$this->_objConnection);
+		
+		//echo 'before get comment bad';
+		$arrCommentBad =  global_common::getArrayColumn($arrResult,global_mapping::CommentID);
+		$arrCommentBadInfo = global_common::getCommentBadInfo($arrCommentBad,$this->_objConnection);
+		//echo 'after get comment bad';
 		//print_r($arrUserInfo);
 		$count = count($arrResult);
 		for($i=0; $i < $count; $i++)
 		{
 			//print_r($arrResult[$i]);
-			$arrResult[$i]['CreatedBy'] = $arrUserInfo[$arrResult[$i]['CreatedBy']];
+			$arrResult[$i][global_mapping::ArticleID] = $arrArticleInfo[$arrResult[$i][global_mapping::ArticleID]];
+			$arrResult[$i][global_mapping::CommentBad] = $arrCommentBadInfo[$arrResult[$i][global_mapping::CommentID]];
 		}
 		//print_r($arrResult);
 		return $arrResult;
@@ -3701,6 +3754,40 @@ class global_common
 		}		
 		return $arrUserInfo;
 	}
+	
+	public function getArticleInfo($arrArticleID,$objConnection)
+	{		
+		//print_r($arrUserID);
+		$arrArticleInfo = global_common::getArticleDetails($arrArticleID, $objConnection);
+		
+		//print_r($arrUserInfo);
+		foreach($arrArticleInfo as $key => $info)
+		{
+			$arrArticleInfo[$info[global_mapping::ArticleID]]=$info;
+			unset($arrArticleInfo[$key]);
+		}		
+		return $arrArticleInfo;
+	}
+	
+	
+	public function getCommentBadInfo($arrCommentID,$objConnection)
+	{		
+		//print_r($arrUserID);
+		$objCommentBad = new Model_CommentBad($objConnection);
+		$arrID = global_common::splitString($arrCommentID);
+		$strQueryIN = global_common::convertToQueryIN($arrID);
+		$whereClause = global_mapping::CommentID.' IN ('.$strQueryIN.')';
+		$arrCommentBad = $objCommentBad->getAllCommentBad(0,'*',$whereClause);
+		
+		//print_r($arrUserInfo);
+		foreach($arrCommentBad as $key => $info)
+		{
+			$arrCommentBad[$info[global_mapping::CommentID]]=$info;
+			unset($arrCommentBad[$key]);
+		}		
+		return $arrCommentBad;
+	}
+	
 	
 	
 	/**
@@ -3739,6 +3826,20 @@ class global_common
 		return $arrUsers;
 		
 	}
+	
+	private function getArticleDetails($articleList, $objConnection, $selectField='*')
+	{
+		$arrID = global_common::splitString($articleList);
+		$strQueryIN = global_common::convertToQueryIN($arrID);
+		$whereClause = 'WHERE '.global_mapping::ArticleID.' IN ('.$strQueryIN.')';
+		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE,array('*',
+					Model_Article::TBL_SL_ARTICLE,$whereClause));
+		//echo $strSQL;
+		$arrArticles = $objConnection->selectCommand($strSQL);
+		return $arrArticles;
+		
+	}
+		
 	
 	/**
 	 * lấy thông tin detail của một vài c_user,c_user_detail
