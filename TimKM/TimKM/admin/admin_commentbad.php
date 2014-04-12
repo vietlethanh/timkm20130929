@@ -9,243 +9,135 @@
  */
 
 /// <summary>
-/// Implementations of slcommentbads represent a CommentBad
+/// Implementations of slarticles represent a Article
 ///
 /// </summary>
 chdir("..");
 /* TODO: Add code here */
 require('config/globalconfig.php');
-include_once('class/model_commentBad.php');
+require('include/_permission_admin.inc');
+include_once('class/model_articletype.php');
+include_once('class/model_article.php');
+include_once('class/model_user.php');
+include_once('class/model_comment.php');
+include_once('class/model_commentbad.php');
 
-?>
-<?php
 
+$objComment = new Model_Comment($objConnection);
 $objCommentBad = new Model_CommentBad($objConnection);
+$objUser = new Model_User($objConnection);
+$objArticle = new Model_Article($objConnection);
+$objArticleType = new Model_ArticleType($objConnection);
 
-if ($_pgR["act"] == model_CommentBad::ACT_ADD)
-{
-	
-	if (global_common::isCLogin())
-	{
-		//get user info
-		//$c_userInfo = $_SESSION[consts::SES_C_USERINFO];
-		
-		//if ($objMenu->getMenuByName($_pgR['name'])) {
-		//	echo global_common::convertToXML($arrHeader, array("rs",'info'), array(0,global_common::STRING_NAME_EXIST), array(0,1));
-		//	return;
-		//}
 
-		$commnentID = $_pgR['CommnentID'];
-		$commnentID = global_editor::rteSafe(html_entity_decode($commnentID,ENT_COMPAT ,'UTF-8' ));
-		$description = $_pgR['Description'];
-		$description = global_editor::rteSafe(html_entity_decode($description,ENT_COMPAT ,'UTF-8' ));
-		$reportedBy = $_pgR['ReportedBy'];
-		$reportedBy = global_editor::rteSafe(html_entity_decode($reportedBy,ENT_COMPAT ,'UTF-8' ));
-		$reportedDate = $_pgR['ReportedDate'];
-		$reportedDate = global_editor::rteSafe(html_entity_decode($reportedDate,ENT_COMPAT ,'UTF-8' ));
-		$status = $_pgR['Status'];
-		$status = global_editor::rteSafe(html_entity_decode($status,ENT_COMPAT ,'UTF-8' ));
-		//$strName = $_pgR['name'];
-		//$strName = global_editor::rteSafe(html_entity_decode($strName,ENT_COMPAT ,'UTF-8' ));
-		$resultID = $objCommentBad->insert($commnentID,$description,$reportedBy,$reportedDate,$status);
-		if ($resultID)
-		{
-			$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
-			echo global_common::convertToXML(
-					$arrHeader, array("rs", "inf"), 
-					array(1, $result), 
-					array( 0, 1 )
-					);
-			return;
-		}
-		else
-		{
-			echo global_common::convertToXML($arrHeader, array("rs","info"), array(0,"Input data is invalid"), array(0,1));
-			return;
-		}
-	}
-	else
-	{
-		echo global_common::convertToXML($arrHeader, array("rs",'info'), array(0,global_common::STRING_REQUIRE_LOGIN), array(0,1));
-	}
-	return;
-}
-elseif($_pgR['act'] == model_CommentBad::ACT_UPDATE)
-{
-	if (global_common::isCLogin())
-	{
-		//l?y th?ng tin user
-		//$c_userInfo = $_SESSION[consts::SES_C_USERINFO];
-		
-
-		$commnentID = $_pgR['CommnentID'];
-		$commnentID = global_editor::rteSafe(html_entity_decode($commnentID,ENT_COMPAT ,'UTF-8' ));
-		$description = $_pgR['Description'];
-		$description = global_editor::rteSafe(html_entity_decode($description,ENT_COMPAT ,'UTF-8' ));
-		$reportedBy = $_pgR['ReportedBy'];
-		$reportedBy = global_editor::rteSafe(html_entity_decode($reportedBy,ENT_COMPAT ,'UTF-8' ));
-		$reportedDate = $_pgR['ReportedDate'];
-		$reportedDate = global_editor::rteSafe(html_entity_decode($reportedDate,ENT_COMPAT ,'UTF-8' ));
-		$status = $_pgR['Status'];
-		$status = global_editor::rteSafe(html_entity_decode($status,ENT_COMPAT ,'UTF-8' ));
-        
-		//$checkProduct = $objMenu->getMenuByName($_pgR['name']);
-		//if ($checkProduct && $checkProduct['menu_id']!= $strID) {
-		//	echo global_common::convertToXML($arrHeader, array("rs",'info'), array(0,global_common::STRING_NAME_EXIST), array(0,1));
-		//	return;
-		//}
-		//$strName = $_pgR['name'];
-		//$strDetail= $_pgR['detail'];
-		$resultID = $objCommentBad->update($commnentID,$description,$reportedBy,$reportedDate,$status);
-		
-		if ($resultID)
-		{
-			$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
-			
-			echo global_common::convertToXML(
-					$arrHeader, array("rs", "inf"), 
-					array(1, $result ), 
-					array( 0, 1 )
-					);
-			return;
-		}
-		else
-		{
-			echo global_common::convertToXML($arrHeader, array("rs"), array(0), array(0));
-			return;
-		}
-	}
-	else
-	{
-		echo global_common::convertToXML($arrHeader, array("rs",'info'), array(0,global_common::STRING_REQUIRE_LOGIN), array(0,1));
-	}
-	return;
-}
-elseif($_pgR['act'] == model_CommentBad::ACT_CHANGE_PAGE)
-{
-	$intPage = $_pgR['p'];
-	
-	$outPutHTML =  $objCommentBad->getListCommentBad($intPage);
-	echo global_common::convertToXML($strMessageHeader, array('rs','inf'), array(1,$outPutHTML),array(0,1));
-	return ;
-}
-elseif($_pgR['act'] == model_CommentBad::ACT_SHOW_EDIT)
-{
-	
-	$strCommentBadID = $_pgR['id'];
-	$arrCommentBad =  $objCommentBad->getCommentBadByID($strCommentBadID);
-	
-	echo global_common::convertToXML($strMessageHeader, array('rs','CommnentID','Description','ReportedBy','ReportedDate','Status'), array(1,'CommnentID','Description','ReportedBy','ReportedDate','Status'),array(0,1,1,1,1,1));
-	return ;
-}
-elseif ($_pgR["act"] == model_CommentBad::ACT_GET)
-{		
-	$sectionID = $_pgR["sect"];
-	$arrSection= $objMenu->getAllMenuBySection($sectionID);
-	if($arrSection)
-	{
-		$strHTML = $objMenu->outputHTMLMenu($arrSection);
-		echo global_common::convertToXML($arrHeader, array("rs", "inf"), 
-				array(1, $strHTML), array(0, 1));
-		return;	
-	}
-	else
-	{
-		echo global_common::convertToXML($arrHeader, array("rs",'inf'),array(0,'Kh?ng c? nh?m h?ng'),array(0,0));
-		return ;
-	}
-}
-elseif($_pgR['act'] == model_CommentBad::ACT_DELETE)
-{
-	
-	$IDName = "menu_id";
-	$contentID = $_pgR["id"];
-	$strTableName = user_menu::TBL_T_MENU;
-	$result = global_common::updateDeleteFlag($contentID,$IDName,$strTableName ,$_pgR["status"],$objConnection);
-	if($result)
-	{
-		$IDName = "content_id";
-		$strTableName = user_faq::TBL_T_FAQ;
-		$result = global_common::updateDeleteFlag($contentID,$IDName,$strTableName ,$_pgR["status"],$objConnection);
-	}
-	$arrHeader = global_common::getMessageHeaderArr($banCode=0,0);
-	$arrKey = array("rs","id");
-	$arrValue = array($result?1:0,$contentID);
-	$arrIsMetaData = array(0, 1);
-	echo global_common::convertToXML($arrHeader, $arrKey, $arrValue, $arrIsMetaData);
-	
-	return;
-}
+$comments = $objComment->getAllBadComment();
+//print_r($comments[0]);
 ?>
-
 <?php
+$_SESSION[global_common::SES_C_CUR_PAGE] = "admin/admin_article.php";
 include_once('include/_admin_header.inc');
-include_once('include/_admin_menu.inc');
 ?>
-<script type="text/javascript" src="<?php echo $_objSystem->locateJs('sela_CommentBad.js');?>"></script>
-	
-<!--Begin Form Input -->
-<input type="hidden" id="adddocmode" name="adddocmode" value="1<?php //echo $intMode;?>" />
-<input type="hidden" id="txtPage" name="txtPage" value="<?php echo $_pgR["p"]?$intPage:1;?>" />
-<input type="hidden" id="txtID" name="txtID" value="" />
- <center>
-<br><h2 align="center">Mananage CommentBad</h2>
-		<div class="input-field-border input-field-content" >
-				<div id="lgTitle" class="div_admin_group_title" style="">
-				<span style="cursor:default; font-family:inherit" id='status-add' name='status-add'>Add Mode</span></div>
-				
-				<div class="div_admin_group_content_inside" style="width: 100%; top: -20px;">
-				    <table id="tblPopUp" style="width: 100%;" border="0" cellpadding="2" cellspacing="0">
-                        <tbody>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>CommnentID</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtCommnentID' name='txtCommnentID' value='' style='width: 49.5%;'  maxlength='60' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>Description</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><textarea id='txtDescription' name='txtDescription'  style='width: 49.5%;'  maxlength='65535' ></textarea></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>ReportedBy</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtReportedBy' name='txtReportedBy' value='' style='width: 49.5%;'  maxlength='60' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>ReportedDate</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtReportedDate' name='txtReportedDate' value='' style='width: 49.5%;'  maxlength='0' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>Status</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtStatus' name='txtStatus' value='' style='width: 49.5%;'  maxlength='60' type='text'></td>
-						</tr>
-                        </tbody>
-                    </table>
-				</div>
-	
-
-				<div class="div_admin_group_content_inside" style="margin: 4px; display: block;" align="center">		
-				  <input id="btnOK" value="OK"  style="width: 50px;" onClick="_objCommentBad.btnSave_OnClick()" type="button" class="btn btn-oliver"> &nbsp;&nbsp;&nbsp;
-				  <input id="btnClose" value="Cancel" align="center" style="width: 65px;" onClick="_objCommentBad.showAddMode()" type="button" class="btn btn-oliver">  
-			  </div>					
-		</div>	
-	
-		</center>
-<!--End Form Input -->
-
-   <div  id="content-admin" >
-                    <div align="center">
-	                    <h2>Danh s?ch</h2>									
-					</div>
-					<div id="list-content" style="padding:10px">
-						<?php echo $objCommentBad ->getListCommentBad(1) ?>					
-						</div>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_comment.js');?>"></script>
+<div id="admin-article">
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+			<h3 class="page-title">
+				Quản lý bad comment
+			</h3>
+		</div>
 	</div>
-
-<?php 
-//footer
+	 <div class="row-fluid">	
+            <div class="span12">
+	<div class="portlet box">
+		<div class="portlet-title hide">
+			<div class="caption">
+				<!--i class="icon-reorder"></i-->
+			</div>
+			
+			<div class="tools">                                
+				<!--a href="#config-form" data-toggle="modal" class="config"></a-->
+				<!--a href="javascript:;" class="reload" title="Reload"></a-->
+			</div>
+			<div class="actions">									
+				
+			</div>
+		</div>
+		<!---->
+		<div class="portlet-body">
+		
+									
+<?php
+//print_r($articles);
+if($comments)
+{
+	echo '<table class="table table-striped">';
+	echo '<thead>';
+	echo '<th>';
+	echo 'Tên khuyến mãi';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Comment';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Comment by';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Comment date';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Reported by';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Reported date';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Action';		
+	echo '</th>';
+	echo '</thead>';
+	foreach($comments as $item)
+	{
+		//print_r($item[global_mapping::CommentBad]);
+		echo '<tr>';
+		echo '<td>';
+		echo $item[global_mapping::ArticleID][global_mapping::Title];		
+		echo '</td>';
+		echo '<td style="padding:0;width:200px">';
+		echo $item[global_mapping::Content];		
+		echo '</td>';
+		echo '<td>';
+		echo $item[global_mapping::CreatedBy][global_mapping::UserName];		
+		echo '</td>';
+		echo '<td>';
+		echo global_common::formatDateTimeVN($item[global_mapping::CreatedDate]);		
+		echo '</td>';
+		echo '<td>';
+		echo $item[global_mapping::CommentBad][global_mapping::ReportedBy][global_mapping::UserName];		
+		echo '</td>';
+		echo '<td>';
+		echo global_common::formatDateTimeVN($item[global_mapping::CommentBad][global_mapping::ReportedDate]);	
+		echo '</td>';
+		echo '<td style="padding:0;width:180px">';
+		echo '<a href="../article_detail.php?aid='.$item[global_mapping::ArticleID][global_mapping::ArticleID].'" target="_blank" class="btn btn-mini"> View Article</a> ';	
+		if(	!$item[global_mapping::CommentBad][global_mapping::Status])
+		{
+			echo '<a href="javascript:comment.badComment(\''.$item[global_mapping::CommentID].'\',1,true)" class="btn btn-mini">Delete</a> ';	
+		}
+		else
+		{
+			echo '<a href="javascript:comment.badComment(\''.$item[global_mapping::CommentID].'\',0,true)" class="btn btn-mini">Restore</a>';	
+		}	
+		echo '</td>';
+		echo '</tr>';
+	}
+	echo '</table>';
+}
+?>
+				</div>
+					</div>
+		</div>
+	</div>
+</div>
+<?php
 include_once('include/_admin_footer.inc');
 ?>

@@ -16,73 +16,67 @@ class Model_CommentBad
 {		   
 	#region PRESERVE ExtraMethods For CommentBad
 	#endregion
-    #region Contants	
-    const ACT_ADD							= 10;
-    const ACT_UPDATE						= 11;
-    const ACT_DELETE						= 12;
-    const ACT_CHANGE_PAGE					= 13;
-    const ACT_SHOW_EDIT                     = 14;
-    const ACT_GET                           = 15;
-    const NUM_PER_PAGE                      = 15;
-    
-    const TBL_SL_COMMENT_BAD			            = 'sl_comment_bad';
-
+	#region Contants	
+	const ACT_ADD							= 10;
+	const ACT_UPDATE						= 11;
+	const ACT_DELETE						= 12;
+	const ACT_CHANGE_PAGE					= 13;
+	const ACT_SHOW_EDIT                     = 14;
+	const ACT_GET                           = 15;
+	const NUM_PER_PAGE                      = 15;
+	
+	const TBL_SL_COMMENT_BAD			            = 'sl_comment_bad';
+	
 	const SQL_INSERT_SL_COMMENT_BAD		= 'INSERT INTO `{0}`
 		(
-			CommnentID,
-			Description,
-			ReportedBy,
-			ReportedDate,
-			CreatedBy,
-			CreatedDate,
-			ModifiedBy,
-			ModifiedDate,
-			DeletedBy,
-			DeletedDate,
-			IsDeleted,
-			Status
-        )
-        VALUES (
-			\'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\', \'{11}\', \'{12}\'
-        );';
-        
+		CommentID,
+		Description,
+		ReportedBy,
+		ReportedDate,
+		ModifiedBy,
+		ModifiedDate,
+		DeletedBy,
+		DeletedDate,
+		IsDeleted,
+		Status
+		)
+		VALUES (
+		\'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\'
+		);';
+	
 	const SQL_UPDATE_SL_COMMENT_BAD		= 'UPDATE `{0}`
 		SET  
-			`CommnentID` = \'{1}\',
-			`Description` = \'{2}\',
-			`ReportedBy` = \'{3}\',
-			`ReportedDate` = \'{4}\',
-			`CreatedBy` = \'{5}\',
-			`CreatedDate` = \'{6}\',
-			`ModifiedBy` = \'{7}\',
-			`ModifiedDate` = \'{8}\',
-			`DeletedBy` = \'{9}\',
-			`DeletedDate` = \'{10}\',
-			`IsDeleted` = \'{11}\',
-			`Status` = \'{12}\'
-		WHERE `CommnentID` = \'{1}\'  ';
-		   
-
-    const SQL_CREATE_TABLE_SL_COMMENT_BAD		= 'CREATE TABLE `{0}` (
-
-			`CommnentID` varchar(20),
-			`Description` ,
-			`ReportedBy` varchar(20),
-			`ReportedDate` ,
-			`CreatedBy` varchar(20),
-			`CreatedDate` ,
-			`ModifiedBy` varchar(20),
-			`ModifiedDate` ,
-			`DeletedBy` varchar(20),
-			`DeletedDate` ,
-			`IsDeleted` ,
-			`Status` varchar(20),
-			PRIMARY KEY(CommnentID)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+		`CommentID` = \'{1}\',
+		`Description` = \'{2}\',
+		`ReportedBy` = \'{3}\',
+		`ReportedDate` = \'{4}\',
+		`ModifiedBy` = \'{5}\',
+		`ModifiedDate` = \'{6}\',
+		`DeletedBy` = \'{7}\',
+		`DeletedDate` = \'{8}\',
+		`IsDeleted` = \'{9}\',
+		`Status` = \'{10}\'
+		WHERE `CommentID` = \'{1}\'  ';
 	
-    #endregion   
-    
-    #region Variables
+	
+	const SQL_CREATE_TABLE_SL_COMMENT_BAD		= 'CREATE TABLE `{0}` (
+		
+		`CommentID` varchar(20),
+		`Description` ,
+		`ReportedBy` varchar(20),
+		`ReportedDate` ,
+		`ModifiedBy` varchar(20),
+		`ModifiedDate` ,
+		`DeletedBy` varchar(20),
+		`DeletedDate` ,
+		`IsDeleted` ,
+		`Status` varchar(20),
+		PRIMARY KEY(CommentID)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+	
+	#endregion   
+	
+	#region Variables
 	var $_objConnection;
 	#end region
 	
@@ -100,17 +94,24 @@ class Model_CommentBad
 		$this->_objConnection = $objConnection;
 		
 	}
-    #region
-    
-    #region Public Functions
-    
-    public function insert( $description,$reportedby,$reporteddate,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
+	#region
+	
+	#region Public Functions
+	
+	public function insert($commentID, $description,$reportedby, $status)
 	{
-		$intID = global_common::getMaxID(self::TBL_SL_COMMENT_BAD);
-		
 		$strTableName = self::TBL_SL_COMMENT_BAD;
 		$strSQL = global_common::prepareQuery(self::SQL_INSERT_SL_COMMENT_BAD,
-				array(self::TBL_SL_COMMENT_BAD,$intID,global_common::escape_mysql_string($description),global_common::escape_mysql_string($reportedby),global_common::escape_mysql_string($reporteddate),global_common::escape_mysql_string($createdby),global_common::escape_mysql_string($createddate),global_common::escape_mysql_string($modifiedby),global_common::escape_mysql_string($modifieddate),global_common::escape_mysql_string($deletedby),global_common::escape_mysql_string($deleteddate),global_common::escape_mysql_string($isdeleted),global_common::escape_mysql_string($status)));
+				array(self::TBL_SL_COMMENT_BAD,$commentID,
+					global_common::escape_mysql_string($description),
+					global_common::escape_mysql_string($reportedby),
+					global_common::nowSQL(),
+					global_common::escape_mysql_string($modifiedby),
+					global_common::escape_mysql_string($modifieddate),
+					global_common::escape_mysql_string($deletedby),
+					global_common::escape_mysql_string($deleteddate),
+					global_common::escape_mysql_string($isdeleted),
+					global_common::escape_mysql_string($status)));
 		
 		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_COMMENT_BAD,$this->_objConnection,$strTableName))
 		{
@@ -118,30 +119,61 @@ class Model_CommentBad
 			global_common::writeLog('Error add sl_comment_bad:'.$strSQL,1);
 			return false;
 		}	
-		return $intID;
+		return $commentID;
 		
 	}
-    
-    public function update($commnentid,$description,$reportedby,$reporteddate,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
+	
+	public function update($commentid,$description,$reportedby,$reporteddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
 	{
+		//echo 'status'.$status;
 		$strTableName = self::TBL_SL_COMMENT_BAD;
 		$strSQL = global_common::prepareQuery(self::SQL_UPDATE_SL_COMMENT_BAD,
-				array($strTableName,global_common::escape_mysql_string($commnentid),global_common::escape_mysql_string($description),global_common::escape_mysql_string($reportedby),global_common::escape_mysql_string($reporteddate),global_common::escape_mysql_string($createdby),global_common::escape_mysql_string($createddate),global_common::escape_mysql_string($modifiedby),global_common::escape_mysql_string($modifieddate),global_common::escape_mysql_string($deletedby),global_common::escape_mysql_string($deleteddate),global_common::escape_mysql_string($isdeleted),global_common::escape_mysql_string($status) ));
-		
+				array($strTableName,global_common::escape_mysql_string($commentid),
+				global_common::escape_mysql_string($description),
+				global_common::escape_mysql_string($reportedby),
+				global_common::escape_mysql_string($reporteddate),
+				global_common::escape_mysql_string($modifiedby),
+				global_common::escape_mysql_string($modifieddate),
+				global_common::escape_mysql_string($deletedby),
+				global_common::escape_mysql_string($deleteddate),
+				global_common::escape_mysql_string($isdeleted),
+				global_common::escape_mysql_string($status) ));
+		//echo $strSQL;
 		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_COMMENT_BAD,$this->_objConnection,$strTableName))
 		{
 			//echo $strSQL;
 			global_common::writeLog('Error add sl_comment_bad:'.$strSQL,1);
 			return false;
 		}	
-		return $intNewID;		
+		return $commentid;		
 	}
-    
-    public function getCommentBadByID($objID,$selectField='*') 
+	public function activateBadComment($commentID,$description, $updatedBy,$isBad)
+	{
+		$currentComment = $this->getCommentBadByID($commentID);
+		$currentComment[global_mapping::Description] = $description;
+		$currentComment[global_mapping::ModifiedBy] = $updatedBy;
+		$currentComment[global_mapping::Status] = $isBad;
+		//echo 'bad:'.$isBad;
+		//print_r($currentComment);
+		//echo 'status'.$currentComment[global_mapping::Status];
+		//echo "Active".$currentComment[global_mapping::CommentID];
+		return $this->update(
+			$currentComment[global_mapping::CommentID],
+			$currentComment[global_mapping::Description],
+			$currentComment[global_mapping::ReportedBy],
+			$currentComment[global_mapping::ReportedDate],
+			$currentComment[global_mapping::ModifiedBy],
+			global_common::nowSQL(),
+			$currentComment[global_mapping::DeletedBy],
+			$currentComment[global_mapping::DeletedDate],
+			$currentComment[global_mapping::IsDeleted],
+			$currentComment[global_mapping::Status]);
+	}
+	public function getCommentBadByID($objID,$selectField='*') 
 	{		
 		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
 				array($selectField, self::TBL_SL_COMMENT_BAD ,							
-					'WHERE CommnentID = \''.$objID.'\' '));
+					'WHERE CommentID = \''.$objID.'\' '));
 		//echo '<br>SQL:'.$strSQL;
 		$arrResult =$this->_objConnection->selectCommand($strSQL);		
 		if(!$arrResult)
@@ -152,10 +184,11 @@ class Model_CommentBad
 		//print_r($arrResult);
 		return $arrResult[0];
 	}
-    
-    public function getAllCommentBad($intPage = 0,$selectField='*',$whereClause='',$orderBy='') 
+	
+	
+	public function getAllCommentBad($intPage = 0,$selectField='*',$whereClause='',$orderBy='') 
 	{		
-        if($whereClause)
+		if($whereClause)
 		{
 			$whereClause = ' WHERE '.$whereClause;
 		}
@@ -164,18 +197,18 @@ class Model_CommentBad
 		{
 			$orderBy = ' ORDER BY '.$orderBy;
 		}
-        if($intPage>0)
-        {
-		    $strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
-				array($selectField, Model_CommentBad::TBL_SL_COMMENT_BAD ,							
-					$whereClause.$orderBy .' limit '.(($intPage-1)* self::NUM_PER_PAGE).','.self::NUM_PER_PAGE));
-        }
-        else
-        {
-            $strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
-				array($selectField, Model_CommentBad::TBL_SL_COMMENT_BAD ,							
-					$whereClause.$orderBy ));
-        }
+		if($intPage>0)
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, Model_CommentBad::TBL_SL_COMMENT_BAD ,							
+						$whereClause.$orderBy .' limit '.(($intPage-1)* self::NUM_PER_PAGE).','.self::NUM_PER_PAGE));
+		}
+		else
+		{
+			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array($selectField, Model_CommentBad::TBL_SL_COMMENT_BAD ,							
+						$whereClause.$orderBy ));
+		}
 		//echo '<br>SQL:'.$strSQL;
 		$arrResult =$this->_objConnection->selectCommand($strSQL);		
 		if(!$arrResult)
@@ -183,58 +216,62 @@ class Model_CommentBad
 			global_common::writeLog('get All sl_comment_bad:'.$strSQL,1,$_mainFrame->pPage);
 			return null;
 		}
+		//echo 'Merge bad comment info';
+		//print_r($arrResult);
+		$arrResult = global_common::mergeUserInfo($arrResult);
+		//echo 'End Merge bad comment info';
 		//print_r($arrResult);
 		return $arrResult;
 	}
-    
-    public function getListCommentBad($intPage,$orderBy='CommnentID', $whereClause)
+	
+	public function getListCommentBad($intPage,$orderBy='CommentID', $whereClause)
 	{		
-        if($whereClause)
-        {
-            $whereClause='WHERE'+ $whereClause;						
-        }
-        if($orderBy)
-        {
-            $orderBy='ORDER BY'+ $orderBy;						
-        }
+		if($whereClause)
+		{
+			$whereClause='WHERE'+ $whereClause;						
+		}
+		if($orderBy)
+		{
+			$orderBy='ORDER BY'+ $orderBy;						
+		}
 		$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE,array('*',
 					self::TBL_SL_COMMENT_BAD,$orderBy.' '.$whereClause.' limit '.(($intPage-1)* self::NUM_PER_PAGE).','.self::NUM_PER_PAGE));
 		//echo 'sql:'.$strSQL;	
 		$arrResult = $this->_objConnection->selectCommand($strSQL);
 		//print_r($arrResult);
 		$strHTML = '<table class="tbl-list">
-                    <thead>
-						<td>CommnentID</td>
-						<td>Description</td>
-						<td>ReportedBy</td>
-						<td>ReportedDate</td>
-						<td>CreatedBy</td>
-						<td>CreatedDate</td>
-						<td>ModifiedBy</td>
-						<td>ModifiedDate</td>
-						<td>DeletedBy</td>
-						<td>DeletedDate</td>
-						<td>IsDeleted</td>
-						<td>Status</td>
-                    </thead>
-                    <tbody>';
+				<thead>
+				<td>CommentID</td>
+				<td>Description</td>
+				<td>ReportedBy</td>
+				<td>ReportedDate</td>
+				<td>CreatedBy</td>
+				<td>CreatedDate</td>
+				<td>ModifiedBy</td>
+				<td>ModifiedDate</td>
+				<td>DeletedBy</td>
+				<td>DeletedDate</td>
+				<td>IsDeleted</td>
+				<td>Status</td>
+				</thead>
+				<tbody>';
 		$icount = count($arrmenu);
 		for($i=0;$i<$icount;$i++)
 		{
 			$strHTML.='<tr class="'.($i%2==0?'even':'odd').'">
-						<td>'.$arrResult[$i]['CommnentID'].'</td>
-						<td>'.$arrResult[$i]['Description'].'</td>
-						<td>'.$arrResult[$i]['ReportedBy'].'</td>
-						<td>'.$arrResult[$i]['ReportedDate'].'</td>
-						<td>'.$arrResult[$i]['CreatedBy'].'</td>
-						<td>'.$arrResult[$i]['CreatedDate'].'</td>
-						<td>'.$arrResult[$i]['ModifiedBy'].'</td>
-						<td>'.$arrResult[$i]['ModifiedDate'].'</td>
-						<td>'.$arrResult[$i]['DeletedBy'].'</td>
-						<td>'.$arrResult[$i]['DeletedDate'].'</td>
-						<td><input type="checkbox" onclick="_objCommentBad.showHide(\''.$arrResult[$i]['CommnentID'].'\',\''.$arrResult[$i]['name'].'\',this)" '.($arrResult[$i]['IsDeleted']?'':'checked=checked').' /></td>
-						<td class="lastCell">'.$arrResult[$i]['Status'].'</td>
-					  </tr>';
+					<td>'.$arrResult[$i]['CommentID'].'</td>
+					<td>'.$arrResult[$i]['Description'].'</td>
+					<td>'.$arrResult[$i]['ReportedBy'].'</td>
+					<td>'.$arrResult[$i]['ReportedDate'].'</td>
+					<td>'.$arrResult[$i]['CreatedBy'].'</td>
+					<td>'.$arrResult[$i]['CreatedDate'].'</td>
+					<td>'.$arrResult[$i]['ModifiedBy'].'</td>
+					<td>'.$arrResult[$i]['ModifiedDate'].'</td>
+					<td>'.$arrResult[$i]['DeletedBy'].'</td>
+					<td>'.$arrResult[$i]['DeletedDate'].'</td>
+					<td><input type="checkbox" onclick="_objCommentBad.showHide(\''.$arrResult[$i]['CommentID'].'\',\''.$arrResult[$i]['name'].'\',this)" '.($arrResult[$i]['IsDeleted']?'':'checked=checked').' /></td>
+					<td class="lastCell">'.$arrResult[$i]['Status'].'</td>
+					</tr>';
 		}
 		$strHTML.='</tbody></table>';
 		
@@ -242,7 +279,7 @@ class Model_CommentBad
 				"_objMenu.changePage")."</div>";
 		return $strHTML;
 	}
-    
-    #endregion   
+	
+	#endregion   
 }
 ?>

@@ -2,7 +2,7 @@
 if ($_pgR["aid"])
 {
 	$articleID = $_pgR["aid"];
-	$article = $objArticle->getArticleByID($articleID);
+	$article = $objArticle->getArticleByID($articleID, '*','`Status`=1');
 	//$intPage = 1;
 	//$total = 0;
 	//$comments = $objComment->getCommentByArticle($intPage,$total,$articleID,'*','',' CreatedDate DESC');

@@ -81,7 +81,9 @@
 <body >
 <div id="main" align="center">
     <!--div id="subcontent" -->
-    <div id="header" align="">
+    <div id="admin-header" align="">
+		<a class="menu" href="admin_article.php">Manage Article</a>
+		<a class="menu" href="admin_commentbad.php">Manage Comment</a>
     </div>
 	<div class="wrapper">		
        

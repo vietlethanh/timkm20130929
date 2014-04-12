@@ -23,6 +23,7 @@ var article = {
     ACT_CHANGE_PAGE : 13,
     ACT_SHOW_EDIT : 14,
     ACT_GET : 15,
+    ACT_ACTIVE : 16,
     Page : "bg_article.php",
     
    
@@ -557,8 +558,16 @@ var article = {
 		var map = new GMaps({
 				el: '#map-article',
 				lat: core.constant.LatDefault,
-				lng: core.constant.LongDefault
+				lng: core.constant.LongDefault,
+				
+                zoomControl : true,
+			    zoomControlOpt: {
+                    style : 'SMALL',
+                    position: 'TOP_LEFT'
+                },
+                panControl : true
 			});
+	
 		for(i=0;i<addresses.length;i++)
 		{
 			if(addresses[i] != 'undefined' && addresses[i] != '')
@@ -614,6 +623,35 @@ var article = {
 		*/
 		optDistrict.trigger("liszt:updated");
 	},
+	
+	activeArticle: function(articleID,isActivate)
+	{
+		var articleInfo = 
+		{
+			 id: articleID,
+			 isactivate: isActivate
+		};
+		
+		articleInfo.act = this.ACT_ACTIVE;
+		
+        core.request.post('../'+this.Page,articleInfo,
+            function(respone, info){
+				var strRespond = core.util.parserXML(respone);
+				if (parseInt(strRespond[1]['rs']) == 1) {
+					core.ui.showInfoBar(1, strRespond[1]["inf"]);	
+					core.util.reload();
+                }
+                else{
+                    core.ui.showInfoBar(2, strRespond[1]["inf"]);	
+                }
+            },
+            function()
+            {
+				core.ui.showInfoBar(2, core.constant.MsgProcessError);	
+            }
+        );
+	},
+	
     /*
     this.edit = edit;
     function edit() {

@@ -27,6 +27,10 @@ class global_mapping
 	const ArticleType				= 'ArticleType';
 	const CreatedDate				= 'CreatedDate';
 	const CreatedBy					= 'CreatedBy';
+	const ModifiedDate				= 'ModifiedDate';
+	const ModifiedBy				= 'ModifiedBy';
+	const DeletedDate				= 'DeletedDate';
+	const DeletedBy					= 'DeletedBy';
 	const ArticleID					= 'ArticleID';
 	const Content					= 'Content';
 	const Status					= 'Status';
@@ -36,6 +40,10 @@ class global_mapping
 
 		
 	const CommentID					= 'CommentID';
+	const CommentBad				= 'CommentBad';
+	const Description				= 'Description';
+	const ReportedDate				= 'ReportedDate';
+	const ReportedBy				= 'ReportedBy';
 	const Title						= 'Title';
 	const Articles					= 'Articles';
 	const NumArticle				= 'NumArticle';

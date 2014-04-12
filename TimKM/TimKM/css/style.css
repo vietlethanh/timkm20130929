@@ -449,6 +449,21 @@ table.table {
     width: 35px;
     height: 35px; }
 
+#admin-header {
+  border-bottom: 1px solid #FFFFFF;
+  font-size: 19px;
+  height: 45px;
+  margin-bottom: 18px;
+  padding-bottom: 4px;
+  padding-top: 27px;
+  vertical-align: bottom;
+  text-align: left; }
+  #admin-header a.menu {
+    border-right: 2px solid #0000FF;
+    padding-right: 5px; }
+  #admin-header a.menu:last-child {
+    border-right: none; }
+
 /*********** end header ************/
 /*********** left-sider ************/
 #left-sider {
@@ -927,6 +942,8 @@ table.table {
           line-height: 10px; }
           #article #article-detail #comment-content #comment-list .item .comment-detail .username p.created-date {
             float: right; }
+      #article #article-detail #comment-content #comment-list .item .comment-controls {
+        float: right; }
   #article #company-info {
     display: inline-block;
     text-align: right;

@@ -19,6 +19,7 @@ else
 
 $condidtion =global_mapping::StartDate.' <= \''.global_common::nowSQL().'\''.
 	' And '.global_mapping::EndDate.' >= \''.global_common::nowSQL().'\'';
+$condidtion .= ' And `Status` = 1';
 $articles = $objArticle->getTopArticleByType($allCatIDs,global_common::DEFAULT_TOP_ITEMS,null,$condidtion);
 //print_r($articles);
 ?>
