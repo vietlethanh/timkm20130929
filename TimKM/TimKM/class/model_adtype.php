@@ -170,6 +170,10 @@ class Model_AdType
     
     public function getAllAdType($intPage = 0,$selectField='*',$whereClause='',$orderBy='') 
 	{		
+		if(!$selectField)
+		{
+			$selectField = '*';
+		}
         if($whereClause)
 		{
 			$whereClause = ' WHERE '.$whereClause;
