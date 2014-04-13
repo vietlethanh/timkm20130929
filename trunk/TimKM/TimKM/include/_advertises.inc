@@ -5,10 +5,8 @@ $condition = global_mapping::AdTypeID.'=\'2\'';
 $allAds = $objAdvertising->getAllAdvertising(0,'',$condition,'');
 foreach($allAds as $item)
 {
-	
 	echo '<div class="advertise">';
-	echo '	<img class="partner" src="'.$item[global_mapping::ImageLink].'" />';
+	echo '<a href="'.$item[global_mapping::PreferLink].'" target="_blank"><img class="partner" src="'.$item[global_mapping::ImageLink].'" /></a>';
 	echo '</div>';
-	
 }
-		?>	
+?>	

@@ -86,6 +86,7 @@ class global_mapping
 	const AdvertisingID				= 'AdvertisingID';
 	const AdvertisingName			= 'AdvertisingName';
 	const AdTypeID					= 'AdTypeID';
+	const PreferLink					= 'PreferLink';
 	const AdTypeName				= 'AdTypeName';
 	const ImageLink					= 'ImageLink';
 	const PartnerID					= 'PartnerID';

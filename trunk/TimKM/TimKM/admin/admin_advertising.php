@@ -33,6 +33,8 @@ if ($_pgR["act"] == Model_Advertising::ACT_ADD || $_pgR["act"] == Model_Advertis
 	$advertisingName = html_entity_decode($advertisingName,ENT_COMPAT ,'UTF-8' );
 	
 	$adTypeID = html_entity_decode($_pgR[global_mapping::AdTypeID],ENT_COMPAT ,'UTF-8' );
+	$content = html_entity_decode($_pgR[global_mapping::Content],ENT_COMPAT ,'UTF-8' );
+	$preferLink = html_entity_decode($_pgR[global_mapping::PreferLink],ENT_COMPAT ,'UTF-8' );
 	$order = html_entity_decode($_pgR[global_mapping::Order],ENT_COMPAT ,'UTF-8' );
 	$startDate = html_entity_decode($_pgR[global_mapping::StartDate],ENT_COMPAT ,'UTF-8' );
 	$endDate = html_entity_decode($_pgR[global_mapping::EndDate],ENT_COMPAT ,'UTF-8' );
@@ -43,7 +45,7 @@ if ($_pgR["act"] == Model_Advertising::ACT_ADD || $_pgR["act"] == Model_Advertis
 	{
 		$createdBy = $c_userInfo[global_mapping::UserID];
 		
-		$resultID = $objAdvertising->insert($advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$imageLink,$order,$createdBy,$status);
+		$resultID = $objAdvertising->insert($advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$content,$imageLink,$preferLink,$order,$createdBy,$status);
 		if ($resultID)
 		{
 			$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
@@ -65,7 +67,7 @@ if ($_pgR["act"] == Model_Advertising::ACT_ADD || $_pgR["act"] == Model_Advertis
 		$modifiedBy = $c_userInfo[global_mapping::UserID];
 		$advertisingID = html_entity_decode($_pgR[global_mapping::AdvertisingID],ENT_COMPAT ,'UTF-8' );
 		$currentAd = $objAdvertising->getAdvertisingByID($advertisingID);
-		$resultID = $objAdvertising->update($advertisingID,$advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$imageLink,$order,
+		$resultID = $objAdvertising->update($advertisingID,$advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$content,$imageLink,$preferLink,$order,
 				$modifiedBy,global_common::nowSQL(),
 				$currentAd[global_mapping::DeletedBy],$currentAd[global_mapping::DeletedDate],
 				$currentAd[global_mapping::IsDeleted],$currentAd[global_mapping::Status]
@@ -303,6 +305,21 @@ foreach($allAdType as $item)
             </label>
             <div class="controls">
                  <input id="txtImageLink" type="text" class="span5">
+            </div>
+        </div>
+		<div class="control-group">
+            <label class="control-label">
+                Prefer Link 
+            </label>
+            <div class="controls">
+                 <input id="txtPreferLink" type="text" class="span5">
+            </div>
+        </div>
+		<div class="control-group">
+            <label class="control-label">
+                Content </label>
+            <div class="controls">
+                <textarea  id="txtContent" class="span5" rows="3"></textarea>
             </div>
         </div>
         <div class="control-group">
