@@ -72,9 +72,17 @@
 <script type="text/javascript" src="<?php echo $_objSystem->locateJs('ajax.js');?>"></script>
 <script type="text/javascript" src="<?php echo $_objSystem->locateJs('global_config.js');?>"></script>
 <script type="text/javascript" src="<?php echo $_objSystem->locateJs('global_core.js');?>"></script>
-
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('app.js');?>"></script>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('form-components.js');?>"></script>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_user.js');?>"></script>
 </head>
-
+<script>
+		jQuery(document).ready(function() {
+			// initiate layout and plugins
+			App.init();
+			FormComponents.init();
+		});
+	</script>
 <?php
 
 ?>
@@ -82,8 +90,10 @@
 <div id="main" align="center">
     <!--div id="subcontent" -->
     <div id="admin-header" align="">
+		<a class="menu" href="../index.php">TimKM</a>
 		<a class="menu" href="admin_article.php">Manage Article</a>
 		<a class="menu" href="admin_commentbad.php">Manage Comment</a>
+		<a class="menu" href="admin_advertising.php">Manage Advertising</a>
     </div>
 	<div class="wrapper">		
        

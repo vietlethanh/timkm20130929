@@ -9,270 +9,326 @@
  */
 
 /// <summary>
-/// Implementations of sladvertisings represent a Advertising
+/// Implementations of slAdvertising represent a Advertising
 ///
 /// </summary>
 chdir("..");
 /* TODO: Add code here */
 require('config/globalconfig.php');
+require('include/_permission_admin.inc');
+include_once('class/model_user.php');
 include_once('class/model_advertising.php');
+include_once('class/model_adtype.php');
 
-?>
-<?php
 
 $objAdvertising = new Model_Advertising($objConnection);
+$objAdType = new Model_AdType($objConnection);
 
-if ($_pgR["act"] == model_Advertising::ACT_ADD)
+if ($_pgR["act"] == Model_Advertising::ACT_ADD || $_pgR["act"] == Model_Advertising::ACT_UPDATE)
 {
+	//get user info
+	$c_userInfo = $_SESSION[global_common::SES_C_USERINFO];
 	
-	if (global_common::isCLogin())
+	$advertisingName = $_pgR[global_mapping::AdvertisingName];
+	$advertisingName = html_entity_decode($advertisingName,ENT_COMPAT ,'UTF-8' );
+	
+	$adTypeID = html_entity_decode($_pgR[global_mapping::AdTypeID],ENT_COMPAT ,'UTF-8' );
+	$order = html_entity_decode($_pgR[global_mapping::Order],ENT_COMPAT ,'UTF-8' );
+	$startDate = html_entity_decode($_pgR[global_mapping::StartDate],ENT_COMPAT ,'UTF-8' );
+	$endDate = html_entity_decode($_pgR[global_mapping::EndDate],ENT_COMPAT ,'UTF-8' );
+	$imageLink = html_entity_decode($_pgR[global_mapping::ImageLink],ENT_COMPAT ,'UTF-8' );
+	$partnerID = html_entity_decode($_pgR[global_mapping::PartnerID],ENT_COMPAT ,'UTF-8' );
+	$status = 1;
+	if($_pgR["act"] == Model_Advertising::ACT_ADD)
 	{
-		//get user info
-		//$c_userInfo = $_SESSION[consts::SES_C_USERINFO];
+		$createdBy = $c_userInfo[global_mapping::UserID];
 		
-		//if ($objMenu->getMenuByName($_pgR['name'])) {
-		//	echo global_common::convertToXML($arrHeader, array("rs",'info'), array(0,global_common::STRING_NAME_EXIST), array(0,1));
-		//	return;
-		//}
-
-		$advertisingID = $_pgR['AdvertisingID'];
-		$advertisingID = global_editor::rteSafe(html_entity_decode($advertisingID,ENT_COMPAT ,'UTF-8' ));
-		$advertisingName = $_pgR['AdvertisingName'];
-		$advertisingName = global_editor::rteSafe(html_entity_decode($advertisingName,ENT_COMPAT ,'UTF-8' ));
-		$partnerID = $_pgR['PartnerID'];
-		$partnerID = global_editor::rteSafe(html_entity_decode($partnerID,ENT_COMPAT ,'UTF-8' ));
-		$startDate = $_pgR['StartDate'];
-		$startDate = global_editor::rteSafe(html_entity_decode($startDate,ENT_COMPAT ,'UTF-8' ));
-		$endDate = $_pgR['EndDate'];
-		$endDate = global_editor::rteSafe(html_entity_decode($endDate,ENT_COMPAT ,'UTF-8' ));
-		$adTypeID = $_pgR['AdTypeID'];
-		$adTypeID = global_editor::rteSafe(html_entity_decode($adTypeID,ENT_COMPAT ,'UTF-8' ));
-		$imageLink = $_pgR['ImageLink'];
-		$imageLink = global_editor::rteSafe(html_entity_decode($imageLink,ENT_COMPAT ,'UTF-8' ));
-		$status = $_pgR['Status'];
-		$status = global_editor::rteSafe(html_entity_decode($status,ENT_COMPAT ,'UTF-8' ));
-		//$strName = $_pgR['name'];
-		//$strName = global_editor::rteSafe(html_entity_decode($strName,ENT_COMPAT ,'UTF-8' ));
-		$resultID = $objAdvertising->insert($advertisingID,$advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$imageLink,$status);
+		$resultID = $objAdvertising->insert($advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$imageLink,$order,$createdBy,$status);
 		if ($resultID)
 		{
 			$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
 			echo global_common::convertToXML(
 					$arrHeader, array("rs", "inf"), 
-					array(1, $result), 
+					array(1, 'Đăng bài viết thành công'), 
 					array( 0, 1 )
 					);
 			return;
 		}
 		else
 		{
-			echo global_common::convertToXML($arrHeader, array("rs","info"), array(0,"Input data is invalid"), array(0,1));
+			echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,"Input data is invalid"), array(0,1));
 			return;
 		}
 	}
 	else
 	{
-		echo global_common::convertToXML($arrHeader, array("rs",'info'), array(0,global_common::STRING_REQUIRE_LOGIN), array(0,1));
-	}
-	return;
-}
-elseif($_pgR['act'] == model_Advertising::ACT_UPDATE)
-{
-	if (global_common::isCLogin())
-	{
-		//l?y th?ng tin user
-		//$c_userInfo = $_SESSION[consts::SES_C_USERINFO];
-		
-
-		$advertisingID = $_pgR['AdvertisingID'];
-		$advertisingID = global_editor::rteSafe(html_entity_decode($advertisingID,ENT_COMPAT ,'UTF-8' ));
-		$advertisingName = $_pgR['AdvertisingName'];
-		$advertisingName = global_editor::rteSafe(html_entity_decode($advertisingName,ENT_COMPAT ,'UTF-8' ));
-		$partnerID = $_pgR['PartnerID'];
-		$partnerID = global_editor::rteSafe(html_entity_decode($partnerID,ENT_COMPAT ,'UTF-8' ));
-		$startDate = $_pgR['StartDate'];
-		$startDate = global_editor::rteSafe(html_entity_decode($startDate,ENT_COMPAT ,'UTF-8' ));
-		$endDate = $_pgR['EndDate'];
-		$endDate = global_editor::rteSafe(html_entity_decode($endDate,ENT_COMPAT ,'UTF-8' ));
-		$adTypeID = $_pgR['AdTypeID'];
-		$adTypeID = global_editor::rteSafe(html_entity_decode($adTypeID,ENT_COMPAT ,'UTF-8' ));
-		$imageLink = $_pgR['ImageLink'];
-		$imageLink = global_editor::rteSafe(html_entity_decode($imageLink,ENT_COMPAT ,'UTF-8' ));
-		$status = $_pgR['Status'];
-		$status = global_editor::rteSafe(html_entity_decode($status,ENT_COMPAT ,'UTF-8' ));
-        
-		//$checkProduct = $objMenu->getMenuByName($_pgR['name']);
-		//if ($checkProduct && $checkProduct['menu_id']!= $strID) {
-		//	echo global_common::convertToXML($arrHeader, array("rs",'info'), array(0,global_common::STRING_NAME_EXIST), array(0,1));
-		//	return;
-		//}
-		//$strName = $_pgR['name'];
-		//$strDetail= $_pgR['detail'];
-		$resultID = $objAdvertising->update($advertisingID,$advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$imageLink,$status);
-		
+		$modifiedBy = $c_userInfo[global_mapping::UserID];
+		$advertisingID = html_entity_decode($_pgR[global_mapping::AdvertisingID],ENT_COMPAT ,'UTF-8' );
+		$currentAd = $objAdvertising->getAdvertisingByID($advertisingID);
+		$resultID = $objAdvertising->update($advertisingID,$advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$imageLink,$order,
+				$modifiedBy,global_common::nowSQL(),
+				$currentAd[global_mapping::DeletedBy],$currentAd[global_mapping::DeletedDate],
+				$currentAd[global_mapping::IsDeleted],$currentAd[global_mapping::Status]
+				);
 		if ($resultID)
 		{
 			$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
-			
 			echo global_common::convertToXML(
 					$arrHeader, array("rs", "inf"), 
-					array(1, $result ), 
+					array(1, 'Cập nhật thành công'), 
 					array( 0, 1 )
 					);
 			return;
 		}
 		else
 		{
-			echo global_common::convertToXML($arrHeader, array("rs"), array(0), array(0));
+			echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,"Input data is invalid"), array(0,1));
 			return;
 		}
 	}
-	else
-	{
-		echo global_common::convertToXML($arrHeader, array("rs",'info'), array(0,global_common::STRING_REQUIRE_LOGIN), array(0,1));
-	}
 	return;
 }
-elseif($_pgR['act'] == model_Advertising::ACT_CHANGE_PAGE)
-{
-	$intPage = $_pgR['p'];
-	
-	$outPutHTML =  $objAdvertising->getListAdvertising($intPage);
-	echo global_common::convertToXML($strMessageHeader, array('rs','inf'), array(1,$outPutHTML),array(0,1));
-	return ;
-}
-elseif($_pgR['act'] == model_Advertising::ACT_SHOW_EDIT)
+elseif($_pgR['act'] == Model_Advertising::ACT_SHOW_EDIT)
 {
 	
-	$strAdvertisingID = $_pgR['id'];
-	$arrAdvertising =  $objAdvertising->getAdvertisingByID($strAdvertisingID);
-	
-	echo global_common::convertToXML($strMessageHeader, array('rs','AdvertisingID','AdvertisingName','PartnerID','StartDate','EndDate','AdTypeID','ImageLink','Status'), array(1,'AdvertisingID','AdvertisingName','PartnerID','StartDate','EndDate','AdTypeID','ImageLink','Status'),array(0,1,1,1,1,1,1,1,1));
-	return ;
-}
-elseif ($_pgR["act"] == model_Advertising::ACT_GET)
-{		
-	$sectionID = $_pgR["sect"];
-	$arrSection= $objMenu->getAllMenuBySection($sectionID);
-	if($arrSection)
+	$advertisingID = $_pgR['id'];
+	$advertising =  $objAdvertising->getAdvertisingByID($advertisingID);
+	if($advertising)
 	{
-		$strHTML = $objMenu->outputHTMLMenu($arrSection);
-		echo global_common::convertToXML($arrHeader, array("rs", "inf"), 
-				array(1, $strHTML), array(0, 1));
-		return;	
+		$advertising[global_mapping::StartDate] = global_common::formatDateVN($advertising[global_mapping::StartDate]);
+		$advertising[global_mapping::EndDate] = global_common::formatDateVN($advertising[global_mapping::EndDate]);
+		echo global_common::convertToXML($strMessageHeader, 
+				array('rs','content'),array(1,json_encode($advertising)), array(0,1));
 	}
 	else
 	{
-		echo global_common::convertToXML($arrHeader, array("rs",'inf'),array(0,'Kh?ng c? nh?m h?ng'),array(0,0));
-		return ;
+		echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,"Data is invalid. Pleae try again later"), array(0,1));
 	}
-}
-elseif($_pgR['act'] == model_Advertising::ACT_DELETE)
-{
 	
-	$IDName = "menu_id";
-	$contentID = $_pgR["id"];
-	$strTableName = user_menu::TBL_T_MENU;
-	$result = global_common::updateDeleteFlag($contentID,$IDName,$strTableName ,$_pgR["status"],$objConnection);
-	if($result)
-	{
-		$IDName = "content_id";
-		$strTableName = user_faq::TBL_T_FAQ;
-		$result = global_common::updateDeleteFlag($contentID,$IDName,$strTableName ,$_pgR["status"],$objConnection);
-	}
-	$arrHeader = global_common::getMessageHeaderArr($banCode=0,0);
-	$arrKey = array("rs","id");
-	$arrValue = array($result?1:0,$contentID);
-	$arrIsMetaData = array(0, 1);
-	echo global_common::convertToXML($arrHeader, $arrKey, $arrValue, $arrIsMetaData);
-	
-	return;
+	return ;
 }
+$allAds = $objAdvertising->getAllAdvertising(0,null,null,null);
+$allAdType = $objAdType->getAllAdType(0,null,null,null);
 ?>
-
 <?php
+$_SESSION[global_common::SES_C_CUR_PAGE] = "admin/admin_advertising.php";
 include_once('include/_admin_header.inc');
-include_once('include/_admin_menu.inc');
 ?>
-<script type="text/javascript" src="<?php echo $_objSystem->locateJs('sela_Advertising.js');?>"></script>
-	
-<!--Begin Form Input -->
-<input type="hidden" id="adddocmode" name="adddocmode" value="1<?php //echo $intMode;?>" />
-<input type="hidden" id="txtPage" name="txtPage" value="<?php echo $_pgR["p"]?$intPage:1;?>" />
-<input type="hidden" id="txtID" name="txtID" value="" />
- <center>
-<br><h2 align="center">Mananage Advertising</h2>
-		<div class="input-field-border input-field-content" >
-				<div id="lgTitle" class="div_admin_group_title" style="">
-				<span style="cursor:default; font-family:inherit" id='status-add' name='status-add'>Add Mode</span></div>
-				
-				<div class="div_admin_group_content_inside" style="width: 100%; top: -20px;">
-				    <table id="tblPopUp" style="width: 100%;" border="0" cellpadding="2" cellspacing="0">
-                        <tbody>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>AdvertisingID</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtAdvertisingID' name='txtAdvertisingID' value='' style='width: 49.5%;'  maxlength='60' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>AdvertisingName</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtAdvertisingName' name='txtAdvertisingName' value='' style='width: 49.5%;'  maxlength='150' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>PartnerID</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtPartnerID' name='txtPartnerID' value='' style='width: 49.5%;'  maxlength='60' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>StartDate</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtStartDate' name='txtStartDate' value='' style='width: 49.5%;'  maxlength='0' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>EndDate</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtEndDate' name='txtEndDate' value='' style='width: 49.5%;'  maxlength='0' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>AdTypeID</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtAdTypeID' name='txtAdTypeID' value='' style='width: 49.5%;'  maxlength='60' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>ImageLink</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtImageLink' name='txtImageLink' value='' style='width: 49.5%;'  maxlength='765' type='text'></td>
-						</tr>
-						<tr>
-							<td width='110'><span style='cursor:default; font-family:inherit'>Status</span></td>
-							<td width='10'><span class='forceFillForm'></span></td>
-							<td width='567'><input id='txtStatus' name='txtStatus' value='' style='width: 49.5%;'  maxlength='60' type='text'></td>
-						</tr>
-                        </tbody>
-                    </table>
-				</div>
-	
-
-				<div class="div_admin_group_content_inside" style="margin: 4px; display: block;" align="center">		
-				  <input id="btnOK" value="OK"  style="width: 50px;" onClick="_objAdvertising.btnSave_OnClick()" type="button" class="btn btn-oliver"> &nbsp;&nbsp;&nbsp;
-				  <input id="btnClose" value="Cancel" align="center" style="width: 65px;" onClick="_objAdvertising.showAddMode()" type="button" class="btn btn-oliver">  
-			  </div>					
-		</div>	
-	
-		</center>
-<!--End Form Input -->
-
-   <div  id="content-admin" >
-                    <div align="center">
-	                    <h2>Danh s?ch</h2>									
-					</div>
-					<div id="list-content" style="padding:10px">
-						<?php echo $objAdvertising ->getListAdvertising(1) ?>					
-						</div>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_advertising.js');?>"></script>
+<div id="admin-advertising">
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+			<h3 class="page-title">
+				Manage Advertising
+			</h3>
+		</div>
 	</div>
-
-<?php 
-//footer
+	
+	 <div class="row-fluid">	
+            <div class="span12">
+				<input type="hidden" id="adddocmode" name="adddocmode" value="" />
+				<input type="hidden" id="AdvertisingID" name="AdvertisingID" value="" />
+			<a href='javascript:advertising.showPopupAdd("modal-add")' class="btn" title="Add new advertising"><i class="icon-plus"></i> Add New</a>
+	<div class="portlet box">
+		<div class="portlet-title hide">
+			<div class="caption">
+				<!--i class="icon-reorder"></i-->
+			</div>
+			
+			<div class="tools">                                
+				<!--a href="#config-form" data-toggle="modal" class="config"></a-->
+				<!--a href="javascript:;" class="reload" title="Reload"></a-->
+			</div>
+			<div class="actions">									
+				
+			</div>
+		</div>
+		<!---->
+		<div class="portlet-body">
+		
+									
+<?php
+//print_r($advertising);
+if($allAds)
+{
+	echo '<table class="table table-striped">';
+	echo '<thead>';
+	echo '<th>';
+	echo 'Ad Name';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Partner';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Type';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Order';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Image';		
+	echo '</th>';
+	echo '<th>';
+	echo 'StartDate';		
+	echo '</th>';
+	echo '<th>';
+	echo 'EndDate';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Action';		
+	echo '</th>';
+	echo '</thead>';
+	foreach($allAds as $item)
+	{
+		echo '<tr>';
+		echo '<td>';
+		echo $item[global_mapping::AdvertisingName];		
+		echo '</td>';
+		echo '<td style="">';
+		echo $item[global_mapping::PartnerID];		
+		echo '</td>';
+		echo '<td style="">';
+		echo $item[global_mapping::AdTypeID];		
+		echo '</td>';
+		echo '<td style="">';
+		echo $item[global_mapping::Order];		
+		echo '</td>';
+		echo '<td style="">';
+		echo '<a href="'. $item[global_mapping::ImageLink].'" target="_blank"><img src= "'. $item[global_mapping::ImageLink].'" width="50" height="50"></a>';	
+		echo '</td>';
+		echo '<td>';
+		echo global_common::formatDateVN($item[global_mapping::StartDate]);		
+		echo '</td>';
+		echo '<td>';
+		echo global_common::formatDateVN($item[global_mapping::EndDate]);		
+		echo '</td>';
+		echo '<td style="padding:0;width:180px">';
+		echo '<a href="javascript:advertising.showPopupEdit(\''.$item[global_mapping::AdvertisingID].'\',\'modal-add\')" class="btn btn-mini">Edit</a> ';	
+		if(	!$item[global_mapping::IsDeleted])
+		{
+			echo '<a href="javascript:advertising.Delete(\''.$item[global_mapping::AdvertisingID].'\',1)" class="btn btn-mini">Delete</a> ';	
+		}
+		else
+		{
+			echo '<a href="javascript:advertising.Delete(\''.$item[global_mapping::AdvertisingID].'\',0)" class="btn btn-mini">Restore</a>';	
+		}	
+		echo '</td>';
+		echo '</tr>';
+	}
+	echo '</table>';
+}
+?>
+				</div>
+					</div>
+		</div>
+	</div>
+</div>
+<?php
 include_once('include/_admin_footer.inc');
 ?>
+
+
+<div id="modal-add" class="modal hide fade" tabindex="-1" data-width="800" data-keyboard="false"  aria-hidden="true" data-backdrop="static">
+    <div class="modal-header">
+        <!--button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        </button-->
+        <h3 class="popup-title">Add new advertising
+        </h3>
+    </div>
+    <div class="modal-body">
+		
+		 <!-- BEGIN FORM-->
+        <form class="form-horizontal" action="#">
+		<div class="control-group">
+			<div class="controls">
+				<!--label class="m-wrap">(*) là thông tin bắt buộc</label-->
+			</div>
+		</div>
+        <div class="control-group">
+            <label class="control-label">
+                Name</label>
+            <div class="controls">
+                <input type="text" id="txtAdName" class="span5">
+            </div>
+        </div>
+		 <div class="control-group">
+            <label class="control-label">
+                Advertising Type 
+            </label>
+            <div class="controls">
+                <select tabindex="1" class="span5" id="cmAdType">
+<?php
+foreach($allAdType as $item)
+{
+	echo '			<option value="'.$item[global_mapping::AdTypeID].'" >'.$item[global_mapping::AdTypeName].'</option>';
+	
+}
+?>
+                </select>
+            </div>
+        </div>	
+		<div class="control-group">
+            <label class="control-label">
+                Order </label>
+            <div class="controls">
+                <input type="text" id="txtOrder" class="span5">
+            </div>
+        </div>		
+        <div class="control-group">
+            <label class="control-label">
+                Start Date </label>
+            <div class="controls">
+                	<div class="input-append date date-picker text " data-date="" readonly="readonly"  data-date-format="dd/mm/yyyy"  data-date-viewmode="days">
+					<input name="txtStartDate" id="txtStartDate" disabled="disabled" class="m-wrap m-ctrl-medium date-picker"
+					size="16" type="text" placeholder="dd/mm/yyyy" value=""/>
+						<span class="add-on"><i class="icon-calendar"></i></span>
+				</div>
+            </div>
+        </div>
+		<div class="control-group">
+            <label class="control-label">
+                End Date </label>
+            <div class="controls">
+               	<div class="input-append date date-picker text " data-date="" readonly="readonly"  data-date-format="dd/mm/yyyy"  data-date-viewmode="days">
+					<input name="txtEndDate" id="txtEndDate" disabled="disabled" class="m-wrap m-ctrl-medium date-picker"
+					size="16" type="text" placeholder="dd/mm/yyyy" value=""/>
+						<span class="add-on"><i class="icon-calendar"></i></span>
+				</div>
+            </div>
+        </div>
+		<div class="control-group">
+            <label class="control-label">
+                Image Link 
+            </label>
+            <div class="controls">
+                 <input id="txtImageLink" type="text" class="span5">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Partner Info </label>
+            <div class="controls">
+                <textarea  id="txtPartner" class="span5" rows="3"></textarea>
+            </div>
+        </div>
+       
+        </form>
+        <!-- END FORM-->
+	</div>
+	 <div class="modal-footer">
+		<div class="pull-right">
+			<a href="javascript:advertising.addAdverting();" class="btn" id="btnSave">Save</a>
+			<a href="javascript:;" class="btn btn-mini" data-dismiss="modal"   aria-hidden="true">Cancel</a>        
+		</div>
+		 <div class="controls pull-right">
+			<label class="checkbox ckCreateOther">
+				<div class="checker">
+					<span class="">
+						<input type="checkbox" value=""></span>
+				</div>
+				Create another
+			</label>
+		</div>
+	</div>
+</div>

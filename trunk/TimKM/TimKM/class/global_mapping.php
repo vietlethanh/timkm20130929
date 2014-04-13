@@ -83,5 +83,13 @@ class global_mapping
 	const ExpireDate				= 'ExpireDate';
 	const ResetDate					= 'ResetDate';
 	
+	const AdvertisingID				= 'AdvertisingID';
+	const AdvertisingName			= 'AdvertisingName';
+	const AdTypeID					= 'AdTypeID';
+	const AdTypeName				= 'AdTypeName';
+	const ImageLink					= 'ImageLink';
+	const PartnerID					= 'PartnerID';
+	
+	const Mode						= 'Mode';
 }
 ?>

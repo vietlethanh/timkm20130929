@@ -407,6 +407,9 @@ table.table {
 .modal-header h3 {
   color: black; }
 
+.modal {
+  color: black; }
+
 /*********** end custom plugin ************/
 /*********** header ************/
 #header {
@@ -1027,6 +1030,13 @@ table.table {
   border-left: 16px solid transparent;
   border-right: 16px solid transparent;
   border-bottom: 16px solid #336699; }
+
+/*********** end map ************/
+/*********** map ************/
+#admin-advertising {
+  text-align: left; }
+  #admin-advertising h3.page-title {
+    text-align: center; }
 
 /*********** end map ************/
 .wrapper p.slogan {
