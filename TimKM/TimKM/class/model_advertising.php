@@ -35,7 +35,9 @@ class Model_Advertising
 		StartDate,
 		EndDate,
 		AdTypeID,
+		`Content`,
 		ImageLink,
+		`PreferLink`,
 		`Order`,
 		CreatedBy,
 		CreatedDate,
@@ -47,7 +49,7 @@ class Model_Advertising
 		Status
 		)
 		VALUES (
-		\'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\', \'{11}\', \'{12}\', \'{13}\', \'{14}\', \'{15}\', \'{16}\'
+		\'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\', \'{11}\', \'{12}\', \'{13}\', \'{14}\', \'{15}\', \'{16}\', \'{17}\', \'{18}\'
 		);';
 	
 	const SQL_UPDATE_SL_ADVERTISING		= 'UPDATE `{0}`
@@ -57,16 +59,18 @@ class Model_Advertising
 		`StartDate` = \'{4}\',
 		`EndDate` = \'{5}\',
 		`AdTypeID` = \'{6}\',
-		`ImageLink` = \'{7}\',
-		`CreatedBy` = \'{8}\',
-		`Order` = \'{9}\',
-		`CreatedDate` = \'{10}\',
-		`ModifiedBy` = \'{11}\',
-		`ModifiedDate` = \'{12}\',
-		`DeletedBy` = \'{13}\',
-		`DeletedDate` = \'{14}\',
-		`IsDeleted` = \'{15}\',
-		`Status` = \'{16}\'
+		`Content` = \'{7}\',
+		`ImageLink` = \'{8}\',
+		`PreferLink` = \'{9}\',
+		`Order` = \'{10}\',
+		`CreatedBy` = \'{11}\',
+		`CreatedDate` = \'{12}\',
+		`ModifiedBy` = \'{13}\',
+		`ModifiedDate` = \'{14}\',
+		`DeletedBy` = \'{15}\',
+		`DeletedDate` = \'{16}\',
+		`IsDeleted` = \'{17}\',
+		`Status` = \'{18}\'
 		WHERE `AdvertisingID` = \'{1}\'  ';
 	
 	
@@ -114,14 +118,17 @@ class Model_Advertising
 	
 	#region Public Functions
 	
-	public function insert( $advertisingname,$partnerid,$startdate,$enddate,$adtypeid,$imagelink,$order,$createdby,$status)
+	public function insert( $advertisingname,$partnerid,$startdate,$enddate,$adtypeid,$content,$imagelink,$preferlink,$order,$createdby,$status)
 	{
 		$strTableName = self::TBL_SL_ADVERTISING;
 		$strSQL = global_common::prepareQuery(self::SQL_INSERT_SL_ADVERTISING,
 				array(self::TBL_SL_ADVERTISING,0,global_common::escape_mysql_string($advertisingname),
 					global_common::escape_mysql_string($partnerid),global_common::formatDateTimeSQL($startdate),
 					global_common::formatDateTimeSQL($endDate),global_common::escape_mysql_string($adtypeid),
-					global_common::escape_mysql_string($imagelink),global_common::escape_mysql_string($order),
+					global_common::escape_mysql_string($content),
+					global_common::escape_mysql_string($imagelink),
+					global_common::escape_mysql_string($preferlink),
+					global_common::escape_mysql_string($order),
 					global_common::escape_mysql_string($createdby),global_common::nowSQL(),
 					global_common::escape_mysql_string($modifiedby),global_common::escape_mysql_string($modifieddate),
 					global_common::escape_mysql_string($deletedby),global_common::escape_mysql_string($deleteddate),
@@ -138,14 +145,17 @@ class Model_Advertising
 		
 	}
 	
-	public function update($advertisingid,$advertisingname,$partnerid,$startdate,$enddate,$adtypeid,$imagelink,$order,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
+	public function update($advertisingid,$advertisingname,$partnerid,$startdate,$enddate,$adtypeid,$content,$imagelink,$preferlink,$order,$createdby,$createddate,$modifiedby,$modifieddate,$deletedby,$deleteddate,$isdeleted,$status)
 	{
 		$strTableName = self::TBL_SL_ADVERTISING;
 		$strSQL = global_common::prepareQuery(self::SQL_UPDATE_SL_ADVERTISING,
 				array($strTableName,global_common::escape_mysql_string($advertisingid),
 					global_common::escape_mysql_string($advertisingname),global_common::escape_mysql_string($partnerid),
 					global_common::formatDateTimeSQL($startdate),global_common::formatDateTimeSQL($enddate),
-					global_common::escape_mysql_string($adtypeid),global_common::escape_mysql_string($imagelink),
+					global_common::escape_mysql_string($adtypeid),
+					global_common::escape_mysql_string($content),
+					global_common::escape_mysql_string($imagelink),
+					global_common::escape_mysql_string($preferlink),
 					global_common::escape_mysql_string($order),global_common::escape_mysql_string($createdby),
 					global_common::escape_mysql_string($createddate),global_common::escape_mysql_string($modifiedby),
 					global_common::escape_mysql_string($modifieddate),global_common::escape_mysql_string($deletedby),
