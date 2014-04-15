@@ -189,11 +189,11 @@ class Model_Comment
 	{		
 		if($whereClause)
 		{
-			$whereClause = ' WHERE '.$whereClause. ' AND  `'.global_mapping::ArticleID.'` =  \''. $articleID .'\' AND CommentID NOT IN (SELECT CommentID FROM sl_comment_bad WHERE `STATUS` =\'0\')';
+			$whereClause = ' WHERE '.$whereClause. ' AND  `'.global_mapping::ArticleID.'` =  \''. $articleID .'\' AND CommentID NOT IN (SELECT CommentID FROM sl_comment_bad WHERE `STATUS` =\'1\')';
 		}
 		else
 		{
-			$whereClause = ' WHERE `'.global_mapping::ArticleID.'` =  \''. $articleID .'\'  AND CommentID NOT IN (SELECT CommentID FROM sl_comment_bad WHERE `STATUS` =\'0\')';
+			$whereClause = ' WHERE `'.global_mapping::ArticleID.'` =  \''. $articleID .'\'  AND CommentID NOT IN (SELECT CommentID FROM sl_comment_bad WHERE `STATUS` =\'1\')';
 		}
 		
 		if($orderBy)

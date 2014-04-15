@@ -61,7 +61,7 @@ foreach($comments as $item)
 	if(global_common::isAdmin())
 	{	
 		echo '			<div class="comment-controls">';
-		echo '				<a href="javascript:comment.badComment(\''.$item[global_mapping::CommentID].'\')">Delete</a>';
+		echo '				<a href="javascript:comment.badComment(\''.$item[global_mapping::CommentID].'\',1)">Delete</a>';
 		echo '			</div>	';	
 	}			
 	echo '		</div>';
