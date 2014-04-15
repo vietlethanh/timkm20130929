@@ -74,8 +74,14 @@ var advertising = {
 		controlID = 'cmAdType';		
 		core.util.getObjectByID(controlID).val(advert.AdTypeID);
 		
+		controlID = 'txtContent';		
+		core.util.getObjectByID(controlID).html(advert.Content);
+		
 		controlID = 'txtOrder';		
 		core.util.getObjectByID(controlID).val(advert.Order);
+
+		controlID = 'txtPreferLink';		
+		core.util.getObjectByID(controlID).val(advert.PreferLink);
 
 		controlID = 'txtStartDate';		
 		core.util.getObjectByID(controlID).val(advert.StartDate);
@@ -100,6 +106,9 @@ var advertising = {
 		controlID = 'cmAdType';		
 		var adType = core.util.getObjectValueByID(controlID);
 		
+		controlID = 'txtContent';		
+		var content = core.util.getObjectValueByID(controlID);
+		
 		controlID = 'txtOrder';		
 		var order = core.util.getObjectValueByID(controlID);
 
@@ -112,6 +121,9 @@ var advertising = {
 		controlID = 'txtImageLink';		
 		var imageLink = core.util.getObjectValueByID(controlID);
 		
+		controlID = 'txtPreferLink';		
+		var preferLink = core.util.getObjectValueByID(controlID);
+		
 		controlID = 'txtPartner';		
 		var partner = core.util.getObjectValueByID(controlID);
 		
@@ -119,10 +131,12 @@ var advertising = {
 		{
 			 AdvertisingName: adName,
 			 AdTypeID: adType,
+			 Content: content,
 			 Order: order,
 			 StartDate: startDate,
 			 EndDate: endDate,
 			 ImageLink: imageLink,
+			 PreferLink: preferLink,
 			 PartnerID: partner,
 			 AdvertisingID: core.util.getObjectValueByID('AdvertisingID'),
 			 Mode: core.util.getObjectValueByID('adddocmode')
@@ -150,7 +164,13 @@ var advertising = {
 		controlID = 'txtImageLink';		
 		core.util.clearValue(controlID);
 		
+		controlID = 'txtPreferLink';		
+		core.util.clearValue(controlID);
+		
 		controlID = 'txtPartner';		
+		core.util.clearValue(controlID);
+		
+		controlID = 'txtContent';		
 		core.util.clearValue(controlID);
 		
 		core.util.getObjectByID('adddocmode').val(0);

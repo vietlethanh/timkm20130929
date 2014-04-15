@@ -189,7 +189,7 @@ elseif($_pgR['act'] == Model_Comment::ACT_BAD_COMMENT)
 				else
 				{
 					$updatedBy = $c_userInfo[global_mapping::UserID];
-					$resultID = $objCommentBad->activateBadComment($commentID,$description, $updatedBy,0);
+					$resultID = $objCommentBad->activateBadComment($commentID,$description, $updatedBy,$isBad);
 				}
 				
 				if ($resultID)
