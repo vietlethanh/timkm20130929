@@ -2,7 +2,11 @@
 $objArticleType = new model_ArticleType($objConnection);
 $objArticle = new model_Article($objConnection);
 
-$catID = $_pgR["cid"];
+$catID = $_pgR['cid'];
+//Just get from "article_list.php"
+//$city = $_pgR['ct'];
+//$district = $_pgR['ds'];
+//$keyword =  $_pgR['kw'];
 
 $allCats = $objArticleType->getAllArticleType(0,null,'ParentID='.$catID,null);
 if(count($allCats)<=0)
@@ -16,10 +20,45 @@ else
 //print_r($allCats);
 
 //print_r($allCatIDs);
+$search = '';
+if($city)
+{
+	$search = '`'.global_mapping::Cities.'` like \'%'.global_common::escape_mysql_string($city).'%\' ';
+}
+if($district)
+{
+	if($search)
+	{
+		$search .= ' and `'.global_mapping::Dictricts.'` like \'%'.global_common::escape_mysql_string($district).'%\' ';
+	}
+	else
+	{
+		$search .= '`'.global_mapping::Dictricts.'` like \'%'.global_common::escape_mysql_string($district).'%\' ';
+	}
+}
 
-$condidtion =global_mapping::StartDate.' <= \''.global_common::nowSQL().'\''.
+if($keyword)
+{
+	if($search)
+	{
+		$search .= ' and (`'.global_mapping::Title.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or `'.global_mapping::Content.'` like \'%'.global_common::escape_mysql_string($keyword).'%\')' ;
+	}
+	else
+	{
+		$search .= '(`'.global_mapping::Title.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or `'.global_mapping::Content.'` like \'%'.global_common::escape_mysql_string($keyword).'%\')' ;
+	}
+}
+$condidtion = global_mapping::StartDate.' <= \''.global_common::nowSQL().'\''.
 	' And '.global_mapping::EndDate.' >= \''.global_common::nowSQL().'\'';
 $condidtion .= ' And `Status` = 1';
+
+if($search)
+{
+	$condidtion .= ' And '.$search;
+}
+
+//echo $condidtion;
+
 $articles = $objArticle->getTopArticleByType($allCatIDs,global_common::DEFAULT_TOP_ITEMS,null,$condidtion);
 //print_r($articles);
 ?>

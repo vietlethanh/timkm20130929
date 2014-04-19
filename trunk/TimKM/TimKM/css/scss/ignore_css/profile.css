@@ -46,3 +46,7 @@
     margin-top: 6px; }
   #profile-page #general-info li {
     padding: 10px; }
+  #profile-page table.article-profile td.article-control {
+    width: 82px; }
+  #profile-page table.article-profile td.article-date {
+    width: 100px; }

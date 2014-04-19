@@ -39,9 +39,9 @@
 		cursor:pointer;
 		
 	}
-	select#optlocation
+	select#optCity, select#optDistrict
 	{
-		padding: 11px 9px; 
+		padding: 5px 9px; 
 		margin: 0;
 		-webkit-border-radius:0px;
 		-moz-border-radius:0px;
@@ -98,4 +98,9 @@
 		width: 24px;
 		height: 35px;
 	}
+	.btn-post
+	{
+		margin-left: 103px;
+	}
+	
 }

@@ -11,7 +11,9 @@ if (!$_pgR["cid"])
 {
 	global_common::redirectByScript("index.php"); 
 }
-
+$city = $_pgR['ct'];
+$district = $_pgR['ds'];
+$keyword =  $_pgR['kw'];
 ?>
 
 <?php
@@ -24,10 +26,7 @@ include_once('include/_header.inc');
 include_once('include/_menu.inc');
 
 ?>
-
-<script type="text/javascript"> 
-
-</script>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_article.js');?>"></script>
 	
 <?php 
 //left side

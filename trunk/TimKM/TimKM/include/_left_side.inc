@@ -38,8 +38,8 @@ elseif($_pgR["aid"])
 	
 	<ul>
 <?php 
-
-echo $parentCat[global_mapping::ArticleTypeName];
+$link = 'article_list.php?cid='.$parentCat[global_mapping::ArticleTypeID];
+echo '<a href="'.$link.'">	'.$parentCat[global_mapping::ArticleTypeName].'</a>';
 foreach($allCats as $item)
 {
 	$classActive = '';

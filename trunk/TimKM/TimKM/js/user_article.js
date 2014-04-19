@@ -601,13 +601,16 @@ var article = {
 		optDistrict.val('');
 		var districts = optDistrict.find("option");
 		districts.each(function(index){
-			if($(this).attr("CityID") == cityID)
+			if($(this).attr("CityID") != "0")
 			{
-				$(this).show();
-			}
-			else
-			{
-				$(this).hide();
+				if($(this).attr("CityID") == cityID )
+				{
+					$(this).css("display","block");
+				}
+				else
+				{
+					$(this).hide();
+				}
 			}
 		});
 		/*var currentParent = core.util.getObjectValueByID('cmArea');
@@ -621,6 +624,7 @@ var article = {
 			}
 		}
 		*/
+		$("#optDistrict option[CityID=0]").attr('selected', 'selected');
 		optDistrict.trigger("liszt:updated");
 	},
 	
@@ -651,5 +655,22 @@ var article = {
             }
         );
 	},
-	
+	validateKeyword: function()
+	{
+		var isValid =true;
+		controlID = 'txtkeyword';		
+		var keyword = core.util.getObjectValueByID(controlID);
+		core.util.validateInputTextBox(controlID,'');
+		if(core.util.isNull(keyword)){
+			//core.util.validateInputTextBox(controlID,'Xin hãy nhập từ khóa tìm kiếm', isValid);
+			//isValid =  false;
+		}else if (keyword.length > 50) {
+			 core.util.validateInputTextBox(controlID,'Từ khóa tìm kiếm quá dài', isValid);
+			isValid =  false;
+		}
+		if(isValid)
+		{
+			core.util.getObjectByID("formSearch").submit();
+		}
+	},
 }

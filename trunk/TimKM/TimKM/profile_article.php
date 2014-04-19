@@ -14,8 +14,11 @@ if (global_common::isCLogin())
 	//get user info
 	$userInfo = $_SESSION[global_common::SES_C_USERINFO];
 	$userID = $userInfo[global_mapping::UserID];
-	$articles = $objArticle->getArticleByUser($userID,0,global_common::DEFAULT_PAGE_SIZE,null,'','');
-	
+	$condidtion = global_mapping::StartDate.' <= \''.global_common::nowSQL().'\''.
+		' And '.global_mapping::EndDate.' >= \''.global_common::nowSQL().'\'';
+	$articles = $objArticle->getArticleByUser($userID,1,global_common::DEFAULT_PAGE_SIZE,null,$condidtion,'');
+	$condidtion = global_mapping::EndDate.' <= \''.global_common::nowSQL().'\'';
+	$expireArticles = $objArticle->getArticleByUser($userID,1,global_common::DEFAULT_PAGE_SIZE,null,$condidtion,'');
 	//print_r($articles);
 }
 
@@ -25,7 +28,8 @@ if (global_common::isCLogin())
 include_once('include/_header.inc');
 include_once('include/_menu.inc');
 ?>
-<script type="text/javascript" src="<?php echo $_objSystem->locateJs('sela_user.js');?>"></script>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_user.js');?>"></script>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_article.js');?>"></script>
 <div id="profile-page" class="page-content">
 	<div class="row-fluid">
 		<div class="span12">
@@ -101,7 +105,7 @@ include_once('include/_menu.inc');
 								</div>
 								<!---->
 								<div class="portlet-body">
-									<table class="table table-bordered table-hover">
+									<table class="table table-bordered table-hover article-profile">
 										<thead>
 											<tr>
 												<th class="span4">Tên khuyến mãi</th>
@@ -115,14 +119,12 @@ include_once('include/_menu.inc');
 foreach($articles as $item)
 {
 	echo '								<tr>';
-	echo '									<td>'.$item[global_mapping::Title].'</td>';
-	echo '									<td>'.global_common::formatDateVN($item[global_mapping::StartDate]).'</td>';
-	echo '									<td>'.global_common::formatDateVN($item[global_mapping::EndDate]).'</td>';
-	echo '									<td>';
-	echo '										<a href="article_detail.php?aid='.$item[global_mapping::ArticleID].'" class="btn btn-mini purple">Xem</a>';
+	echo '									<td><a href="article_detail.php?aid='.$item[global_mapping::ArticleID].'" >'.$item[global_mapping::Title].'</a></td>';
+	echo '									<td class="article-date">'.global_common::formatDateVN($item[global_mapping::StartDate]).'</td>';
+	echo '									<td class="article-date">'.global_common::formatDateVN($item[global_mapping::EndDate]).'</td>';
+	echo '									<td class="article-control">';
 	echo '										<a href="post_article.php?aid='.$item[global_mapping::ArticleID].'" class="btn btn-mini">Sửa</a>';
-	echo '										<a href="javascript:void(0)" class="btn btn-mini">Ẩn tin</a>';
-	echo '										<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>';
+	echo '										<a href="javascript:article.activeArticle(\''.$item[global_mapping::ArticleID].'\',0)" class="btn btn-mini">Xóa</a>';
 	echo '									</td>';
 	echo '								</tr>';
 }
@@ -131,7 +133,7 @@ foreach($articles as $item)
 									</table>
 								</div>						
 								<!-- BEGIN PAGINATION-->
-								<div class="row-fluid no-background no-display">
+								<!--div class="row-fluid no-background no-display">
 									<div class="span12">
 										<div class="pagination pull-right margin-right">
 											<ul>
@@ -147,7 +149,7 @@ foreach($articles as $item)
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div-->
 								<!-- END PAGINATION-->
 								<!---->
 							</div>
@@ -173,44 +175,12 @@ foreach($articles as $item)
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>Khuyến mãi tháng 12</td>
-												<td>12/12/2013</td>
-												<td>01/01/2014</td>
-												<td>
-													<a href="javascript:void(0)" class="btn btn-mini purple">Xem</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Sửa</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Ẩn tin</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>
-												</td>
-											</tr>
-											<tr>
-												<td>Khuyến mãi tháng 12</td>
-												<td>12/12/2013</td>
-												<td>01/01/2014</td>
-												<td>
-													<a href="javascript:void(0)" class="btn btn-mini purple">Xem</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Sửa</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Ẩn tin</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>
-												</td>
-											</tr>
-											<tr>
-												<td>Khuyến mãi tháng 12</td>
-												<td>12/12/2013</td>
-												<td>01/01/2014</td>
-												<td>
-													<a href="javascript:void(0)" class="btn btn-mini purple">Xem</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Sửa</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Ẩn tin</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>
-												</td>
-											</tr>
+
 										</tbody>
 									</table>
 								</div>						
 								<!-- BEGIN PAGINATION-->
-								<div class="row-fluid no-background no-display">
+								<!--div class="row-fluid no-background no-display">
 									<div class="span12">
 										<div class="pagination pull-right margin-right">
 											<ul>
@@ -226,7 +196,7 @@ foreach($articles as $item)
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div-->
 								<!-- END PAGINATION-->
 								<!---->
 							</div>
@@ -252,44 +222,12 @@ foreach($articles as $item)
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>Khuyến mãi tháng 12</td>
-												<td>12/12/2013</td>
-												<td>01/01/2014</td>
-												<td>
-													<a href="javascript:void(0)" class="btn btn-mini purple">Xem</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Sửa</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Đăng tin</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>
-												</td>
-											</tr>
-											<tr>
-												<td>Khuyến mãi tháng 12</td>
-												<td>12/12/2013</td>
-												<td>01/01/2014</td>
-												<td>
-													<a href="javascript:void(0)" class="btn btn-mini purple">Xem</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Sửa</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Đăng tin</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>
-												</td>
-											</tr>
-											<tr>
-												<td>Khuyến mãi tháng 12</td>
-												<td>12/12/2013</td>
-												<td>01/01/2014</td>
-												<td>
-													<a href="javascript:void(0)" class="btn btn-mini purple">Xem</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Sửa</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Đăng tin</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>
-												</td>
-											</tr>
+											
 										</tbody>
 									</table>
 								</div>						
 								<!-- BEGIN PAGINATION-->
-								<div class="row-fluid no-background no-display">
+								<!--div class="row-fluid no-background no-display">
 									<div class="span12">
 										<div class="pagination pull-right margin-right">
 											<ul>
@@ -305,7 +243,7 @@ foreach($articles as $item)
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div-->
 								<!-- END PAGINATION-->
 								<!---->
 							</div>
@@ -321,7 +259,7 @@ foreach($articles as $item)
 								</div>
 								<!---->
 								<div class="portlet-body">
-									<table class="table table-bordered table-hover">
+									<table class="table table-bordered table-hover article-profile">
 										<thead>
 											<tr>
 												<th class="span4">Tên khuyến mãi</th>
@@ -331,41 +269,25 @@ foreach($articles as $item)
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>Khuyến mãi tháng 12</td>
-												<td>12/12/2013</td>
-												<td>01/01/2014</td>
-												<td>
-													<a href="javascript:void(0)" class="btn btn-mini purple">Xem</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Sửa</a>													
-													<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>
-												</td>
-											</tr>
-											<tr>
-												<td>Khuyến mãi tháng 12</td>
-												<td>12/12/2013</td>
-												<td>01/01/2014</td>
-												<td>
-													<a href="javascript:void(0)" class="btn btn-mini purple">Xem</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Sửa</a>													
-													<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>
-												</td>
-											</tr>
-											<tr>
-												<td>Khuyến mãi tháng 12</td>
-												<td>12/12/2013</td>
-												<td>01/01/2014</td>
-												<td>
-													<a href="javascript:void(0)" class="btn btn-mini purple">Xem</a>
-													<a href="javascript:void(0)" class="btn btn-mini">Sửa</a>													
-													<a href="javascript:void(0)" class="btn btn-mini">Xóa</a>
-												</td>
-											</tr>
+<?php
+foreach($expireArticles as $item)
+{
+	echo '								<tr>';
+	echo '									<td><a href="article_detail.php?aid='.$item[global_mapping::ArticleID].'" class="">'.$item[global_mapping::Title].'</a></td>';
+	echo '									<td class="article-date">'.global_common::formatDateVN($item[global_mapping::StartDate]).'</td>';
+	echo '									<td class="article-date">'.global_common::formatDateVN($item[global_mapping::EndDate]).'</td>';
+	echo '									<td class="article-control">';
+	echo '										<a href="post_article.php?aid='.$item[global_mapping::ArticleID].'" class="btn btn-mini">Sửa</a>';
+	echo '										<a href="javascript:article.activeArticle(\''.$item[global_mapping::ArticleID].'\',0)" class="btn btn-mini">Xóa</a>';
+	echo '									</td>';
+	echo '								</tr>';
+}
+?>
 										</tbody>
 									</table>
 								</div>						
 								<!-- BEGIN PAGINATION-->
-								<div class="row-fluid no-background no-display">
+								<!--div class="row-fluid no-background no-display">
 									<div class="span12">
 										<div class="pagination pull-right margin-right">
 											<ul>
@@ -381,7 +303,7 @@ foreach($articles as $item)
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div-->
 								<!-- END PAGINATION-->
 								<!---->
 							</div>
@@ -396,10 +318,7 @@ foreach($articles as $item)
 </div>
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
-        core.getObject("btnOK").click(function () {
-               _objUser.login();
-				return false;
-            });
+      
     });
 </script>
 <?php 
