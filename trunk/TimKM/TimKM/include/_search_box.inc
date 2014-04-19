@@ -43,7 +43,7 @@ foreach($allCities as $item)
 $display='style="display:none"';
 foreach($allDistricts as $item)
 {
-	if($selectCityID)
+	if($selectCityID == $item[global_mapping::CityID])
 	{
 		if($item[global_mapping::DistrictName] == $district)
 		{
