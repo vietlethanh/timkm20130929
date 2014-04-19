@@ -665,6 +665,10 @@ table.table {
     margin-top: 6px; }
   #profile-page #general-info li {
     padding: 10px; }
+  #profile-page table.article-profile td.article-control {
+    width: 82px; }
+  #profile-page table.article-profile td.article-date {
+    width: 100px; }
 
 /*********** end profile ************/
 /*********** seach box ************/
@@ -705,8 +709,8 @@ table.table {
     background: url("../images/search25.png") right top repeat;
     border: none;
     cursor: pointer; }
-  #search-box select#optlocation {
-    padding: 11px 9px;
+  #search-box select#optCity, #search-box select#optDistrict {
+    padding: 5px 9px;
     margin: 0;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
@@ -757,6 +761,8 @@ table.table {
     top: -6px;
     width: 24px;
     height: 35px; }
+  #search-box .btn-post {
+    margin-left: 103px; }
 
 /*********** end seach box ************/
 /*********** footer ************/
@@ -831,10 +837,12 @@ table.table {
   #article-list #advertises {
     display: inline-block;
     width: 18%; }
-    #article-list #advertises .advertise img.partner {
-      height: 200px;
-      margin: 5px 0;
-      width: 100%; }
+    #article-list #advertises .advertise {
+      margin: 0 0 5px 0; }
+      #article-list #advertises .advertise img.partner {
+        height: 200px;
+        /*margin: 5px 0;*/
+        width: 100%; }
   #article-list ul {
     list-style-type: none; }
     #article-list ul li {
@@ -853,18 +861,20 @@ table.table {
     vertical-align: top;
     width: 17%;
     margin-left: 0px; }
-    #article #advertises .advertise img.partner:first-child {
-      margin: 0; }
-    #article #advertises .advertise img.partner {
-      height: 200px;
-      margin: 5px 0;
-      width: 100%; }
+    #article #advertises .advertise {
+      margin: 0 0 5px 0; }
+      #article #advertises .advertise img.partner:first-child {
+        /*margin: 0;*/ }
+      #article #advertises .advertise img.partner {
+        height: 200px;
+        /*margin: 5px 0;*/
+        width: 100%; }
   #article #article-detail {
     display: inline-block;
     margin: 0 0px;
     width: 60%; }
     #article #article-detail #article-content {
-      padding: 10px;
+      padding: 2px;
       vertical-align: top;
       margin-bottom: 20px;
       border: 5px solid #716c68;
@@ -883,7 +893,8 @@ table.table {
       #article #article-detail #article-content .content {
         background: none repeat scroll 0 0 white;
         font-size: 1.1em;
-        text-align: justify; }
+        text-align: justify;
+        padding: 2px; }
     #article #article-detail #comment-content #comment-editor {
       background: none repeat scroll 0 0 rgba(113, 108, 104, 0.3);
       padding: 10px; }

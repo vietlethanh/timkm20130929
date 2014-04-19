@@ -477,7 +477,6 @@ class Model_Article
 			
 			$topRow = global_common::DEFAULT_TOP_ITEMS;
 		}
-		
 		$strSQL = global_common::prepareQuery(global_common::SQL_SELECT_FREE_LIMIT, 
 				array($selectField, self::TBL_SL_ARTICLE, $condition.$orderBy,0,$topRow ));					
 		//return $strSQL;
@@ -564,8 +563,8 @@ class Model_Article
 		if($whereClause)
 		{
 			$condition = 'WHERE ('.global_mapping::IsDeleted.' IS NULL or '.global_mapping::IsDeleted.' = \'0\') and `'.
-				global_mapping::CreatedBy.'` = `'.$userID.'` and `'.
-				global_mapping::Status.'` = `'.$status.'` and '.$whereClause;	
+				global_mapping::CreatedBy.'` = \''.$userID.'\' and `'.
+				global_mapping::Status.'` = \''.$status.'\' and '.$whereClause;	
 		}
 		else
 		{
@@ -579,7 +578,6 @@ class Model_Article
 			
 			$topRow = global_common::DEFAULT_PAGE_SIZE;
 		}
-		
 		$strSQL = global_common::prepareQuery(global_common::SQL_SELECT_FREE_LIMIT, 
 				array($selectField, self::TBL_SL_ARTICLE, $condition.$orderBy,0,$topRow ));					
 		//return $strSQL;
