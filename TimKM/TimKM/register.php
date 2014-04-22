@@ -93,7 +93,7 @@ include_once('include/_menu.inc');
 			<div class="control-group">
 				<div class="controls">
 					<label class="checkbox">
-						<input type="checkbox" id="chkTerm" value="" /> Tôi đã đọc và đồng ý với <a href="#" class="link">điều khoản sử dụng</a>  của hệ thống timkm.com
+						<input type="checkbox" id="chkTerm" value="" /> Tôi đã đọc và đồng ý với <a href="<?php echo global_common::PAGE_TERM_TIMKM ?>" class="link">điều khoản sử dụng</a>  của hệ thống timkm.com
 					</label>
 					<div class="help-inline message">Bạn cần phải đồng ý điều khoản sử dụng</div>
 				</div>

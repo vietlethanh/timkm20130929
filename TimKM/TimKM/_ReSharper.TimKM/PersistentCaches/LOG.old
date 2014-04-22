@@ -1,5 +1,5 @@
-2014/01/13-19:07:46.195 1d40 Recovering log #40
-2014/01/13-19:07:46.195 1d40 Level-0 table #42: started
-2014/01/13-19:07:46.195 1d40 Level-0 table #42: 0 bytes OK
-2014/01/13-19:07:46.334 1d40 Delete type=0 #40
-2014/01/13-19:07:46.335 1d40 Delete type=3 #38
+2014/04/22-23:45:53.445 dc8 Recovering log #151
+2014/04/22-23:45:53.445 dc8 Level-0 table #153: started
+2014/04/22-23:45:53.445 dc8 Level-0 table #153: 0 bytes OK
+2014/04/22-23:45:53.563 dc8 Delete type=0 #151
+2014/04/22-23:45:53.563 dc8 Delete type=3 #149
