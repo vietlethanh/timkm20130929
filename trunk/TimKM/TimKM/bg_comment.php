@@ -167,7 +167,7 @@ elseif($_pgR['act'] == Model_Comment::ACT_BAD_COMMENT)
 				$linkArticle = global_common::getHostName().'/article_detail.php?aid='.$comment[global_mapping::ArticleID];
 				$commentDate = global_common::formatDateTimeVN($comment[global_mapping::CreatedDate]);
 				$commentContent = $comment[global_mapping::Content];
-				$linkPolicy = global_common::getHostName().'/policy.php';
+				$linkPolicy = global_common::getHostName().'/'.global_common::PAGE_TERM_KM;
 				
 				$arrMailContent = global_common::formatMailContent(global_common::TEAMPLATE_BAD_COMMENT,
 						null, array(global_common::formatOutputText($fullName),$linkArticle, $commentDate,$commentContent, $linkPolicy));

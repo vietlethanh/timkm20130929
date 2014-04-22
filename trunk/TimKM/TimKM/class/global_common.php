@@ -115,6 +115,10 @@ class global_common
 	const DEFAUTL_MALE_AVATAR					= '/images/default/default-avatar-male.png';
 	const FOLDER_AVATAR							= 'file/avatar/';
 	
+	
+	const PAGE_TERM_KM							= 'term_km.php';
+	const PAGE_TERM_TIMKM						= 'term_timkm.php';
+	
 	/*****************************************************************************
 	* 
 	* Email Template Variable
