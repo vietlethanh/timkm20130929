@@ -59,9 +59,9 @@ class Model_User
 	
 	const SQL_UPDATE_SL_USER		= 'UPDATE `{0}`
 		SET  
-		--`UserID` = \'{1}\',
+		-- `UserID` = \'{1}\',
 		`UserName` = \'{2}\',
-		--`Password` = \'{3}\',
+		-- `Password` = \'{3}\',
 		`Fullname` = \'{4}\',
 		`BirthDate` = \'{5}\',
 		`Address` = \'{6}\',
@@ -204,7 +204,7 @@ class Model_User
 					global_common::escape_mysql_string($avatar),
 					global_common::escape_mysql_string($accountid),
 					global_common::escape_mysql_string($isactived) ));
-		echo $strSQL;
+		//echo $strSQL;
 		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_USER,$this->_objConnection,$strTableName))
 		{
 			//echo $strSQL;
