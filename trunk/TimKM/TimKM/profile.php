@@ -35,18 +35,18 @@ if($_pgR["update-avatar"])
 			$manipulator = new ImageManipulator($_FILES["file"]["tmp_name"]);
 			// resizing to 200x200
 			$manipulator->resample($_FILES["file"]["tmp_name"],$_FILES["file"]["type"], 200, 200);
-			echo "after";
+			//echo "after";
 			$fileName = global_common::FOLDER_AVATAR.$currentUser[global_mapping::UserID].'_'.$_FILES["file"]["name"];
 			$userUpdate = $objUser->getUserByID($currentUser[global_mapping::UserID]);
 			$userUpdate[global_mapping::Avatar]= $fileName;
-			echo $fileName;
-			echo $userUpdate[global_mapping::IsActive];
+			//echo $fileName;
+			//echo $userUpdate[global_mapping::IsActive];
 			$result=$objUser->update($userUpdate[global_mapping::UserID],$userUpdate[global_mapping::UserName],$userUpdate[global_mapping::Password],
 					$userUpdate[global_mapping::FullName],$userUpdate[global_mapping::BirthDate],$userUpdate[global_mapping::Address],
 					$userUpdate[global_mapping::Phone],$userUpdate[global_mapping::Email],$userUpdate[global_mapping::Sex],
 					$userUpdate[global_mapping::Identity],$userUpdate[global_mapping::RoleID],$userUpdate[global_mapping::UserRankID],
 					$userUpdate[global_mapping::Avatar],$userUpdate[global_mapping::AccountID],$userUpdate[global_mapping::IsActive]);
-			echo $result;
+			//echo $result;
 			$_SESSION[global_common::SES_C_USERINFO] = $currentUser = $userUpdate;
 			move_uploaded_file($_FILES["file"]["tmp_name"],$fileName);
 			
