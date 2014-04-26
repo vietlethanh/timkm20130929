@@ -6008,10 +6008,6 @@
     {
     "ProjRelPath" = "T"
     }
-    "include\\_comment_editor_delete.inc"
-    {
-    "ProjRelPath" = "T"
-    }
     "admin\\index.php"
     {
     "ProjRelPath" = "T"
