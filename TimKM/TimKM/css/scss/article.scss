@@ -26,6 +26,30 @@
 		}
 		
 	}
+	
+	#company_partners
+	{
+		display: inline-block;
+		vertical-align: top;		
+		margin-left: 0px;
+		.advertise
+		{
+			margin: 0 0 5px 0;
+			
+			img.partner:first-child
+			{
+				/*margin: 0;*/
+			}
+			img.partner
+			{
+				height: 250px;
+				/*margin: 5px 0;*/
+				width: 100%;
+			}
+			
+		}
+		
+	}
 	#article-detail
 	{		
 		display: inline-block;
