@@ -15,7 +15,7 @@ if ($_pgR["aid"])
 <div id="article">
 	<div id="advertises">
 <?php 
-//article
+//advertising
 include_once('_advertises.inc');
 		?>	
 	</div>
@@ -118,10 +118,11 @@ if($count>0)
 			<!--img class="map-address" src="images/map.jpg" /-->
 			
 		</div>
-		<div id="company_partner">
-			<img class="partner" src="images/partner.jpg" />
-			<img class="partner" src="images/partner.jpg" />
-			<img class="partner" src="images/partner.jpg" />
+		<div id="company_partners">
+		<?php 
+		//advertising
+			include_once('_partner.inc');
+		?>	
 		</div>
 	</div>
 </div>

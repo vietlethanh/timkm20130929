@@ -870,6 +870,18 @@ table.table {
         height: 200px;
         /*margin: 5px 0;*/
         width: 100%; }
+  #article #company_partners {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 0px; }
+    #article #company_partners .advertise {
+      margin: 0 0 5px 0; }
+      #article #company_partners .advertise img.partner:first-child {
+        /*margin: 0;*/ }
+      #article #company_partners .advertise img.partner {
+        height: 250px;
+        /*margin: 5px 0;*/
+        width: 100%; }
   #article #article-detail {
     display: inline-block;
     margin: 0 0px;
