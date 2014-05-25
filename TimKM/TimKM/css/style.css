@@ -511,7 +511,7 @@ table.table {
 /*********** gallery ************/
 #content .gallery {
   margin-left: 19px;
-  margin-top: 150px; }
+  margin-top: 88px; }
 
 /*********** end gallery ************/
 /*********** login ************/
@@ -1088,6 +1088,9 @@ table.table {
   color: #0099ff; }
 .wrapper #content p.slogan {
   padding-top: 80px; }
+.wrapper #content img.slogan {
+  width: 60%;
+  margin-top: 30px; }
 
 .tooltipBox {
   border-radius: 5px;

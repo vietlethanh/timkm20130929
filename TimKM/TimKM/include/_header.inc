@@ -101,9 +101,9 @@ $arrCategories =  $objArticleType->getAllArticleType(0,null,'`ParentID`=0','Leve
 ?>
 
 <body >
-<div id="main" align="">
+<div id="main" >
     <!--div id="subcontent" -->
-    <div id="header" align="">
+    <div id="header" >
 		<div id="header-menu">
 			<ul>
 			<li>
