@@ -26,19 +26,21 @@ caption,th,td{font-weight:400;text-align:left}
 table,td,th{vertical-align:middle}
 blockquote:before,blockquote:after,q:before,q:after{content:""}
 blockquote,q{quotes:""}
-body{
+body
+{
 		color:$color_body;font-family:Verdana, Arial, Helvetica, sans-serif;font-size:$size_body;margin:0;padding:0;line-height:1.5;
 		background: url("../images/bg-page.jpg") right top repeat;
 		
-	}
-#main{
+}
+#main
+{
 		width:1024px;
 		/*background-color:#C4C6C8;*/
 		height:100%;
 		margin: auto;
 		background: none repeat scroll 0 0 rgba(228, 167, 219, 0.1);
 		
-	}
+}
 .wrapper{width:100%; display:block; min-height: 360px;}
 /*
 #slider-left {float:left; height:100%;width:15%;}
@@ -152,7 +154,13 @@ h1  a:hover {color:$color_header !important;}
 		{
 			padding-top:80px;
 		}
+		img.slogan
+		{
+			width:60%; 
+			margin-top: 30px;			
+		}
 	}
+	
 }
 
 .tooltipBox{border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;background-color:#fffbe7;border:1px #ffb950 solid;padding:5px 25px 5px 10px;.display:inline-block}

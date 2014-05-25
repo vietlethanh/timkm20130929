@@ -52,12 +52,21 @@ include_once('include/_cat_list.inc');
 {
 	display:none;
 }
+#main
+{		
+	background: none;		
+}
+#main #content
+{
+	text-align:center;
+}
 </style>
 <div id="content">	
 <?php 
 //left side
-include_once('include/_slogan.inc');
+//include_once('include/_slogan.inc');
 ?>
+<img class="slogan" src="images/slogan.png" />
 	<div class="gallery">
 <?php
 foreach($arrCategories as $item)
