@@ -66,7 +66,7 @@ include_once('include/_cat_list.inc');
 //left side
 //include_once('include/_slogan.inc');
 ?>
-<img class="slogan" src="images/slogan.png" />
+<img class="slogan" src="images/home-slogan.png" />
 	<div class="gallery">
 <?php
 foreach($arrCategories as $item)
