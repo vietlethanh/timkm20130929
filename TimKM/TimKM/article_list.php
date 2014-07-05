@@ -45,6 +45,7 @@ include_once('include/_right_side.inc');
 include_once('include/_search_box.inc');
 ?>
 <?php 
+
 //article list
 include_once('include/_article_list.inc');
 ?>

@@ -1,1 +1,4 @@
-<p class="slogan">Đăng ký đơn giản - Đăng tin miễn phí</p>
+<div class="slogan">
+	<!--Đăng ký đơn giản - Đăng tin miễn phí-->
+	<img src="images/slogan.jpg" >
+</div>

@@ -24,6 +24,7 @@ var article = {
     ACT_SHOW_EDIT : 14,
     ACT_GET : 15,
     ACT_ACTIVE : 16,
+    ACT_REFRESH : 17,
     Page : "bg_article.php",
     
    
@@ -644,6 +645,31 @@ var article = {
 				if (parseInt(strRespond[1]['rs']) == 1) {
 					core.ui.showInfoBar(1, strRespond[1]["inf"]);	
 					core.util.reload();
+                }
+                else{
+                    core.ui.showInfoBar(2, strRespond[1]["inf"]);	
+                }
+            },
+            function()
+            {
+				core.ui.showInfoBar(2, core.constant.MsgProcessError);	
+            }
+        );
+	},
+	refreshArticle: function(articleID,isActivate)
+	{
+		var articleInfo = 
+		{
+			 id: articleID
+		};
+		
+		articleInfo.act = this.ACT_REFRESH;
+		
+        core.request.post('../'+this.Page,articleInfo,
+            function(respone, info){
+				var strRespond = core.util.parserXML(respone);
+				if (parseInt(strRespond[1]['rs']) == 1) {
+					core.ui.showInfoBar(1, strRespond[1]["inf"]);	
                 }
                 else{
                     core.ui.showInfoBar(2, strRespond[1]["inf"]);	

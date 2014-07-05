@@ -124,6 +124,7 @@ foreach($articles as $item)
 	echo '									<td class="article-date">'.global_common::formatDateVN($item[global_mapping::EndDate]).'</td>';
 	echo '									<td class="article-control">';
 	echo '										<a href="post_article.php?aid='.$item[global_mapping::ArticleID].'" class="btn btn-mini">Sửa</a>';
+	echo '										<a href="javascript:article.refreshArticle(\''.$item[global_mapping::ArticleID].'\')" class="btn btn-mini">Làm mới</a>';
 	echo '										<a href="javascript:article.activeArticle(\''.$item[global_mapping::ArticleID].'\',0)" class="btn btn-mini">Xóa</a>';
 	echo '									</td>';
 	echo '								</tr>';
