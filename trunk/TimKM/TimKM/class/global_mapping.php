@@ -37,6 +37,9 @@ class global_mapping
 	const ParentID					= 'ParentID';
 	const Thumbnail					= 'Thumbnail';
 	const Logo						= 'Logo';
+	
+	const RenewedNum				= 'RenewedNum';
+	const RenewedDate				= 'RenewedDate';
 
 		
 	const CommentID					= 'CommentID';

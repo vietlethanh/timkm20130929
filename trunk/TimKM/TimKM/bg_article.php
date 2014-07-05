@@ -30,7 +30,7 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 		
 		$sectionID = $_pgR[global_mapping::SectionID];
 		
-		$renewedNum = html_entity_decode($renewedNum,ENT_COMPAT ,'UTF-8' );
+		$renewedNum = 0;
 		$companyName = html_entity_decode($_pgR[global_mapping::CompanyName],ENT_COMPAT ,'UTF-8' );
 		$companyAddress = html_entity_decode($_pgR[global_mapping::CompanyAddress],ENT_COMPAT ,'UTF-8' );
 		$companyWebsite = html_entity_decode($_pgR[global_mapping::CompanyWebsite],ENT_COMPAT ,'UTF-8' );
@@ -75,8 +75,9 @@ if ($_pgR["act"] == model_Article::ACT_ADD || $_pgR["act"] == model_Article::ACT
 			$articleID = html_entity_decode($_pgR[global_mapping::ArticleID],ENT_COMPAT ,'UTF-8' );
 			$currentArticle = $objArticle->getArticleByID($articleID);
 			$resultID = $objArticle->update($articleID,null,$title,$fileName,$catalogueID, $content,null,$tags,null,null,$currentArticle[global_mapping::CreatedBy],
-					$currentArticle[global_mapping::CreatedDate],$modifiedBy,global_common::nowSQL(),null,null,1,null,null,null,null,$companyName,
-					$companyAddress,$companyWebsite,$companyPhone,$adType,$startDate,$endDate,$happyDays,
+					$currentArticle[global_mapping::CreatedDate],$modifiedBy,global_common::nowSQL(),null,null,0,null,null,
+					$currentArticle[global_mapping::RenewedDate], $currentArticle[global_mapping::RenewedNum],
+					$companyName,$companyAddress,$companyWebsite,$companyPhone,$adType,$startDate,$endDate,$happyDays,
 					$startHappyHour,$endHappyHour, $addresses,$dictricts,$cities);
 			if ($resultID)
 			{
@@ -117,14 +118,36 @@ elseif($_pgR['act'] == Model_Article::ACT_ACTIVE)
 		$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
 		echo global_common::convertToXML(
 				$arrHeader, array("rs", "inf"), 
-				array(1, ($isActivate?'Activate':'Deactivate').' successfully'), 
+				array(1, ($isActivate?'Xóa':'Deactivate').' thành công'), 
 				array( 0, 1 )
 				);
 		return;
 	}
 	else
 	{
-		echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,($isActivate?'Activate':'Deactivate').' unsuccessfully'), array(0,1));
+		echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,($isActivate?'Xóa':'Deactivate').' unsuccessfully'), array(0,1));
+		return;
+	}
+	
+}
+elseif($_pgR['act'] == Model_Article::ACT_REFRESH)
+{
+	$articleID = $_pgR['id'];
+	$c_userInfo = $_SESSION[global_common::SES_C_USERINFO];
+	$result = $objArticle->refreshArticle($articleID,$c_userInfo);
+	if ($result >=0 )
+	{
+		$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
+		echo global_common::convertToXML(
+				$arrHeader, array("rs", "inf"), 
+				array(1, 'Bạn còn '.$result.' lần làm mới trong ngày'), 
+				array( 0, 1 )
+				);
+		return;
+	}
+	else
+	{
+		echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,'Bạn đã sử dụng hết '.Model_Article::NUM_REFRESH.' lần làm mới trong ngày'), array(0,1));
 		return;
 	}
 	

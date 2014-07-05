@@ -30,8 +30,8 @@
 				height: 24px;
 				padding: 10px 9px;
 				text-align: center;
-				line-height:12px;
-				width:80px;
+				line-height:17px;
+				width:76px;
 				a
 				{
 					color: $color_body;
@@ -39,7 +39,16 @@
 				a:hover
 				{
 					color:$color_hover;
-				}				
+				}
+				img.m-logo
+				{
+					height:40px;
+					margin-top: -5px;
+				}
+			}
+			li:first-child
+			{
+				
 			}
 			li:last-child
 			{

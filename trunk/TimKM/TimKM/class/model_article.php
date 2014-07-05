@@ -24,9 +24,11 @@ class Model_Article
 	const ACT_SHOW_EDIT                     = 14;
 	const ACT_GET                           = 15;
 	const ACT_ACTIVE                        = 16;
-
-
+	const ACT_REFRESH                       = 17;
+	
+	
 	const NUM_PER_PAGE                      = 15;
+	const NUM_REFRESH                       = 5;
 	
 	const TBL_SL_ARTICLE			        = 'sl_article';
 	const TBL_SL_ARTICLE_TYPE_ID			= 'sl_article_type_id';
@@ -94,8 +96,8 @@ class Model_Article
 		#`IsDeleted` = \'{16}\',
 		#`Status` = \'{17}\',
 		#`comments` = \'{18}\',
-		#`RenewedDate` = \'{19}\',
-		#`RenewedNum` = \'{20}\',
+		`RenewedDate` = \'{19}\',
+		`RenewedNum` = \'{20}\',
 		`CompanyName` = \'{21}\',
 		`CompanyAddress`= \'{22}\',
 		`CompanyWebsite`= \'{23}\',
@@ -110,11 +112,11 @@ class Model_Article
 		`Dictricts`= \'{32}\',
 		`Cities`= \'{33}\'
 		WHERE `ArticleID` = \'{1}\'  ';
-		
+	
 	//status : 0 -> Deactivate;  1 ->Active; 2-> bad content
 	const SQL_ACTIVE_SL_ARTICLE		= 'UPDATE `{0}`
 		SET  		
-		 `Status` = \'{2}\'		
+		`Status` = \'{2}\'		
 		WHERE `ArticleID` = \'{1}\'  ';
 	
 	const SQL_CREATE_TABLE_SL_ARTICLE		= 'CREATE TABLE `{0}` (
@@ -203,7 +205,7 @@ class Model_Article
 					global_common::escape_mysql_string($createdby),global_common::nowSQL(),
 					global_common::escape_mysql_string($deletedby),global_common::escape_mysql_string($deleteddate),
 					global_common::escape_mysql_string($isdeleted),global_common::escape_mysql_string($status),
-					global_common::escape_mysql_string($comments),global_common::escape_mysql_string($reneweddate),
+					global_common::escape_mysql_string($comments),global_common::nowSQL(),
 					global_common::escape_mysql_string($renewednum),global_common::escape_mysql_string($companyname),
 					global_common::escape_mysql_string($companyAddress),global_common::escape_mysql_string($companyWebsite),
 					global_common::escape_mysql_string($companyPhone),global_common::escape_mysql_string($adType),
@@ -287,6 +289,63 @@ class Model_Article
 		}	
 		return $articleID;	
 	}
+	
+	public function refreshArticle($articleID,$currentUser)
+	{
+		$currentArticle = $this->getArticleByID($articleID);
+		
+		$renewNum = $currentArticle[global_mapping::RenewedNum];	
+		$renewedDate = $currentArticle[global_mapping::RenewedDate];	
+		$diffDay = global_common::datediff(global_common::getDate(),date('d-m-Y', strtotime($renewedDate)),d);
+		if($diffDay > 0)
+		{
+			$renewNum = 0;
+		}
+		if($renewNum < self::NUM_REFRESH )
+		{		
+			$renewNum += 1;
+			$title = $currentArticle[global_mapping::Title];
+			$fileName = $currentArticle[global_mapping::FileName];
+			$catalogueID = $currentArticle[global_mapping::CatalogueID];
+			$content = $currentArticle[global_mapping::Content];
+			$tags = $currentArticle[global_mapping::Tags];
+			$createdBy = $currentArticle[global_mapping::CreatedBy];
+			$createdDate = global_common::formatDateTimeVN($currentArticle[global_mapping::CreatedDate]);
+			$modifiedBy = $currentUser[global_mapping::UserID];
+			
+			$renewedDate = global_common::nowSQL();
+			
+			$companyName = $currentArticle[global_mapping::CompanyName];
+			$companyAddress = $currentArticle[global_mapping::CompanyAddress];
+			$companyWebsite = $currentArticle[global_mapping::CompanyWebsite];
+			$companyPhone = $currentArticle[global_mapping::CompanyPhone];
+			
+			$adType = $currentArticle[global_mapping::AdType];
+			$startDate = global_common::formatDateTimeVN($currentArticle[global_mapping::StartDate]);
+			$endDate = global_common::formatDateTimeVN($currentArticle[global_mapping::EndDate]);
+			
+			$happyDays = $currentArticle[global_mapping::HappyDays];
+			$startHappyHour = $currentArticle[global_mapping::StartHappyHour];		
+			$endHappyHour = $currentArticle[global_mapping::EndHappyHour];
+			$addresses = $currentArticle[global_mapping::Addresses];
+			$dictricts = $currentArticle[global_mapping::Dictricts];
+			$cities = $currentArticle[global_mapping::Cities];
+			
+			$resultID = $this->update($articleID,null,$title,$fileName,$catalogueID, $content,null,$tags,$numView,$numComment,$createdBy,
+					$createdDate,$modifiedBy,global_common::nowSQL(),null,null,0,null,null,$renewedDate,$renewNum,$companyName,
+					$companyAddress,$companyWebsite,$companyPhone,$adType,$startDate,$endDate,$happyDays,
+					$startHappyHour,$endHappyHour, $addresses,$dictricts,$cities);
+			if (!$resultID)
+			{
+				//echo $strSQL;
+				global_common::writeLog('Error refreshArticle sl_article:'.$articleID,1);
+				return -1;
+			}	
+			return (self::NUM_REFRESH - $renewNum);
+		}
+		return -1;	
+	}
+	
 	
 	public function getArticleByID($objID,$selectField='*', $whereClause='') 
 	{		
@@ -454,11 +513,11 @@ class Model_Article
 		
 		if($orderBy)
 		{
-			$orderBy = ' ORDER BY '.$orderBy. ', ModifiedDate DESC';
+			$orderBy = ' ORDER BY '.$orderBy. ', '.global_mapping::RenewedDate.' DESC';
 		}
 		else
 		{
-			$orderBy = ' ORDER BY  ModifiedDate DESC';
+			$orderBy = ' ORDER BY  '.global_mapping::RenewedDate.' DESC';
 		}
 		
 		if($whereClause)

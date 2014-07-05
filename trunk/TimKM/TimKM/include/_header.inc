@@ -107,7 +107,7 @@ $arrCategories =  $objArticleType->getAllArticleType(0,null,'`ParentID`=0','Leve
 		<div id="header-menu">
 			<ul>
 			<li>
-				<a href="index.php">Logo</a>
+				<a href="index.php"><img class="m-logo" src="images/logo.png"></img></a>
 			</li>
 <?php
 foreach($arrCategories as $item)

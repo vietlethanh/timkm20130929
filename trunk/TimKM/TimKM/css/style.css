@@ -438,12 +438,15 @@ table.table {
       height: 24px;
       padding: 10px 9px;
       text-align: center;
-      line-height: 12px;
-      width: 80px; }
+      line-height: 17px;
+      width: 76px; }
       #header #header-menu > ul li a {
         color: white; }
       #header #header-menu > ul li a:hover {
         color: #ffbc00; }
+      #header #header-menu > ul li img.m-logo {
+        height: 40px;
+        margin-top: -5px; }
     #header #header-menu > ul li:last-child {
       border-right: none; }
   #header #div-login label {
@@ -1080,7 +1083,7 @@ table.table {
     padding: 20px; }
 
 /*********** end map ************/
-.wrapper p.slogan {
+.wrapper div.slogan {
   font-size: 24px;
   text-align: center;
   padding-top: 0px;
