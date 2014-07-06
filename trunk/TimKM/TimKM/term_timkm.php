@@ -375,7 +375,6 @@ Trừ các ngoại lệ đã nêu trong Quy chế này, Người dùng bị nghi
 Việc đăng bất kỳ thông tin và tài liệu nào trên ('Trang web') không cấu thành nên sự từ bỏ bất kỳ quyền nào đối với thông tin và tài liệu.
 Không được tái tạo phần nào của Các sản phẩm đã nêu dưới bất kỳ hình thức nào hay đưa vào bất kỳ hệ thống truy tìm thông tin nào, dù là điện tử hay máy móc, để tái bản, phân phối, chuyển nhượng, cấp giấy phép bổ sung, bán hàng, chuẩn bị sản phẩm phát sinh hay các hình thức sử dụng khác ngoài sự sử dụng vì mục đích cá nhân của Người dùng.
 Với việc sử dụng trang web, Người dùng đồng ý chuyển nhượng cho Công ty toàn bộ quyền và lợi ích liên quan đến bản quyền của các rao vặt và quảng cáo đăng trên Trang web, bao gồm nhưng không giới hạn các đoạn văn bản, đồ họa, hình vẽ, bố cục và ảnh ("Các sản phẩm được chuyển nhượng').
-Tất cả các ảnh sử dụng trong bất kỳ rao vặt và quảng cáo nào và được đăng trên Trang web sẽ được đóng dấu hình mờ của Công ty ('Hình mờ'). Không được xóa bỏ Hình mờ vào bất kỳ lúc nào.
 Công ty rất chú trọng đến việc vi phạm bản quyền và sẽ không ngần ngại thực hiện các hành động bao gồm cả tiến hành kiện tụng với bất kỳ người nào vi phạm bản quyền. XIN LƯU Ý rằng việc vi phạm bản quyền sẽ dẫn đến các hình phạt dân sự và hình sự.
 </p>
 <h2>
@@ -400,19 +399,18 @@ XIII. Điều khoản cam kết</h2>
 <p>
 Sàn giao dịch Thương mại điện tử TimKM
 </p>
-<p>
-Công ty: 
-</p>
-<p>
+<!--p>
+Công ty: T
+</p-->
+<!--p>
 Địa chỉ: 
+</p-->
+<p>
+Số Điện thoại: +084 94992 5616
 </p>
 <p>
-Số Điện thoại: +
+E-Mail: timkm.vn@gmail.com
 </p>
-<p>
-E-Mail: trogiup@timkm.vn
-</p>
-
 
 	</div>
 </div>

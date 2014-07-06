@@ -63,8 +63,11 @@ if ($_pgR["aid"])
 
 ?>
 
+<script type="text/javascript" src="<?php echo $_objSystem->locateJPlugin('ckeditor/ckeditor.js');?>"></script>
+<script type="text/javascript" src="<?php echo $_objSystem->locateJPlugin('ckeditor/adapters/jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_article.js');?>"></script>
 <script type="text/javascript" src="<?php echo $_objSystem->locateJs('user_articletype.js');?>"></script>
+
 <div id="post-page" class="span10">
 	<form method="POST" class="form-horizontal" id="post-article">
 		<!--Begin Form Input -->
