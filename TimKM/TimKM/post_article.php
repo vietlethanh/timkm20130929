@@ -291,7 +291,7 @@ for($i=0; $i<$total; $i++)
 			<div class="control-group">
 				<div class="controls">
 					<label class="checkbox">
-						<input type="checkbox" id="chkTerm" value="" /> Tôi đã đọc và đồng ý với <a href="<?php echo global_common::PAGE_TERM_KM ?>" class="link">điều khoản đăng tin</a>  của hệ thống timkm.com
+						<input type="checkbox" id="chkTerm" value="" /> Tôi đã đọc và đồng ý với <a href="<?php echo global_common::PAGE_TERM_KM ?>" class="link" target="_blank">điều khoản đăng tin</a>  của hệ thống timkm.com
 					</label>
 					<div class="help-inline message"></div>		
 				</div>
