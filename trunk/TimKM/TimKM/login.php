@@ -47,7 +47,7 @@ include_once('include/_menu.inc');
 $redirect = $_pgR["r"];
 ?>
 <div id="login-page">
-	<form method="POST" id="form-login"  class="form-horizontal">\
+	<form method="POST" id="form-login"  class="form-horizontal">
 <?php
 if($redirect)
 {
