@@ -556,7 +556,7 @@ class PHPMailer {
 
   // public $DKIM_domain     = '';  // TODO: DO - modified
 
-  public $DKIM_domain     = 'hellochao.com';
+  public $DKIM_domain     = 'timkm.vn';
 
 
 

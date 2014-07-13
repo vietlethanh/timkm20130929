@@ -260,6 +260,39 @@ else if ($_pgR["act"] == Model_User::ACT_UPDATE_PROFILE)
 						return;
 					}
 				}
+				else if ($_pgR["act"] == Model_User::ACT_CONTACT_US)
+					{
+						$fullName = $_pgR['fullName'];
+						$fullName = html_entity_decode($fullName,ENT_COMPAT ,'UTF-8' );
+						$email = $_pgR['email'];
+						$email = html_entity_decode($email,ENT_COMPAT ,'UTF-8' );
+						$subject = $_pgR['subject'];
+						$subject = html_entity_decode($subject,ENT_COMPAT ,'UTF-8' );
+						$content = $_pgR['content'];
+						$content = html_entity_decode($content,ENT_COMPAT ,'UTF-8' );
+					
+						
+						$emailContent = 'From:'. $fullName.'<br>'.'Email:'.$email.'<br>'.'Content: <br>'.$content;
+						$isSent = global_mail::send(global_common::SUPPORT_MAIL_USERNAME,global_common::SUPPORT_MAIL_DISPLAY_NAME,$subject,$emailContent,null,
+								global_common::SUPPORT_MAIL_USERNAME,global_common::SUPPORT_MAIL_PASSWORD,
+								global_common::SUPPORT_MAIL_DISPLAY_NAME);
+						if($isSent)
+						{
+							$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
+							echo global_common::convertToXML(
+									$arrHeader, array('rs', 'inf'), 
+									array(1, 'Đã gửi thành công.'), 
+									array( 0, 1 )
+									);
+							return;
+						}
+						else
+						{
+							echo global_common::convertToXML($arrHeader, array('rs','inf'), array(0,'Xử lý thất bại. Xin vui lòng thử lại sau!'), array(0,1));
+							return;
+						}
+					
+					}
 				else if ($_pgR["act"] == Model_User::ACT_LOGOUT)
 					{
 						

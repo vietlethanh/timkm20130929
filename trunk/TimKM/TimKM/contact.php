@@ -13,7 +13,7 @@ include_once('include/_menu.inc');
 $redirect = $_pgR["r"];
 ?>
 <div id="login-page">
-	<form method="POST" id="form-login"  class="form-horizontal">
+	<form method="POST" id="form-contact"  class="form-horizontal">
 		<div class="row-fluid">
 			<div class="span8 ">
 				<div class="table-login" style="float:right; width:100%">
@@ -30,21 +30,21 @@ $redirect = $_pgR["r"];
 					<div class="control-group">
 						<label class="control-label">Họ tên (*)</label>
 						<div class="controls">
-							<input type="text" name="txtUserName" id="txtUserName" class="text" maxlength="250" style="width:400px" />
+							<input type="text" name="txtFullName" id="txtFullName" class="text" maxlength="250" style="width:400px" />
 							<div class="help-block message"></div>		
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label">Email (*)</label>
 						<div class="controls">
-							<input type="text" name="txtUserName" id="txtUserName" class="text" maxlength="250" style="width:400px" />
+							<input type="text" name="txtEmail" id="txtEmail" class="text" maxlength="250" style="width:400px" />
 							<div class="help-block message"></div>		
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label">Chủ đề (*)</label>
 						<div class="controls">
-							<input type="text" name="txtUserName" id="txtUserName" class="text" maxlength="250" style="width:400px"/>
+							<input type="text" name="txtSubject" id="txtSubject" class="text" maxlength="250" style="width:400px"/>
 							<div class="help-block message"></div>		
 						</div>
 					</div>
@@ -58,7 +58,7 @@ $redirect = $_pgR["r"];
 					<div class="control-group">
 					
 						<div class="controls">
-							<input type="submit" name="btnOK" id="btnOK" class="btn" value="Gửi" style="margin-left:340px"/>
+							<input type="button" name="btnOK" id="btnOK" class="btn" value="Gửi" style="margin-left:340px"/>
 							
 						</div>
 					</div>
@@ -79,12 +79,13 @@ $redirect = $_pgR["r"];
 </div>
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
-		core.util.getObjectByID("form-login").submit(function () {
-                return user.login();	
+		core.util.getObjectByID("form-contact").submit(function () {
+                //return user.sendContactUs();
+				
             });
         core.util.getObjectByID("btnOK").click(function () {
-               //user.login();
-				//return false;
+               user.sendContactUs();
+			   return false;
             });
     });
 </script>

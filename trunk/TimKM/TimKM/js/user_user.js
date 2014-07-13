@@ -30,6 +30,7 @@ var user = {
 	ACT_UPDATE_PROFILE:		20,
 	ACT_RESET_PASS:			21,
 	ACT_UPDATE_RESET_PASS:	22,
+	ACT_CONTACT_US:	        23,
     Page : "bg_user.php",
 
     	
@@ -577,6 +578,98 @@ var user = {
         ); 
 		
 	},//reset password
+	
+	
+	getContactUsInfo: function(controlSubmit) 
+	{
+        core.util.disableControl(controlSubmit, true);
+        var isValid = true;
+      
+		
+		controlID = 'txtFullName';
+        var fullName = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(fullName)) {
+            core.util.validateInputTextBox(controlID, 'Họ tên không được rỗng', isValid);
+            isValid = false;
+        } 
+        
+		controlID = 'txtEmail';	
+        var email = core.util.getObjectValueByID(controlID);
+		core.util.validateInputTextBox(controlID, '');
+		if(core.util.isNull(email))
+		{
+			core.util.validateInputTextBox(controlID, 'Email không được rỗng', isValid);
+			isValid = false;
+		}
+		else
+		{			
+			if (!core.util.validateEmail(email)) {
+				core.util.validateInputTextBox(controlID, 'Email không hợp lệ', isValid);
+				isValid = false;
+			}
+		}
+		
+		controlID = 'txtSubject';
+        var subject = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(subject)) {
+            core.util.validateInputTextBox(controlID, 'Tiêu không được rỗng', isValid);
+            isValid = false;
+        } 
+        
+		controlID = 'txtContent';
+        var content = core.util.getObjectValueByID(controlID);
+        core.util.validateInputTextBox(controlID, '');
+        if (core.util.isNull(content)) {
+            core.util.validateInputTextBox(controlID, 'Tiêu không được rỗng', isValid);
+            isValid = false;
+        } 
+        
+		if (isValid == false) {
+            core.util.disableControl(controlSubmit, false);
+            return;
+        }
+		return {			
+			fullName: fullName,
+			email: email,
+			subject: subject,
+			content: content		
+	   }      
+    },
+	sendContactUs: function()
+	{		
+		var controlSubmit = "btnOK";
+		var contactInfo = this.getContactUsInfo(controlSubmit);
+		if(core.util.isNull(contactInfo))
+		{
+			return false;
+		}
+		
+		contactInfo.act = this.ACT_CONTACT_US;
+        core.request.post(this.Page,contactInfo,
+            function(respone, info){
+				var strRespond = core.util.parserXML(respone);
+				if (parseInt(strRespond[1]['rs']) == 1) {
+					core.ui.showInfoBar(1, strRespond[1]["inf"]);	
+					core.util.clearValue("txtFullName");
+					core.util.clearValue("txtEmail");
+					core.util.clearValue("txtSubject");
+					core.util.clearValue("txtContent");
+                }
+                else{					
+					core.ui.showInfoBar(2,strRespond[1]["inf"]);	
+                }
+				core.util.disableControl(controlSubmit, false);
+            },
+            function()
+            {
+				core.ui.showInfoBar(2, core.constant.MsgProcessError);	
+				core.util.disableControl(controlSubmit, false);
+            }
+        ); 
+		
+	},//sendContactUs
 	
     logout: function()
 	{		

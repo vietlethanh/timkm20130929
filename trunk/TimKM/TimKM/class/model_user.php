@@ -30,6 +30,7 @@ class Model_User
 	const ACT_UPDATE_PROFILE				= 20;
 	const ACT_RESET_PASS					= 21;
 	const ACT_UPDATE_RESET_PASS				= 22;
+	const ACT_CONTACT_US					= 23;
 	
 	const NUM_PER_PAGE                      = 15;
 	

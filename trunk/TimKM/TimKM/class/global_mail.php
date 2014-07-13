@@ -58,6 +58,7 @@ class global_mail
 			$mail->Username   = $sender;			   
 			$mail->Password   = $senderPass;
 			$mail->CharSet = 'utf-8'; 
+			
 			if(!$mail->Send()) 
 			{
 				global_common::writeLog("Mailer Error: " . $mail->ErrorInfo,0,"sendmail.php");
@@ -128,7 +129,7 @@ class global_mail
 	{
 		// [0]: Chi so cua mx record trong mang ma vua duoc dung
 		// [1]->...: Cac mx record
-		return array(1,"mx.hellochao.com","mx1.hellochao.com","mx2.hellochao.com","mx3.hellochao.com","mx4.hellochao.com");
+		return array(1,"timkm.com");
 	}
 	
 	public function isYahooMail($strEmail)

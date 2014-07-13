@@ -127,6 +127,7 @@ class global_common
 	const TEAMPLATE_REGISTER = 'reset_password.mail';
 	const TEAMPLATE_RESET_PASSWORD = 'reset_password.mail';
 	const TEAMPLATE_BAD_COMMENT = 'bad_comment.mail';
+	const TEAMPLATE_CONTACT_US = 'contact_us.mail';
 	
 	/*****************************************************************************
 	* 
