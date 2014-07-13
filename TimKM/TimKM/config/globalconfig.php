@@ -188,7 +188,7 @@ if (('admin'==$strModule) && ($_mainFrame->_pName!='index') && ($_mainFrame->_pN
 //elseif('admin'!=$strModule)
 {
 	// TODO: DoNguyen - Tam thoi khong cho truy cap vao m.hellochao.com
-	/*$subDomainMobile = 'm.hellochao.com';
+	/*$subDomainMobile = 'm.timkm.com';
 	$moduleNameForMobile = 'm';
 			
 	// Redirect from mobile
@@ -214,7 +214,7 @@ if (('admin'==$strModule) && ($_mainFrame->_pName!='index') && ($_mainFrame->_pN
 			{
 				// TODO: DoNguyen - Tam thoi ngung trang mobile
 				//global_common::redirectByScript('http://$subDomainMobile/m/');
-				global_common::redirectByScript('http://www.hellochao.com/');
+				global_common::redirectByScript('http://www.timkmcom/');
 			}
 		}
 	}else{

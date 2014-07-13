@@ -39,14 +39,14 @@ class global_editor
 		$options = array(
 					'http'=>array(
 					'method'=>"GET",
-					'header'=>	"Host: hellochao.com\r\n" .
+					'header'=>	"Host: timkm.vn\r\n" .
 					"User-Agent: " . $_SERVER['HTTP_USER_AGENT'] . " \r\n" .
 					"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 \r\n" .
 					"Accept-language: en-us,en;q=0.5\r\n" .
 					"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7\r\n" .
 					"Keep-Alive: 300\r\n" .
 					"Connection: keep-alive\r\n" .
-					"Referer: http://hellochao.com/\r\n" .
+					"Referer: http://timkm.vn/\r\n" .
 					"Cookie: bwd=" . $cookie_val2 . "; " . "bwd_data=" . $cookie_val . "\r\n"
 					)
 				);
