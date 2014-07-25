@@ -1,7 +1,8 @@
 <?php 
 include_once('class/model_city.php');
 include_once('class/model_district.php');
-
+//get catId from _article.inc
+//$catID = $_pgR['cid'];
 $objCity = new Model_City($objConnection);
 $objDistrict = new Model_District($objConnection);
 
@@ -18,7 +19,8 @@ $selectCityID = "";
 
 ?>
 <div id="search-box">
-	<form method="post" id="formSearch">
+	<form method="get" action="article_list.php" id="formSearch">
+	   <input type="hidden" name="cid" value="<?php echo $catID ?>"/>	
 		<label>
 			<select id="optCity" name="ct" onchange="article.bindDistrict(this);">
 				<option value="">Tỉnh/Thành Phố</option>
@@ -47,7 +49,7 @@ foreach($allDistricts as $item)
 	{
 		if($item[global_mapping::DistrictName] == $district)
 		{
-			echo '<option value="'.$item[global_mapping::DistrictName].'" selected=selected  CityID="'.$item[global_mapping::CityID].'">'.$item[global_mapping::DistrictName].'</option>';
+			echo '<option value="'.$item[global_mapping::DistrictName].'" selected="selected" CityID="'.$item[global_mapping::CityID].'">'.$item[global_mapping::DistrictName].'</option>';
 		}
 		else
 		{

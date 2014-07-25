@@ -41,11 +41,11 @@ if($keyword)
 {
 	if($search)
 	{
-		$search .= ' and (`'.global_mapping::Title.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or `'.global_mapping::Content.'` like \'%'.global_common::escape_mysql_string($keyword).'%\')' ;
+		$search .= ' and (`'.global_mapping::CompanyName.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or `'.global_mapping::Title.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or `'.global_mapping::Content.'` like \'%'.global_common::escape_mysql_string($keyword).'%\')' ;
 	}
 	else
 	{
-		$search .= '(`'.global_mapping::Title.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or `'.global_mapping::Content.'` like \'%'.global_common::escape_mysql_string($keyword).'%\')' ;
+		$search .= '(`'.global_mapping::CompanyName.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or  `'.global_mapping::Title.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or `'.global_mapping::Content.'` like \'%'.global_common::escape_mysql_string($keyword).'%\')' ;
 	}
 }
 $condidtion = global_mapping::StartDate.' <= \''.global_common::nowSQL().'\''.

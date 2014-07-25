@@ -290,7 +290,7 @@ IX. Quyền và nghĩa vụ của Ban quản lý website TMĐT Chợ Tốt</h2
 - Công ty giữ bản quyền sử dụng dịch vụ, hình thức và các nội dung trên trang web theo luật bản quyền quốc tế và các quy định pháp luật về bảo hộ sở hữu trí tuệ tại Việt Nam. Nghiêm cấm mọi hành vi sao chép, sử dụng và phổ biến bất hợp pháp các quyền sở hữu trên.
 </p>
 <h3>
-2. Nghĩa vụ và trách nhiệm của Ban quản lý Sàn giao dịch TMĐT Chợ Tốt</h3>
+2. Nghĩa vụ và trách nhiệm của Ban quản lý Sàn giao dịch TMĐT TimKM</h3>
 
 <p>
 - Đăng ký sàn giao dịch thương mại điện tử với cơ quan nhà nước có thẩm quyền. Xây dựng Quy chế hoạt động, Quy định, Hướng dẫn các quy trình giao dịch…cho Người dùng.
