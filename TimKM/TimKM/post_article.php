@@ -168,7 +168,7 @@ foreach($allTypes as $item)
 				<label class="control-label">Loại khuyến mãi *</label>
 				<div class="controls">
 					<input type="text" name="txtAdTypeValue" id="txtAdTypeValue" class="text ad-value" placeholder="vd: Mua 1 tặng 1" 
-					maxlength="15" value="<?php echo $article[global_mapping::AdType];?>"/>
+					maxlength="30" value="<?php echo $article[global_mapping::AdType];?>"/>
 					<div class="help-inline message"></div>			
 				</div>
 			</div>

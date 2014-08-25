@@ -429,6 +429,11 @@ class global_common
 		return date('Y-m-d H:i:s');
 	}
 	
+	public function nowDateSQL()
+	{
+		return date('Y-m-d');
+	}
+	
 	/**
 	 * thực hiện escape một chuỗi trước khi được dùng làm tham số cho câu sql. Bat buoc truyen doi so thu 2
 	 *

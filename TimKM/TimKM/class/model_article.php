@@ -568,7 +568,7 @@ class Model_Article
 		{
 			$condition = 'WHERE ('.global_mapping::IsDeleted.' IS NULL or '.global_mapping::IsDeleted.' = \'0\') '.
 				($keyword?(' and `'.global_mapping::Title .'` LIKE \'%'.$keyword.'%\' '):'').
-				($strQueryArticleIN? ('and `'.global_mapping::ArticleID.'` IN ('.$strQueryArticleIN.') and '):'').$whereClause;	
+				($strQueryArticleIN? ('and `'.global_mapping::ArticleID.'` IN ('.$strQueryArticleIN.') '):''). $whereClause;	
 		}
 		else
 		{
