@@ -25,20 +25,44 @@ $objArticleType = new model_ArticleType($objConnection);
 $objArticle = new model_Article($objConnection);
 
 $catID = $_pgR["cid"];
-
-$allCats = $objArticleType->getAllArticleType(0,null,'ParentID='.$catID,null);
-if(count($allCats)<=0)
+$inactive = $_pgR["inactive"];
+$expired = $_pgR["expired"];
+$allCats = $objArticleType->getAllArticleType(0,null,'ParentID=0',null);
+if($catID == 0)
 {
-	$allCatIDs = $catID;
+	$allCatIDs ='';
 }
 else
 {
-	$allCatIDs = global_common::getArrayColumn($allCats,global_mapping::ArticleTypeID);
+	$allSubCats = $objArticleType->getAllArticleType(0,null,'ParentID='.$catID,null);
+	//print_r($allSubCats);
+	if(count($allSubCats)<=0)
+	{
+		$allCatIDs = $catID;
+	}
+	else
+	{
+		$allCatIDs = global_common::getArrayColumn($allSubCats,global_mapping::ArticleTypeID);
+	}
 }
-
-
-//$condidtion =global_mapping::StartDate.' <= \''.global_common::nowSQL().'\''.' And '.global_mapping::EndDate.' >= \''.global_common::nowSQL().'\'';
-$articles = $objArticle->searchArticle(1,'','','',$condidtion);
+//print_r($allCatIDs);
+if($expired)
+{
+	$condidtion = ' And '.global_mapping::EndDate.' < \''.global_common::nowDateSQL().'\'';
+}
+else
+{
+	$condidtion = ' And '.global_mapping::StartDate.' <= \''.global_common::nowDateSQL().'\''.' And '.global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\'';
+}
+if($inactive =='true')
+{
+	$condidtion .= ' And `'.global_mapping::Status.'`=0';
+}
+else
+{
+	$condidtion .=  ' And `'.global_mapping::Status.'`=1';
+}
+$articles = $objArticle->searchArticle(0,$allCatIDs,'','',$condidtion);
 
 ?>
 <?php
@@ -74,8 +98,33 @@ include_once('include/_admin_header.inc');
 		</div>
 		<!---->
 		<div class="portlet-body">
-		
-									
+<form method="get" style="display: inline-flex">
+<select class="" name="cid" id="cid" style="height:25px">
+<option value="0" >ALL</option>
+<?php
+foreach($allCats as $item)
+{
+	$isSelect = false;
+	//print_r($currentTypes);
+	
+	if($item[global_mapping::ArticleTypeID] == $catID)
+	{
+		$isSelect=true;
+	}
+	if($isSelect)
+		echo '			<option selected="selected" value="'.$item[global_mapping::ArticleTypeID].'" >'.$item[global_mapping::ArticleTypeName].'</option>';
+	else
+		echo '			<option value="'.$item[global_mapping::ArticleTypeID].'" >'.$item[global_mapping::ArticleTypeName].'</option>';
+}
+?>		
+</select>	
+<label for="inactive" style="height:20px;color:black; margin: 0 0 0 10px">InActive: </label> <input type="checkbox" <?php echo ($inactive?'checked=checked':'') ?> name="inactive" id="inactive" value="true" />
+<label for="expired" style="height:20px;color:black; margin: 0 0 0 10px">Expired: </label> <input type="checkbox" <?php echo ($expired?'checked=checked':'') ?> name="expired" id="expired" value="true" />
+<input type="submit" value="Search" style="height:24px;margin:0 10px" />		
+</form>		
+<div style="float:right;color:black">
+<?php echo 'Total:'. count($articles); ?>
+</div>
 <?php
 //print_r($articles);
 if($articles)
