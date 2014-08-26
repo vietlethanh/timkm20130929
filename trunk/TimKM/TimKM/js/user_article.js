@@ -117,8 +117,8 @@ var article = {
         } else if (core.util.validateDateTime(endDate) == false) {
 			 core.util.validateInputTextBox(controlID, 'Ngày kết thúc không hợp lệ', isValid);
 			 isValid = false;
-        }else if (new Date(core.util.formatDateTimeVN(startDate)) >= new Date(core.util.formatDateTimeVN(endDate)) ) {
-			 core.util.validateInputTextBox(controlID, 'Ngày kết thúc phải sau ngày bắt đầu', isValid);
+        }else if (new Date(core.util.formatDateTimeVN(startDate)) > new Date(core.util.formatDateTimeVN(endDate)) ) {
+			 core.util.validateInputTextBox(controlID, 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu', isValid);
 			 isValid = false;
         }	
 		

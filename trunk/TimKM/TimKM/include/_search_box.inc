@@ -27,13 +27,13 @@ $selectCityID = "";
 <?php
 foreach($allCities as $item)
 {
-	if($item[global_mapping::CityName] == $city)
+	//if($item[global_mapping::CityName] == $city)
 	{
 		$selectCityID = $item[global_mapping::CityID];
 		echo '			<option value="'.$item[global_mapping::CityName].'" selected="selected" CityID="'.$item[global_mapping::CityID].'">'.$item[global_mapping::CityName].'</option>';
 	}
-	else
-		echo '			<option value="'.$item[global_mapping::CityName].'" CityID="'.$item[global_mapping::CityID].'">'.$item[global_mapping::CityName].'</option>';
+	//else
+	//	echo '			<option value="'.$item[global_mapping::CityName].'" CityID="'.$item[global_mapping::CityID].'">'.$item[global_mapping::CityName].'</option>';
 }
 ?>
 			</select>
