@@ -48,8 +48,7 @@ if($keyword)
 		$search .= '(`'.global_mapping::CompanyName.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or  `'.global_mapping::Title.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or `'.global_mapping::Content.'` like \'%'.global_common::escape_mysql_string($keyword).'%\')' ;
 	}
 }
-$condidtion = global_mapping::StartDate.' <= \''.global_common::nowSQL().'\''.
-	' And '.global_mapping::EndDate.' >= \''.global_common::nowSQL().'\'';
+$condidtion = global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\'';
 $condidtion .= ' And `Status` = 1';
 
 if($search)
@@ -86,8 +85,8 @@ foreach($articles as $item)
 			<a href="article_detail.php?aid='.$item[global_mapping::ArticleID].'">'.$item[global_mapping::CompanyName].'</a>
 			</div>
 			<div class="info artcile-title">'.$item[global_mapping::Title].'</div>
-			<div class="info">Bat dau: '.global_common::formatDateVN($item[global_mapping::StartDate]).'</div>
-			<div class="info">Ket thuc: '.global_common::formatDateVN($item[global_mapping::EndDate]).'</div>		
+			<div class="info">Từ: '.global_common::formatDateVN($item[global_mapping::StartDate]).'</div>
+			<div class="info">Đến: '.global_common::formatDateVN($item[global_mapping::EndDate]).'</div>		
 			</div>';
 }
 		?>	

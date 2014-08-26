@@ -52,7 +52,7 @@ if($expired)
 }
 else
 {
-	$condidtion = ' And '.global_mapping::StartDate.' <= \''.global_common::nowDateSQL().'\''.' And '.global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\'';
+	$condidtion = ' And '.global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\'';
 }
 if($inactive =='true')
 {

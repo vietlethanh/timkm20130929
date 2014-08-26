@@ -538,7 +538,7 @@ class Model_Article
 		}
 		$strSQL = global_common::prepareQuery(global_common::SQL_SELECT_FREE_LIMIT, 
 				array($selectField, self::TBL_SL_ARTICLE, $condition.$orderBy,0,$topRow ));					
-		//return $strSQL;
+		//echo $strSQL;
 		$arrResult = self::getArticlesFromDB($strSQL);
 		//print_r($arrResult);
 		return $arrResult;
