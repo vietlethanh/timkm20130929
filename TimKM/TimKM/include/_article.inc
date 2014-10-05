@@ -107,7 +107,7 @@ if($count>0)
 	echo '<div class="title">
 			Đường đi:
 			</div>';
-	echo	'<div id="map-article"></div>';
+	echo	'<div id="map-article" style=""></div>';
 	echo ' <script language="javascript" type="text/javascript">$(document).ready(function () {			
 			article.loadMap("'.$article[global_mapping::Addresses].'","'.$article[global_mapping::Dictricts].'","'.$article[global_mapping::Cities].'");
 			});

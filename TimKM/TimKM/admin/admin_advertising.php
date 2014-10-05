@@ -19,8 +19,9 @@ require('include/_permission_admin.inc');
 include_once('class/model_user.php');
 include_once('class/model_advertising.php');
 include_once('class/model_adtype.php');
+include_once('class/model_articletype.php');
 
-
+$objArticleType = new model_ArticleType($objConnection);
 $objAdvertising = new Model_Advertising($objConnection);
 $objAdType = new Model_AdType($objConnection);
 
@@ -33,6 +34,7 @@ if ($_pgR["act"] == Model_Advertising::ACT_ADD || $_pgR["act"] == Model_Advertis
 	$advertisingName = html_entity_decode($advertisingName,ENT_COMPAT ,'UTF-8' );
 	
 	$adTypeID = html_entity_decode($_pgR[global_mapping::AdTypeID],ENT_COMPAT ,'UTF-8' );
+	$articleTypeID = html_entity_decode($_pgR[global_mapping::ArticleTypeID],ENT_COMPAT ,'UTF-8' );
 	$content = html_entity_decode($_pgR[global_mapping::Content],ENT_COMPAT ,'UTF-8' );
 	$preferLink = html_entity_decode($_pgR[global_mapping::PreferLink],ENT_COMPAT ,'UTF-8' );
 	$order = html_entity_decode($_pgR[global_mapping::Order],ENT_COMPAT ,'UTF-8' );
@@ -45,7 +47,7 @@ if ($_pgR["act"] == Model_Advertising::ACT_ADD || $_pgR["act"] == Model_Advertis
 	{
 		$createdBy = $c_userInfo[global_mapping::UserID];
 		
-		$resultID = $objAdvertising->insert($advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$content,$imageLink,$preferLink,$order,$createdBy,$status);
+		$resultID = $objAdvertising->insert($advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$articleTypeID,$content,$imageLink,$preferLink,$order,$createdBy,$status);
 		if ($resultID)
 		{
 			$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
@@ -67,7 +69,7 @@ if ($_pgR["act"] == Model_Advertising::ACT_ADD || $_pgR["act"] == Model_Advertis
 		$modifiedBy = $c_userInfo[global_mapping::UserID];
 		$advertisingID = html_entity_decode($_pgR[global_mapping::AdvertisingID],ENT_COMPAT ,'UTF-8' );
 		$currentAd = $objAdvertising->getAdvertisingByID($advertisingID);
-		$resultID = $objAdvertising->update($advertisingID,$advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$content,$imageLink,$preferLink,$order,
+		$resultID = $objAdvertising->update($advertisingID,$advertisingName,$partnerID,$startDate,$endDate,$adTypeID,$articleTypeID,$content,$imageLink,$preferLink,$order,
 				$modifiedBy,global_common::nowSQL(),
 				$currentAd[global_mapping::DeletedBy],$currentAd[global_mapping::DeletedDate],
 				$currentAd[global_mapping::IsDeleted],$currentAd[global_mapping::Status]
@@ -111,6 +113,7 @@ elseif($_pgR['act'] == Model_Advertising::ACT_SHOW_EDIT)
 }
 $allAds = $objAdvertising->getAllAdvertising(0,null,null,null);
 $allAdType = $objAdType->getAllAdType(0,null,null,null);
+$allCats = $objArticleType->getAllArticleType(0,null,'ParentID=0',null);
 ?>
 <?php
 $_SESSION[global_common::SES_C_CUR_PAGE] = "admin/admin_advertising.php";
@@ -264,6 +267,22 @@ include_once('include/_admin_footer.inc');
 foreach($allAdType as $item)
 {
 	echo '			<option value="'.$item[global_mapping::AdTypeID].'" >'.$item[global_mapping::AdTypeName].'</option>';
+	
+}
+?>
+                </select>
+            </div>
+        </div>	
+		<div class="control-group">
+            <label class="control-label">
+                Category Type 
+            </label>
+            <div class="controls">
+                <select tabindex="1" class="span5" id="cmCatType">
+<?php
+foreach($allCats as $item)
+{
+	echo '			<option value="'.$item[global_mapping::ArticleTypeID].'" >'.$item[global_mapping::ArticleTypeName].'</option>';
 	
 }
 ?>

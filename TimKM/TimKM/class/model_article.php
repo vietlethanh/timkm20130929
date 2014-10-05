@@ -222,6 +222,8 @@ class Model_Article
 			global_common::writeLog('Error add sl_article:'.$strSQL,1);
 			return false;
 		}	
+		
+		
 		$articleID = global_common::getMaxValueofField(global_mapping::ArticleID,self::TBL_SL_ARTICLE);
 		$strSQLValueType = '';
 		
@@ -273,6 +275,28 @@ class Model_Article
 			global_common::writeLog('Error add sl_article:'.$strSQL,1);
 			return false;
 		}	
+		
+		
+		$strSQL = global_common::prepareQuery(global_common::SQL_DELETE_BY_CONDITION,
+				array(self::TBL_SL_ARTICLE_TYPE_ID,global_mapping::ArticleID,$articleid));
+		
+		if(global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_ARTICLE_TYPE_ID,$this->_objConnection,self::TBL_SL_ARTICLE_TYPE_ID))
+		{
+			$strSQLValueType = '';
+			
+			foreach($articletype as $item){
+				$strSQLValueType .= '(\''.$item.'\', \''.$articleid.'\'),';
+				
+			}
+			$strSQLValueType = global_common::cutLast($strSQLValueType);
+			
+			$strSQL = global_common::prepareQuery(self::SQL_INSERT_SL_ARTICLE_TYPE_ID,
+					array(self::TBL_SL_ARTICLE_TYPE_ID,$strSQLValueType));
+			if (!global_common::ExecuteMultiqueryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_ARTICLE_TYPE_ID,$this->_objConnection,self::TBL_SL_ARTICLE_TYPE_ID));
+			{
+				global_common::writeLog('Error add sl_article_type_id:'.$strSQL,1);
+			}	
+		}
 		return $articleid;		
 	}
 	

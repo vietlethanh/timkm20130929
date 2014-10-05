@@ -1,6 +1,5 @@
 <?php
 $objArticleType = new model_ArticleType($objConnection);
-$objArticleType = new model_ArticleType($objConnection);
 $objArticle = new model_Article($objConnection);
 if($_pgR["cid"])
 {

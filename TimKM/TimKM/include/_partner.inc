@@ -1,7 +1,8 @@
 <?php
 include_once('class/model_advertising.php');
 $objAdvertising = new Model_Advertising($objConnection);
-$condition = global_mapping::AdTypeID.'=\'1\'';
+//$parentID get from _left_side.inc
+$condition = global_mapping::AdTypeID.'=\'3\' and '.global_mapping::ArticleTypeID.'=\''.$parentID.'\'';
 $allAds = $objAdvertising->getAllAdvertising(0,'',$condition,'');
 foreach($allAds as $item)
 {
