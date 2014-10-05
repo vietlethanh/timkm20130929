@@ -560,15 +560,18 @@ var article = {
 				el: '#map-article',
 				lat: core.constant.LatDefault,
 				lng: core.constant.LongDefault,
-				
-                zoomControl : true,
-			    zoomControlOpt: {
-                    style : 'SMALL',
-                    position: 'TOP_LEFT'
-                },
-                panControl : true
+				 navigationControl : false,
+				 disableDefaultUI: true,
+				 mapTypeId: google.maps.MapTypeId.ROADMAP,
+//				zoom: 1,
+//                zoomControl : true,
+//			    zoomControlOpt: {
+//                    style : 'SMALL',
+//                    position: 'TOP_LEFT'
+//                },
+//                panControl : true
 			});
-	
+	   var bounds = new google.maps.LatLngBounds();
 		for(i=0;i<addresses.length;i++)
 		{
 			if(addresses[i] != 'undefined' && addresses[i] != '')
@@ -580,18 +583,24 @@ var article = {
 				  callback: function(results, status){
 					if(status=='OK'){
 						var latlng = results[0].geometry.location;
-						google.maps.event.trigger(map, "resize");
-						map.setCenter(latlng.lat(), latlng.lng());
+						//google.maps.event.trigger(map, "resize");
+						
 						map.addMarker({
 							lat: latlng.lat(),
 							lng: latlng.lng()
 						});
-						
+						//console.log(latlng);
+                      // Extend the new boundary so the new marker/pin will be in view.
+                      bounds.extend(new google.maps.LatLng(latlng.lat(),latlng.lng()));
+                      map.fitBounds(bounds);
+                      map.setCenter(latlng.lat(), latlng.lng());
 					}
 				  }
 				});
 			}
 		}
+		
+		//map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
 	},
 	bindDistrict: function(obj)
 	{

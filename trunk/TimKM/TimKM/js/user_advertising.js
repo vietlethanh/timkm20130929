@@ -73,6 +73,9 @@ var advertising = {
 		
 		controlID = 'cmAdType';		
 		core.util.getObjectByID(controlID).val(advert.AdTypeID);
+
+		controlID = 'cmCatType';
+		core.util.getObjectByID(controlID).val(advert.ArticleTypeID);
 		
 		controlID = 'txtContent';		
 		core.util.getObjectByID(controlID).html(advert.Content);
@@ -105,6 +108,9 @@ var advertising = {
 		
 		controlID = 'cmAdType';		
 		var adType = core.util.getObjectValueByID(controlID);
+
+		controlID = 'cmCatType';
+		var catType = core.util.getObjectValueByID(controlID);
 		
 		controlID = 'txtContent';		
 		var content = core.util.getObjectValueByID(controlID);
@@ -131,6 +137,7 @@ var advertising = {
 		{
 			 AdvertisingName: adName,
 			 AdTypeID: adType,
+			 ArticleTypeID: catType,
 			 Content: content,
 			 Order: order,
 			 StartDate: startDate,
@@ -151,7 +158,7 @@ var advertising = {
 		
 		controlID = 'cmAdType';		
 		core.util.deSelectOption(controlID);		
-		
+				
 		controlID = 'txtOrder';		
 		core.util.clearValue(controlID);
 
