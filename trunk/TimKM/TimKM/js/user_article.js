@@ -111,16 +111,16 @@ var article = {
 		var endDate = core.util.getObjectValueByID(controlID);
 		core.util.validateInputTextBox(controlID,'');
 		
-		if (core.util.isNull(endDate)) {
-            core.util.validateInputTextBox(controlID, 'Ngày kết thúc không được rỗng', isValid);
-            isValid = false;
-        } else if (core.util.validateDateTime(endDate) == false) {
-			 core.util.validateInputTextBox(controlID, 'Ngày kết thúc không hợp lệ', isValid);
-			 isValid = false;
-        }else if (new Date(core.util.formatDateTimeVN(startDate)) > new Date(core.util.formatDateTimeVN(endDate)) ) {
-			 core.util.validateInputTextBox(controlID, 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu', isValid);
-			 isValid = false;
-        }	
+		if (!core.util.isNull(endDate)) 
+		{
+            if (core.util.validateDateTime(endDate) == false) {
+			     core.util.validateInputTextBox(controlID, 'Ngày kết thúc không hợp lệ', isValid);
+			     isValid = false;
+            }else if (new Date(core.util.formatDateTimeVN(startDate)) > new Date(core.util.formatDateTimeVN(endDate)) ) {
+			     core.util.validateInputTextBox(controlID, 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu', isValid);
+			     isValid = false;
+            }	
+        }
 		
 		controlID = 'txtHappyFrom';				
 		var happyFrom = core.util.getObjectValueByID(controlID);

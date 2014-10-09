@@ -5,9 +5,14 @@ require('config/globalconfig.php');
 include_once('include/_permission.inc');
 include_once('class/model_user.php');
 require_once('lib/ImageManipulator.php');
+include_once('class/model_partner.php');
 
+
+$objPartner = new Model_Partner($objConnection);
 $objUser = new Model_User($objConnection);
 $currentUser = $_SESSION[global_common::SES_C_USERINFO];
+$currentPartner = $objPartner->getPartnerByUserID($currentUser[global_mapping::UserID]);
+//print_r($currentPartner);
 if($_pgR["update-avatar"])
 {
 	$allowedExts = array("gif", "jpeg", "jpg", "png");
@@ -106,15 +111,23 @@ include_once('include/_menu.inc');
                             <div class="span2">
                                 <img src="<?php echo ($currentUser[global_mapping::Avatar])?>" alt="" />
                             </div>
+							
                             <ul class="unstyled span10">
+								<li><h1 style="font-size:20px">Thông tin cá nhân</h1></li>
                                 <li><span>Tên đăng nhập:</span> <?php echo global_common::formatOutputText($currentUser[global_mapping::UserName])?></li>
                                 <li><span>Họ và Tên:</span> <?php echo global_common::formatOutputText($currentUser[global_mapping::FullName])?></li>
 								<li><span>Ngày sinh:</span> 
 									<?php echo global_common::formatOutputText(global_common::formatDateVN($currentUser[global_mapping::BirthDate]))?></li>
-                                <li><span>Giới tính:</span> <?php echo ($currentUser[global_mapping::UserName]?'Nam':'Nữ')?></li>
+                                <li><span>Giới tính:</span> <?php echo ($currentUser[global_mapping::Sex]?'Nam':'Nữ')?></li>
                                 <li><span>Email:</span> <a href="mailto:">  <?php echo global_common::formatOutputText($currentUser[global_mapping::Email])?></a></li>
-	   						 <li><span>Số điện thoại:</span> <?php echo ($currentUser[global_mapping::Phone])?></li>                               
+	   							<li><span>Số điện thoại:</span> <?php echo global_common::formatOutputText($currentUser[global_mapping::Phone])?></li>                               
                                 <li><span>Địa chỉ:</span>  <?php echo global_common::formatOutputText($currentUser[global_mapping::Address])?></li>
+                          
+								<li><h2 style="font-size:20px">Thông tin đơn vị</h2></li>
+                                <li><span>Tên:</span> <?php echo global_common::formatOutputText($currentPartner[global_mapping::Company])?></li>
+	   							<li><span>Số điện thoại:</span> <?php echo  global_common::formatOutputText($currentPartner[global_mapping::Phone1])?></li>                               
+                                <li><span>Địa chỉ:</span>  <?php echo global_common::formatOutputText($currentPartner[global_mapping::Address1])?></li>
+                                <li><span>Website:</span>  <?php echo global_common::formatOutputText($currentPartner[global_mapping::Website1])?></li>
                             </ul>
                         </div>
 						<div id="change-avatar" class="tab-pane row-fluid">
@@ -154,6 +167,11 @@ include_once('include/_menu.inc');
 									<label class="m-wrap">(*) là thông tin bắt buộc</label>
 								</div>
 							</div>
+							<div class="control-group">
+								<div class="controls">
+									<h2 class="m-wrap title">Thông tin cá nhân</h2>
+								</div>
+							</div>
 							<div class="control-group">    
 								<label class="control-label">
 									Họ và tên *</label>
@@ -182,12 +200,12 @@ include_once('include/_menu.inc');
 								<div class="controls">
 									<label class="radio " style="">
 										<input type="radio" name="sex" id="rdMale" value="1" style="margin-left:0 !important;margin-right: 3px;"  
-										<?php echo ($currentUser[global_mapping::UserName]?'checked="checked"':'')?> />
+										<?php echo ($currentUser[global_mapping::Sex]?'checked="checked"':'')?> />
 										 Nam
 									</label>
 									<label class="radio " style="">
 										<input type="radio" name="sex" id="rdFemale" value="0"  style="margin-left:0 !important;margin-right: 3px;" 
-										<?php echo ($currentUser[global_mapping::UserName]?'':'checked="checked"')?>  />
+										<?php echo ($currentUser[global_mapping::Sex]?'':'checked="checked"')?>  />
 										 Nữ
 									</label> 
 									<div class="help-inline message"></div>
@@ -220,7 +238,48 @@ include_once('include/_menu.inc');
 									placeholder="vd: 1A Trần Hưng Đạo, P. Bến Thành, Quận 1, HCM" value="<?php echo $currentUser[global_mapping::Address]?>" />
 								</div>				
 							</div>
+							<div class="control-group">
+								<div class="controls">
+									<h2 class="m-wrap title">Thông tin đơn vị</h2>
+								</div>
+							</div>
+							<div class="control-group">    
+								<label class="control-label">
+									Tên </label>
+								<div class="controls">
+									<input type="text" name="txtComanyName" id="txtComanyName" class="text  m-wrap span8" maxlength="255" 
+									value="<?php echo $currentPartner[global_mapping::Company] ?>" />
+									<div class="help-inline message"></div>  
+								</div>     
+							</div>  
+							<div class="control-group">    
+								<label class="control-label">
+									Số điện thoại </label>
+								<div class="controls">
+									<input type="text" name="txtCompanyPhone" id="txtCompanyPhone" class="text  m-wrap span8" maxlength="255" placeholder="Vd: 01289 567 567" 
+									value="<?php echo $currentPartner[global_mapping::Phone1] ?>" />
+									<div class="help-inline message"></div>  
+								</div>     
+							</div>    
+							<div class="control-group">    
+								<label class="control-label">
+									Địa chỉ </label>
+								<div class="controls">
+									<input type="text" name="txtComanyAddress" id="txtComanyAddress" class="text m-wrap span8" maxlength="255" 
+									value="<?php echo $currentPartner[global_mapping::Address1] ?>" />
+									<div class="help-inline message"></div>  
+								</div>     
+							</div>   
 						
+							<div class="control-group">    
+								<label class="control-label">
+									Website </label>
+								<div class="controls">
+									<input type="text" name="txtCompanyWebsite" id="txtCompanyWebsite" class="text  m-wrap span8" maxlength="255" 
+									value="<?php echo $currentPartner[global_mapping::Website1] ?>" />
+									<div class="help-inline message"></div>  
+								</div>     
+							</div>  
                             <div class="submit-btn">
                                 <input type="button" onclick="javascript:user.updateProfile();" class="btn green" id="btnUpdateInfo" value="Lưu thay đổi" />
 								<input type="reset" class="btn" value="Hủy bỏ"/>

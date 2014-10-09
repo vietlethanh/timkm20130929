@@ -48,7 +48,7 @@ if($keyword)
 		$search .= '(`'.global_mapping::CompanyName.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or  `'.global_mapping::Title.'` like \'%'.global_common::escape_mysql_string($keyword).'%\' or `'.global_mapping::Content.'` like \'%'.global_common::escape_mysql_string($keyword).'%\')' ;
 	}
 }
-$condidtion = global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\'';
+$condidtion = '('. global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\' Or '.global_mapping::EndDate.' is null)';
 $condidtion .= ' And `Status` = 1';
 
 if($search)
