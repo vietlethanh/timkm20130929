@@ -4,9 +4,11 @@
 require('config/globalconfig.php');
 include_once('class/model_user.php');
 include_once('class/model_resetpassword.php');
+include_once('class/model_partner.php');
 
 $objUser = new Model_User($objConnection);
 $objReset = new Model_ResetPassword($objConnection);
+$objPartner = new Model_Partner($objConnection);
 
 
 if ($_pgR["act"] == Model_User::ACT_REGISTER)
@@ -80,6 +82,12 @@ else if ($_pgR["act"] == Model_User::ACT_UPDATE_PROFILE)
 		$phone = html_entity_decode($phone,ENT_COMPAT ,'UTF-8' );
 		$address = $_pgR['address'];
 		$address = html_entity_decode($address,ENT_COMPAT ,'UTF-8' );
+		
+		$companyName = html_entity_decode($_pgR['companyName'],ENT_COMPAT ,'UTF-8' );
+		$companyAddress = html_entity_decode($_pgR['companyAddress'],ENT_COMPAT ,'UTF-8' );
+		$companyPhone = html_entity_decode($_pgR['companyPhone'],ENT_COMPAT ,'UTF-8' );
+		$companyWebsite = html_entity_decode($_pgR['companyWebsite'],ENT_COMPAT ,'UTF-8' );
+		
 		$currentUser = $_SESSION[global_common::SES_C_USERINFO];
 		if($objUser->checkExistEmail($email,$currentUser[global_mapping::UserID])){
 			$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
@@ -105,6 +113,21 @@ else if ($_pgR["act"] == Model_User::ACT_UPDATE_PROFILE)
 		if ($result)
 		{
 			$_SESSION[global_common::SES_C_USERINFO] = $objUser->getUserByID($currentUser[global_mapping::UserID]);
+			$curentPartner = $objPartner->getPartnerByUserID($currentUser[global_mapping::UserID]);
+			//print_r($curentPartner);
+			if($curentPartner != null)
+			{
+				//echo 'update:'.$curentPartner[global_mapping::PartnerID];
+				$objPartner->update($curentPartner[global_mapping::PartnerID],$currentUser[global_mapping::UserID], 
+						$companyName,$companyName,
+						$companyAddress,null,$companyPhone,$companyWebsite,$currentUser[global_mapping::UserID]);
+			}
+			else
+			{
+				$objPartner->insert($currentUser[global_mapping::UserID], $companyName,$companyName,
+						$companyAddress,null,$companyPhone,$companyWebsite,$currentUser[global_mapping::UserID]);
+			}
+			
 			$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
 			echo global_common::convertToXML(
 					$arrHeader, array('rs', 'inf'), 
@@ -180,9 +203,9 @@ else if ($_pgR["act"] == Model_User::ACT_UPDATE_PROFILE)
 						$resetPw[global_mapping::ResetDate] = global_common::nowSQL();
 						$resetPw[global_mapping::IsDeleted] = 1;
 						$objReset->update($resetid,$resetPw[global_mapping::UserID],$resetPw[global_mapping::CreatedDate],
-									$resetPw[global_mapping::ExpireDate],$resetPw[global_mapping::ResetDate],   
-									$resetPw[global_mapping::IsDeleted]);
-									
+								$resetPw[global_mapping::ExpireDate],$resetPw[global_mapping::ResetDate],   
+								$resetPw[global_mapping::IsDeleted]);
+						
 						$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
 						echo global_common::convertToXML(
 								$arrHeader, array('rs', 'inf'), 
@@ -270,7 +293,7 @@ else if ($_pgR["act"] == Model_User::ACT_UPDATE_PROFILE)
 						$subject = html_entity_decode($subject,ENT_COMPAT ,'UTF-8' );
 						$content = $_pgR['content'];
 						$content = html_entity_decode($content,ENT_COMPAT ,'UTF-8' );
-					
+						
 						
 						$emailContent = 'From:'. $fullName.'<br>'.'Email:'.$email.'<br>'.'Content: <br>'.$content;
 						$isSent = global_mail::send(global_common::SUPPORT_MAIL_USERNAME,global_common::SUPPORT_MAIL_DISPLAY_NAME,$subject,$emailContent,null,
@@ -291,17 +314,17 @@ else if ($_pgR["act"] == Model_User::ACT_UPDATE_PROFILE)
 							echo global_common::convertToXML($arrHeader, array('rs','inf'), array(0,'Xử lý thất bại. Xin vui lòng thử lại sau!'), array(0,1));
 							return;
 						}
-					
-					}
-				else if ($_pgR["act"] == Model_User::ACT_LOGOUT)
-					{
 						
-						echo global_common::convertToXML(
-								$arrHeader, array('rs', 'inf','rurl'), 
-								array(1, '',$_SESSION[global_common::SES_C_CUR_PAGE]), 
-								array( 0, 1,1 )
-								);
-						global_common::clearSession();
-						return;
 					}
+					else if ($_pgR["act"] == Model_User::ACT_LOGOUT)
+						{
+							
+							echo global_common::convertToXML(
+									$arrHeader, array('rs', 'inf','rurl'), 
+									array(1, '',$_SESSION[global_common::SES_C_CUR_PAGE]), 
+									array( 0, 1,1 )
+									);
+							global_common::clearSession();
+							return;
+						}
 ?>

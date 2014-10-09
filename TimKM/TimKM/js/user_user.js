@@ -307,6 +307,10 @@ var user = {
 			birthdate: birthDate,
 			address: core.util.getObjectValueByID("txtAddress"),
 			phone: core.util.getObjectValueByID("txtPhone"),
+			companyName: $("#txtComanyName").val(),
+			companyPhone: $("#txtCompanyPhone").val(),
+			companyAddress: $("#txtComanyAddress").val(),
+			companyWebsite: $("#txtCompanyWebsite").val(),
 	   }      
     },
 	

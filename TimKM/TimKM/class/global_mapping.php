@@ -95,5 +95,12 @@ class global_mapping
 	const PartnerID					= 'PartnerID';
 	
 	const Mode						= 'Mode';
+	
+	const Phone1					= 'Phone1';
+	const Company					= 'Company';
+	const Address1					= 'Address1';
+	const Website1					= 'Website1';
+	
+	
 }
 ?>

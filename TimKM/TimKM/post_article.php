@@ -12,7 +12,10 @@ include_once('class/model_comment.php');
 include_once('class/model_user.php');
 include_once('class/model_city.php');
 include_once('class/model_district.php');
+include_once('class/model_partner.php');
 
+
+$objPartner = new Model_Partner($objConnection);
 $objArticle = new Model_Article($objConnection);
 $objArticleType = new Model_ArticleType($objConnection);
 $objCity = new Model_City($objConnection);
@@ -26,8 +29,14 @@ $allCities = $objCity->getAllCity();
 //echo($allCities);
 $allDistricts = $objDistrict->getAllDistrict();
 
+
+$currentPartner = $objPartner->getPartnerByUserID($_SESSION[global_common::SES_C_USERINFO][global_mapping::UserID]);
+
 if ($_pgR["aid"])
 {
+	//reset partner info
+	$currentPartner = null;
+	
 	$articleID = $_pgR["aid"];
 	
 	$article = $objArticle->getArticleByID($articleID);
@@ -94,24 +103,24 @@ if ($_pgR["aid"])
 				<label class="control-label">Tên đơn vị *</label>
 				<div class="controls">
 					<input type="text" name="txtCompanyName" id="txtCompanyName" 
-						class="text m-wrap span6" maxlength="255" value="<?php echo $article[global_mapping::CompanyName];?>" />
+						class="text m-wrap span6" maxlength="255" value="<?php echo $currentPartner?$currentPartner[global_mapping::Company]:$article[global_mapping::CompanyName];?>" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">Địa chỉ *</label>
 				<div class="controls">
 					<input type="text" name="txtCompanyAddress" id="txtCompanyAddress" class="text m-wrap span6" 
-					maxlength="255" value="<?php echo $article[global_mapping::CompanyAddress];?>"/>
+					maxlength="255" value="<?php echo $currentPartner?$currentPartner[global_mapping::Address1]:$article[global_mapping::CompanyAddress];?>"/>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">Web/Facebook</label>
 				<div class="controls">
 					<input type="text" name="txtCompanySite" id="txtCompanySite" class="text m-wrap" 
-						maxlength="255" value="<?php echo $article[global_mapping::CompanyWebsite];?>" />
+						maxlength="255" value="<?php echo $currentPartner?$currentPartner[global_mapping::Website1]:$article[global_mapping::CompanyWebsite];?>" />
 					<label class="m-wrap inline">Điện thoại *</label>
 					<input type="text" name="txtCompanyPhone" id="txtCompanyPhone" class="text m-wrap span3" 
-					placeholder="Vd: 0123456789, 0123-456-789,..." maxlength="50" value="<?php echo $article[global_mapping::CompanyPhone];?>"/>
+					placeholder="Vd: 0123456789, 0123-456-789,..." maxlength="50" value="<?php echo $currentPartner?$currentPartner[global_mapping::Phone1]:$article[global_mapping::CompanyPhone];?>"/>
 				</div>
 			</div>
 			<div class="control-group zone">
@@ -180,7 +189,7 @@ foreach($allTypes as $item)
 						size="16" type="text" placeholder="dd/mm/yyyy" value="<?php echo $intMode?global_common::formatDateVN($article[global_mapping::StartDate]):'';?>"/>
 							<span class="add-on"><i class="icon-calendar"></i></span>
 					</div>
-					<label class="m-wrap inline">Đến * </label>
+					<label class="m-wrap inline">Đến </label>
 					<div class="input-append date date-picker text " data-date="<?php echo $intMode?global_common::formatDateVN($article[global_mapping::EndDate]):'';?>"  data-date-format="dd/mm/yyyy"  data-date-viewmode="days">
 						<input name="txtEndDate" id="txtEndDate" disabled="disabled" class="m-wrap m-ctrl-medium date-picker" size="16" 
 						type="text" placeholder="dd/mm/yyyy" value="<?php echo $intMode?global_common::formatDateVN($article[global_mapping::EndDate]):'';?>"/>
