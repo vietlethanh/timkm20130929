@@ -72,7 +72,7 @@ class Model_Article
 		VALUES (
 		\'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\', \'{11}\', \'{12}\', 
 		\'{13}\', \'{14}\', \'{15}\', \'{16}\', \'{17}\', \'{18}\', \'{19}\', \'{20}\', \'{21}\', \'{22}\', \'{23}\',
-		\'{24}\', \'{25}\', \'{26}\', \'{27}\', \'{28}\', {29}, {30}, \'{31}\', \'{32}\', \'{33}\');';
+		\'{24}\', \'{25}\', {26}, {27}, \'{28}\', {29}, {30}, \'{31}\', \'{32}\', \'{33}\');';
 	
 	const SQL_INSERT_SL_ARTICLE_TYPE_ID		= 'INSERT INTO `{0}` (ArticleTypeID,ArticleID) VALUES {1};';    
 	
@@ -103,8 +103,8 @@ class Model_Article
 		`CompanyWebsite`= \'{23}\',
 		`CompanyPhone`= \'{24}\',
 		`AdType`= \'{25}\',
-		`StartDate`= \'{26}\',
-		`EndDate`= \'{27}\',
+		`StartDate`= {26},
+		`EndDate`= {27},
 		`HappyDays`= \'{28}\',
 		`StartHappyHour`= {29},
 		`EndHappyHour`= {30},
@@ -191,6 +191,7 @@ class Model_Article
 		$adType,$startDate,$endDate,$happyDays,$startHappyHour,$endHappyHour,$addresses,
 		$dictricts,$cities,$status)
 	{
+		//echo $endDate?'\''.global_common::formatDateTimeSQL($endDate).'\'':'null';
 		$status = 1;
 		$strTableName = self::TBL_SL_ARTICLE;
 		$strSQL = global_common::prepareQuery(self::SQL_INSERT_SL_ARTICLE,
@@ -209,7 +210,8 @@ class Model_Article
 					global_common::escape_mysql_string($renewednum),global_common::escape_mysql_string($companyname),
 					global_common::escape_mysql_string($companyAddress),global_common::escape_mysql_string($companyWebsite),
 					global_common::escape_mysql_string($companyPhone),global_common::escape_mysql_string($adType),
-					global_common::formatDateTimeSQL($startDate),global_common::formatDateTimeSQL($endDate),
+					'\''.global_common::formatDateTimeSQL($startDate).'\'',
+					global_common::formatDateTimeSQL($endDate)?'\''.global_common::formatDateTimeSQL($endDate).'\'':'null',
 					global_common::escape_mysql_string($happyDays),
 					$startHappyHour?'\''.$startHappyHour.'\'':'null',$endHappyHour?'\''.$endHappyHour.'\'':'null',
 					global_common::escape_mysql_string($addresses),
@@ -262,7 +264,8 @@ class Model_Article
 					global_common::escape_mysql_string($renewednum),global_common::escape_mysql_string($companyname),
 					global_common::escape_mysql_string($companyAddress),global_common::escape_mysql_string($companyWebsite),
 					global_common::escape_mysql_string($companyPhone),global_common::escape_mysql_string($adType),
-					global_common::formatDateTimeSQL($startDate),global_common::formatDateTimeSQL($endDate),
+					'\''.global_common::formatDateTimeSQL($startDate).'\'',
+					global_common::formatDateTimeSQL($endDate)?'\''.global_common::formatDateTimeSQL($endDate).'\'':'null',
 					global_common::escape_mysql_string($happyDays),
 					$startHappyHour?'\''.$startHappyHour.'\'':'null',$endHappyHour?'\''.$endHappyHour.'\'':'null',
 					global_common::escape_mysql_string($addresses),
@@ -663,7 +666,7 @@ class Model_Article
 		}
 		$strSQL = global_common::prepareQuery(global_common::SQL_SELECT_FREE_LIMIT, 
 				array($selectField, self::TBL_SL_ARTICLE, $condition.$orderBy,0,$topRow ));					
-		//return $strSQL;
+		//echo $strSQL;
 		$arrResult = self::getArticlesFromDB($strSQL);
 		//print_r($arrResult);
 		return $arrResult;

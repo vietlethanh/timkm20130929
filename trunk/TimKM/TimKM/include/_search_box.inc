@@ -64,6 +64,6 @@ foreach($allDistricts as $item)
 		</label>
 		<input type="text" id="txtkeyword" name="kw" value="<?php echo $keyword ?>" placeholder="Tìm kiếm..."> 
 		<input type="button" class="btnSearch"  onclick="article.validateKeyword();"/>	
-		<a href="post_article.php" class="btn btn-large btn-post">Đăng Tim Mới</a>
+		<a href="post_article.php" class="btn btn-large btn-post">Đăng Tin Mới</a>
 	</form>
 </div>

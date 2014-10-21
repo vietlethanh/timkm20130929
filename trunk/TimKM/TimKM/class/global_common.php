@@ -3579,6 +3579,7 @@ class global_common
 	 **/
 	public function formatDateVN($mySqlDateTime)
 	{
+		if(!$mySqlDateTime) return '';
 		return substr($mySqlDateTime,8,2)."/".substr($mySqlDateTime,5,2)."/".substr($mySqlDateTime,0,4) ;
 	}
 	
@@ -3597,7 +3598,9 @@ class global_common
 	 **/
 	public function formatDateTimeSQL($inputTime)
 	{
-		return date('Y-m-d H:i:s',strtotime(self::formatDateTime($inputTime)));
+		if($inputTime)
+			return date('Y-m-d H:i:s',strtotime(self::formatDateTime($inputTime)));
+		return null;
 	}
 	
 	/**

@@ -14,7 +14,7 @@ if (global_common::isCLogin())
 	//get user info
 	$userInfo = $_SESSION[global_common::SES_C_USERINFO];
 	$userID = $userInfo[global_mapping::UserID];
-	$condidtion = global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\'';
+	$condidtion = '('. global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\' Or '.global_mapping::EndDate.' is null)';
 	$articles = $objArticle->getArticleByUser($userID,1,global_common::DEFAULT_PAGE_SIZE,null,$condidtion,'');
 	$condidtion = global_mapping::EndDate.' < \''.global_common::nowDateSQL().'\'';
 	$expireArticles = $objArticle->getArticleByUser($userID,1,global_common::DEFAULT_PAGE_SIZE,null,$condidtion,'');

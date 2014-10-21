@@ -86,7 +86,7 @@ foreach($articles as $item)
 			</div>
 			<div class="info artcile-title">'.$item[global_mapping::Title].'</div>
 			<div class="info">Từ: '.global_common::formatDateVN($item[global_mapping::StartDate]).'</div>
-			<div class="info">Đến: '.global_common::formatDateVN($item[global_mapping::EndDate]).'</div>		
+			'.($item[global_mapping::EndDate]?('<div class="info">Đến: '.global_common::formatDateVN($item[global_mapping::EndDate]).'</div>'):'').'		
 			</div>';
 }
 		?>	

@@ -185,13 +185,13 @@ foreach($allTypes as $item)
 				<label class="control-label">Từ *</label>
 				<div class="controls">
 					<div class="input-append date date-picker text " data-date="<?php echo $intMode?global_common::formatDateVN($article[global_mapping::StartDate]):'';?>" readonly="readonly"  data-date-format="dd/mm/yyyy"  data-date-viewmode="days">
-						<input name="txtStartDate" id="txtStartDate" disabled="disabled" class="m-wrap m-ctrl-medium date-picker"
+						<input name="txtStartDate" id="txtStartDate"  class="m-wrap m-ctrl-medium date-picker"
 						size="16" type="text" placeholder="dd/mm/yyyy" value="<?php echo $intMode?global_common::formatDateVN($article[global_mapping::StartDate]):'';?>"/>
 							<span class="add-on"><i class="icon-calendar"></i></span>
 					</div>
 					<label class="m-wrap inline">Đến </label>
 					<div class="input-append date date-picker text " data-date="<?php echo $intMode?global_common::formatDateVN($article[global_mapping::EndDate]):'';?>"  data-date-format="dd/mm/yyyy"  data-date-viewmode="days">
-						<input name="txtEndDate" id="txtEndDate" disabled="disabled" class="m-wrap m-ctrl-medium date-picker" size="16" 
+						<input name="txtEndDate" id="txtEndDate"  class="m-wrap m-ctrl-medium date-picker" size="16" 
 						type="text" placeholder="dd/mm/yyyy" value="<?php echo $intMode?global_common::formatDateVN($article[global_mapping::EndDate]):'';?>"/>
 							<span class="add-on"><i class="icon-calendar"></i></span>
 					</div>
