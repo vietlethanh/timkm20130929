@@ -1,7 +1,7 @@
 <?php
 include_once('class/model_advertising.php');
 $objAdvertising = new Model_Advertising($objConnection);
-$condition = global_mapping::AdTypeID.'=\'1\' and '.global_mapping::ArticleTypeID.'=\''.$parentID.'\'';
+$condition = global_mapping::AdTypeID.'=\'1\' and '.global_mapping::ArticleTypeID.'=\''.$parentID.'\' and ('.global_mapping::IsDeleted.' =0 or '.global_mapping::IsDeleted.' is null)';
 $allAds = $objAdvertising->getAllAdvertising(0,'',$condition,'');
 
 ?>	
