@@ -111,7 +111,25 @@ elseif($_pgR['act'] == Model_Advertising::ACT_SHOW_EDIT)
 	
 	return ;
 }
-$allAds = $objAdvertising->getAllAdvertising(0,null,null,null);
+$catID = $_pgR["cid"];
+$adTypeID = $_pgR["tid"];
+
+$condition='';
+if($catID)
+{
+	$condition .= global_mapping::ArticleTypeID .'='.$catID.'';
+}
+
+if($adTypeID)
+{
+	if($condition)
+		$condition .= ' and '.global_mapping::AdTypeID .'='.$adTypeID;
+	else
+		$condition .= global_mapping::AdTypeID .'='.$adTypeID;
+}
+
+$allAds = $objAdvertising->getAllAdvertising(0,null,$condition,null);
+
 $allAdType = $objAdType->getAllAdType(0,null,null,null);
 $allCats = $objArticleType->getAllArticleType(0,null,'ParentID=0',null);
 ?>
@@ -151,7 +169,48 @@ include_once('include/_admin_header.inc');
 		</div>
 		<!---->
 		<div class="portlet-body">
-		
+		<form method="get" id="form-article" style="display: inline-flex">
+<select class="" name="cid" id="cid" style="height:25px">
+<option value="0" >ALL</option>
+<?php
+foreach($allCats as $item)
+{
+	$isSelect = false;
+	//print_r($currentTypes);
+	
+	if($item[global_mapping::ArticleTypeID] == $catID)
+	{
+		$isSelect=true;
+	}
+	if($isSelect)
+		echo '			<option selected="selected" value="'.$item[global_mapping::ArticleTypeID].'" >'.$item[global_mapping::ArticleTypeName].'</option>';
+	else
+		echo '			<option value="'.$item[global_mapping::ArticleTypeID].'" >'.$item[global_mapping::ArticleTypeName].'</option>';
+}
+?>		
+</select>	
+<select class="" name="tid" id="cid" style="height:25px">
+	<option value="0" >ALL</option>
+<?php
+foreach($allAdType as $item)
+{
+	$isSelect = false;
+	//print_r($currentTypes);
+	
+	if($item[global_mapping::AdTypeID] == $adTypeID)
+	{
+		$isSelect=true;
+	}
+	if($isSelect)
+		echo '			<option selected="selected" value="'.$item[global_mapping::AdTypeID].'" >'.$item[global_mapping::AdTypeName].'</option>';
+	else
+		echo '			<option value="'.$item[global_mapping::AdTypeID].'" >'.$item[global_mapping::AdTypeName].'</option>';
+}
+?>	
+</select>	
+
+<input type="submit" value="Search" style="height:24px;margin:0 10px" />		
+</form>		
 									
 <?php
 //print_r($advertising);
