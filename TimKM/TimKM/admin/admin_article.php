@@ -25,6 +25,7 @@ $objArticleType = new model_ArticleType($objConnection);
 $objArticle = new model_Article($objConnection);
 
 $catID = $_pgR["cid"];
+$page = $_pgR["p"]? $_pgR["p"]:1;
 $inactive = $_pgR["inactive"];
 $expired = $_pgR["expired"];
 $allCats = $objArticleType->getAllArticleType(0,null,'ParentID=0',null);
@@ -52,7 +53,7 @@ if($expired)
 }
 else
 {
-	$condidtion = ' And '.global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\'';
+	$condidtion = ' And ('.global_mapping::EndDate.' >= \''.global_common::nowDateSQL().'\' OR '.global_mapping::EndDate.' is null )';
 }
 if($inactive =='true')
 {
@@ -62,7 +63,7 @@ else
 {
 	$condidtion .=  ' And `'.global_mapping::Status.'`=1';
 }
-$articles = $objArticle->searchArticle(0,$allCatIDs,'','',$condidtion);
+$articles = $objArticle->searchArticle($page,$allCatIDs,'','',$condidtion,'',$total);
 
 ?>
 <?php
@@ -98,7 +99,7 @@ include_once('include/_admin_header.inc');
 		</div>
 		<!---->
 		<div class="portlet-body">
-<form method="get" style="display: inline-flex">
+<form method="get" id="form-article" style="display: inline-flex">
 <select class="" name="cid" id="cid" style="height:25px">
 <option value="0" >ALL</option>
 <?php
@@ -120,10 +121,11 @@ foreach($allCats as $item)
 </select>	
 <label for="inactive" style="height:20px;color:black; margin: 0 0 0 10px">InActive: </label> <input type="checkbox" <?php echo ($inactive?'checked=checked':'') ?> name="inactive" id="inactive" value="true" />
 <label for="expired" style="height:20px;color:black; margin: 0 0 0 10px">Expired: </label> <input type="checkbox" <?php echo ($expired?'checked=checked':'') ?> name="expired" id="expired" value="true" />
-<input type="submit" value="Search" style="height:24px;margin:0 10px" />		
+<input type="hidden"  name="p" id="p" value="<?php echo ($page) ?>" />
+<input type="submit" value="Search" style="height:24px;margin:0 10px" onclick="$('#p').val(0)" />		
 </form>		
 <div style="float:right;color:black">
-<?php echo 'Total:'. count($articles); ?>
+<?php echo 'Total:'. $total; ?>
 </div>
 <?php
 //print_r($articles);
@@ -138,10 +140,19 @@ if($articles)
 	echo 'Đơn vị kinh doanh';		
 	echo '</th>';
 	echo '<th>';
+	echo 'Người tạo';		
+	echo '</th>';
+	echo '<th>';
 	echo 'Ngày bắt đầu';		
 	echo '</th>';
 	echo '<th>';
 	echo 'Ngày kết thúc';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Ngày tạo';		
+	echo '</th>';
+	echo '<th>';
+	echo 'Ngày cập nhật';		
 	echo '</th>';
 	echo '<th>';
 	echo 'Action';		
@@ -156,11 +167,20 @@ if($articles)
 		echo '<td style="padding:0;width:200px">';
 		echo $item[global_mapping::CompanyName];		
 		echo '</td>';
+		echo '<td style="">';
+		echo $item[global_mapping::CreatedBy][global_mapping::UserName];		
+		echo '</td>';
 		echo '<td>';
 		echo global_common::formatDateVN($item[global_mapping::StartDate]);		
 		echo '</td>';
 		echo '<td>';
 		echo global_common::formatDateVN($item[global_mapping::EndDate]);		
+		echo '</td>';
+		echo '<td>';
+		echo global_common::formatDateVN($item[global_mapping::CreatedDate]);		
+		echo '</td>';
+		echo '<td>';
+		echo global_common::formatDateVN($item[global_mapping::ModifiedDate]);		
 		echo '</td>';
 		echo '<td style="padding:0;width:180px">';
 		echo '<a href="../article_detail.php?aid='.$item[global_mapping::ArticleID].'" target="_blank" class="btn btn-mini"> View</a> ';	
@@ -176,6 +196,7 @@ if($articles)
 		echo '</tr>';
 	}
 	echo '</table>';
+	echo global_common::getPagingHTMLByNum($page,Model_Article::NUM_PER_PAGE,$total, "article.SearchAdmin");
 }
 ?>
 				</div>
