@@ -708,4 +708,10 @@ var article = {
 			core.util.getObjectByID("formSearch").submit();
 		}
 	},
+	SearchAdmin: function(page)
+	{
+	    $("#form-article #p").val(page);
+		$("#form-article").submit();
+	},
+	
 }

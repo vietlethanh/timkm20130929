@@ -83,6 +83,7 @@
 			FormComponents.init();
 		});
 	</script>
+	
 </head>
 <?php
 
@@ -97,6 +98,7 @@ $arrCategories =  $objArticleType->getAllArticleType(0,null,'`ParentID`=0','Leve
 ?>
 
 <body >
+
 <div id="main" >
     <!--div id="subcontent" -->
     <div id="header" >
@@ -113,6 +115,10 @@ foreach($arrCategories as $item)
 	echo '	</li>';
 }
 	?>
+	<li style="padding:0">
+	
+	
+	</li>
 			</ul>
 		</div>
 		 <div id="div-login" align="right" style=""  class="navbar navbar-inverse navbar-fixed-top">

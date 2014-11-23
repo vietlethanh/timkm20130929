@@ -87,7 +87,7 @@
 
 ?>
 <body >
-<div id="main" align="center">
+<div id="admin" align="center" style="margin:0px 5px;">
     <!--div id="subcontent" -->
     <div id="admin-header" align="">
 		<a class="menu" href="../index.php">TimKM</a>

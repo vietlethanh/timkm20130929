@@ -27,7 +27,7 @@ class Model_Article
 	const ACT_REFRESH                       = 17;
 	
 	
-	const NUM_PER_PAGE                      = 15;
+	const NUM_PER_PAGE                      = 30;
 	const NUM_REFRESH                       = 5;
 	
 	const TBL_SL_ARTICLE			        = 'sl_article';
@@ -572,7 +572,7 @@ class Model_Article
 	}
 	
 	
-	public function searchArticle($intPage, $listTypeID, $keyword, $selectField='*',$whereClause='',$orderBy='') 
+	public function searchArticle($intPage, $listTypeID, $keyword, $selectField='*',$whereClause='',$orderBy='',&$total) 
 	{		
 		if($listTypeID)
 		{
@@ -606,6 +606,10 @@ class Model_Article
 		
 		if($intPage>0)
 		{
+			$strSQLCount = global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
+					array("count(*)", Model_Article::TBL_SL_ARTICLE ,							
+						$condition.$orderBy));
+						
 			$strSQL .= global_common::prepareQuery(global_common::SQL_SELECT_FREE, 
 					array($selectField, Model_Article::TBL_SL_ARTICLE ,							
 						$condition.$orderBy .' limit '.(($intPage-1)* self::NUM_PER_PAGE).','.self::NUM_PER_PAGE));
@@ -616,10 +620,12 @@ class Model_Article
 					array($selectField, Model_Article::TBL_SL_ARTICLE ,							
 						$condition.$orderBy ));
 		}
-		
+		$arrTotal =$this->_objConnection->selectCommand($strSQLCount);		
+		$total = $arrTotal[0][0];
 		//echo $condition;
 		//echo $strSQL;
 		//return $strSQL;
+		$articleTypes =  $this->_objConnection->selectCommand($strSQL);	
 		$arrResult = self::getArticlesFromDB($strSQL);
 		//print_r($arrResult);
 		return $arrResult;

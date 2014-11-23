@@ -15,7 +15,7 @@ $allAds = $objAdvertising->getAllAdvertising(0,'',$condition,'');
 foreach($allAds as $item)
 {
 	echo '<li>';
-	echo '	<a href="'.$item[global_mapping::PreferLink].'" target="_blank"><img src="images/data/kitchen_adventurer_cheesecake_brownie.jpg" /></a>';
+	echo '	<a href="'.$item[global_mapping::PreferLink].'" target="_blank"><img src="'.$item[global_mapping::ImageLink].'" /></a>';
 	echo '</li>';
 	//echo '<div class="advertise">';
 	//echo '<a href="'.$item[global_mapping::PreferLink].'" target="_blank"><img class="partner" src="'.$item[global_mapping::ImageLink].'" /></a>';
