@@ -110,10 +110,31 @@ elseif($_pgR['act'] == Model_Advertising::ACT_SHOW_EDIT)
 	}
 	
 	return ;
+}elseif($_pgR['act'] == Model_Advertising::ACT_ACTIVE)
+{
+	$adID = $_pgR['id'];
+	$isActivate = $_pgR['isactivate'];
+	$result = $objAdvertising->activeAdvertising($adID,$isActivate);
+	if ($result)
+	{
+		$arrHeader = global_common::getMessageHeaderArr($banCode);//$banCode
+		echo global_common::convertToXML(
+				$arrHeader, array("rs", "inf"), 
+				array(1, ($isActivate?'Xóa':'Deactivate').' thành công'), 
+				array( 0, 1 )
+				);
+		return;
+	}
+	else
+	{
+		echo global_common::convertToXML($arrHeader, array("rs","inf"), array(0,($isActivate?'Xóa':'Deactivate').' unsuccessfully'), array(0,1));
+		return;
+	}
+	
 }
 $catID = $_pgR["cid"];
 $adTypeID = $_pgR["tid"];
-
+$deleted = $_pgR["deleted"];
 $condition='';
 if($catID)
 {
@@ -127,7 +148,14 @@ if($adTypeID)
 	else
 		$condition .= global_mapping::AdTypeID .'='.$adTypeID;
 }
-
+if($deleted)
+{
+	$condition .= ' And '.global_mapping::IsDeleted.'=1';
+}
+else
+{
+	$condition .= ' And ('.global_mapping::IsDeleted.'=0 or '.global_mapping::IsDeleted.' is null)';
+}
 $allAds = $objAdvertising->getAllAdvertising(0,null,$condition,null);
 
 $allAdType = $objAdType->getAllAdType(0,null,null,null);
@@ -208,7 +236,7 @@ foreach($allAdType as $item)
 }
 ?>	
 </select>	
-
+<label for="deleted" style="height:20px;color:black; margin: 0 0 0 10px">Deleted: </label> <input type="checkbox" <?php echo ($deleted?'checked=checked':'') ?> name="deleted" id="deleted" value="true" />
 <input type="submit" value="Search" style="height:24px;margin:0 10px" />		
 </form>		
 									
@@ -271,11 +299,11 @@ if($allAds)
 		echo '<a href="javascript:advertising.showPopupEdit(\''.$item[global_mapping::AdvertisingID].'\',\'modal-add\')" class="btn btn-mini">Edit</a> ';	
 		if(	!$item[global_mapping::IsDeleted])
 		{
-			echo '<a href="javascript:advertising.Delete(\''.$item[global_mapping::AdvertisingID].'\',1)" class="btn btn-mini">Delete</a> ';	
+			echo '<a href="javascript:advertising.deleteRetailer(\''.$item[global_mapping::AdvertisingName].'\',\''.$item[global_mapping::AdvertisingID].'\',1)" class="btn btn-mini">Delete</a> ';	
 		}
 		else
 		{
-			echo '<a href="javascript:advertising.Delete(\''.$item[global_mapping::AdvertisingID].'\',0)" class="btn btn-mini">Restore</a>';	
+			echo '<a href="javascript:advertising.deleteRetailer(\''.$item[global_mapping::AdvertisingName].'\',\''.$item[global_mapping::AdvertisingID].'\',0)" class="btn btn-mini">Restore</a>';	
 		}	
 		echo '</td>';
 		echo '</tr>';

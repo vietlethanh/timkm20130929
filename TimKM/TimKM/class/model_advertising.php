@@ -23,6 +23,8 @@ class Model_Advertising
 	const ACT_CHANGE_PAGE					= 13;
 	const ACT_SHOW_EDIT                     = 14;
 	const ACT_GET                           = 15;
+	const ACT_ACTIVE                        = 16;
+	
 	const NUM_PER_PAGE                      = 15;
 	
 	const TBL_SL_ADVERTISING			            = 'sl_advertising';
@@ -95,6 +97,11 @@ class Model_Advertising
 		`Status` varchar(20),
 		PRIMARY KEY(AdvertisingID)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+	
+	const SQL_ACTIVE_SL_ADVERTISING	= 'UPDATE `{0}`
+		SET  		
+		`IsDeleted` = \'{2}\'		
+		WHERE AdvertisingID = \'{1}\'  ';
 	
 	#endregion   
 	
@@ -227,6 +234,21 @@ class Model_Advertising
 		//print_r($arrResult);
 		return $arrResult;
 	}
+	
+	public function activeAdvertising($adID, $isActivate)
+	{
+		$strTableName = self::TBL_SL_ADVERTISING;
+		$strSQL = global_common::prepareQuery(self::SQL_ACTIVE_SL_ADVERTISING,array($strTableName,global_common::escape_mysql_string($adID),$isActivate));
+		//echo $strSQL;
+		if (!global_common::ExecutequeryWithCheckExistedTable($strSQL,self::SQL_CREATE_TABLE_SL_ADVERTISING,$this->_objConnection,$strTableName))
+		{
+			//echo $strSQL;
+			global_common::writeLog('Error add sl_article:'.$strSQL,1);
+			return false;
+		}	
+		return $adID;	
+	}
+	
 	
 	public function getListAdvertising($intPage,$orderBy='AdvertisingID', $whereClause)
 	{		

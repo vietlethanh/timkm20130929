@@ -221,6 +221,35 @@ var advertising = {
 				core.util.disableControl(submitID, false);
             }
         );
+    },
+
+    deleteRetailer: function(name, retailerID, status) {
+        //curRow = currentRowId;
+        me = this;
+        var adInfo =
+		{
+		    id: retailerID,
+		    isactivate: status
+		};
+
+		adInfo.act = this.ACT_ACTIVE;
+
+		core.request.post('' + this.Page, adInfo,
+            function(respone, info) {
+                var strRespond = core.util.parserXML(respone);
+                if (parseInt(strRespond[1]['rs']) == 1) {
+                    core.ui.showInfoBar(1, strRespond[1]["inf"]);
+                    core.util.reload();
+                }
+                else {
+                    core.ui.showInfoBar(2, strRespond[1]["inf"]);
+                }
+            },
+            function() {
+                core.ui.showInfoBar(2, core.constant.MsgProcessError);
+            }
+        );
+
     }
 
 }
